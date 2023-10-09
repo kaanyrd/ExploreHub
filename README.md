@@ -1,2 +1,3 @@
-#Blog for places...
-#Acemilik eserim
+# Blog for places... (Not Done!)
+# Watch Live: https://explore-hub.netlify.app
+# Acemilik eserim
