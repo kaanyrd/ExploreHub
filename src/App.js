@@ -8,9 +8,11 @@ import Favs from "./pages/Favs/Favs";
 import MyProfile from "./pages/Profiles/MyProfile";
 import OtherProfile from "./pages/Profiles/OtherProfile";
 import Places from "./pages/Places/Places";
-import Place from "./pages/Places/Place";
+import PlaceDetail from "./pages/Places/PlaceDetail";
 import Login from "./pages/Authentication/Login";
 import Signup from "./pages/Authentication/Signup";
+import AddPlace from "./pages/Places/AddPlace";
+import ChangePassword from "./pages/Authentication/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -24,13 +26,20 @@ const router = createBrowserRouter([
       },
       {
         path: "places",
-        element: <Places />,
         children: [
           {
+            index: true,
+            element: <Places />,
+          },
+          {
             path: ":placesId",
-            element: <Place />,
+            element: <PlaceDetail />,
           },
         ],
+      },
+      {
+        path: "addplace",
+        element: <AddPlace />,
       },
       {
         path: "favs",
@@ -51,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "changepassword",
+        element: <ChangePassword />,
       },
     ],
   },
