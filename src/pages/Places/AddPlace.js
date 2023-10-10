@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./AddPlace.module.css";
+// import classes from "./AddPlace.module.css";
 
 function AddPlace() {
   return (
