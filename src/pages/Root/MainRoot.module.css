@@ -13,7 +13,6 @@
   width: 90vw;
   margin: 0 auto;
   max-width: 1270px;
-  background: rgb(255, 202, 193);
   padding: 1rem 0;
 }
 .sideOpen {
@@ -36,4 +35,5 @@
   padding: 0.2rem 0.2rem 0rem 0.2rem;
   cursor: pointer;
   background-color: #015792;
+  border: 3px solid white;
 }

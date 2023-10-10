@@ -1,0 +1,124 @@
+.mainContent {
+  border: 3px solid red;
+}
+.mainContent > * {
+  border: 3px solid green;
+}
+.cardTop {
+  border: 3px solid white;
+  column-gap: 0.5rem;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.dot {
+  color: rgb(184, 184, 184);
+}
+.ppSide {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+.ppSelf {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.places {
+  display: flex;
+  align-items: center;
+}
+
+.info {
+  font-size: 0.925rem;
+}
+
+.country {
+  font-size: 0.75rem;
+}
+
+.imgs {
+  border: 3px solid red;
+  height: 300px;
+  position: relative;
+}
+.imgSelf {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.buttonSide {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+.buttonSelf {
+  cursor: pointer;
+  width: 1.5rem;
+  border-radius: 5px;
+  border: none;
+  padding: 0.2rem;
+  background: #015792;
+  color: white;
+  font-weight: bolder;
+}
+.activeBtn {
+  color: #015792;
+  background-color: white;
+}
+
+.likes {
+  padding: 0.5rem;
+  border: 3px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.likes > div:first-child {
+  display: flex;
+  align-items: center;
+  column-gap: 0.2rem;
+}
+.likesRight {
+  display: flex;
+  align-items: center;
+  column-gap: 0.2rem;
+}
+.likeBtn {
+  color: gray;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.editIcon {
+  color: gray;
+  cursor: pointer;
+}
+.deleteIcon {
+  color: gray;
+  cursor: pointer;
+}
+.bookmarkBtn {
+  color: gray;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.liked {
+  color: red;
+}
+.bookmarked {
+  color: rgb(236, 211, 73);
+}
+
+.commentInfo {
+  color: gray;
+  cursor: pointer;
+}

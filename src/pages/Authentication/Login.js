@@ -1,25 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import classes from "./Login.module.css";
+// import logo from "../../assets/icons/icon10.png";
 
 function Login() {
   return (
-    <div>
-      <h1>Login.js</h1>
-      <form>
-        <div>
-          <label>e-mail</label>
-          <input type="email" />
+    <div className={classes.main}>
+      <div className={classes.mainContent}>
+        <div className={classes.formSide}>
+          <form className={classes.form}>
+            <div>
+              <input placeholder="Email adress or nickname" type="email" />
+            </div>
+            <div>
+              <input placeholder="Password" type="password" />
+            </div>
+            <div className={classes.loginBtn}>
+              <button>Login</button>
+            </div>
+          </form>
+          <div className={classes.otherLinks}>
+            <Link className={classes.changeLink} to="/changepassword">
+              Forgot your password?
+            </Link>
+            <div className={classes.divider}></div>
+            <Link className={classes.signupLink} to="/signup">
+              Create New Account
+            </Link>
+          </div>
         </div>
-        <div>
-          <label>password</label>
-          <input type="password" />
-        </div>
-        <button>Log-in</button>
-      </form>
-      <h3>Do you forget your password? </h3>
-      <Link to="/changepassword">Change Password</Link>
-      <h2>You don't have an account?</h2>
-      <Link to="/signup">Signup</Link>
+      </div>
     </div>
   );
 }

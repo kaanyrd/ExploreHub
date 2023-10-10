@@ -1,0 +1,86 @@
+.main {
+  /* border: 3px solid black; */
+  height: calc(100vh - 5rem);
+}
+
+.mainContent {
+  /* border: 3px solid red; */
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  background: white;
+  padding: 1rem;
+}
+.mainContent > * {
+  /* border: 3px solid black; */
+}
+
+.formSide {
+  border-radius: 10px;
+}
+.form {
+}
+.form > div > input {
+  height: 42px;
+  padding: 0 0.3rem;
+  border-radius: 5px;
+  border: 1px solid #ebecee;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.form > div > input:focus {
+  outline: 1px solid #1877f2;
+}
+
+.loginBtn {
+  text-align: center;
+}
+.loginBtn > button {
+  background: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.loginBtn > button:hover {
+  background-color: #0054c1;
+}
+
+.signupLink {
+  background-color: #42b72a;
+  color: white;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+.signupLink:hover {
+  background: #389c24;
+}
+
+.changeLink {
+  color: #1877f2;
+}
+.changeLink:hover {
+  color: #0404d8;
+}
+
+.otherLinks {
+  margin-top: 0.5rem;
+  /* border: 3px solid black; */
+  text-align: center;
+}
+
+.divider {
+  height: 2px;
+  background: #eceef0;
+  width: 100%;
+  margin: 1rem auto;
+  border-radius: 10px;
+}

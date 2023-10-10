@@ -6,6 +6,7 @@ import SideBarOpened from "../../components/SideBar/SideBarOpened";
 import classes from "./MainRoot.module.css";
 import { useSelector } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
+import Footer from "../../components/Footer/Footer";
 
 function MainRoot() {
   const sidebar = useSelector((state) => state.sidebar.sidebar);
@@ -30,6 +31,7 @@ function MainRoot() {
           <SideBarOpened />
         </div>
       )}
+      <Footer />
     </div>
   );
 }

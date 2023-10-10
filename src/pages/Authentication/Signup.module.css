@@ -1,0 +1,70 @@
+.main {
+  /* border: 3px solid black; */
+  min-height: calc(100vh - 5rem);
+}
+.mainContent {
+  /* border: 3px solid red; */
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  background: white;
+  padding: 1rem;
+}
+
+.formControl > input {
+  height: 42px;
+  padding: 0 0.3rem;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: none;
+  border: 1px solid #ebecee;
+}
+
+.formControl > input:focus {
+  outline: 1px solid #1877f2;
+}
+
+.confirmed > input {
+  border: 3px solid green;
+}
+.confirmed > input:focus {
+  outline: none;
+}
+
+.signBtn {
+  text-align: center;
+}
+.signBtn > button {
+  cursor: pointer;
+  background-color: #42b72a;
+  color: white;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+  border: none;
+}
+
+.signBtn > button:hover {
+  background: #389c24;
+}
+.otherLink {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.changeLink {
+  color: #1877f2;
+}
+.changeLink:hover {
+  color: #0404d8;
+}
+
+.divider {
+  height: 2px;
+  background: #eceef0;
+  width: 100%;
+  margin: 1rem auto;
+  border-radius: 10px;
+}
