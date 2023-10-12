@@ -93,7 +93,7 @@ function Signup() {
               <input type="date" />
             </div>
             <div className={classes.signBtn}>
-              <button>Sign Up</button>
+              <button>Signup</button>
             </div>
           </form>
           <div className={classes.divider}></div>

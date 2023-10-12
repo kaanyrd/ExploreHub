@@ -44,7 +44,7 @@
   border-radius: 5px;
   width: 100%;
   padding: 0.5rem 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bolder;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -66,7 +66,9 @@
 }
 
 .changeLink {
+  margin-top: 0.5rem;
   color: #1877f2;
+  display: inline-block;
 }
 .changeLink:hover {
   color: #0404d8;
@@ -121,7 +123,7 @@
 }
 
 .card:hover {
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .photo {
@@ -192,6 +194,7 @@
   align-items: center;
   justify-content: center;
   column-gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .logoSelf {
@@ -216,5 +219,11 @@
   }
   .profiles {
     grid-template-columns: 150px 150px;
+  }
+}
+
+@media screen and (min-width: 968px) {
+  .formSide {
+    padding: 2.5rem;
   }
 }
