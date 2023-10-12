@@ -8,6 +8,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
 
 function PlaceDetail() {
   const DUMMY_DATA = [
@@ -132,9 +133,9 @@ function PlaceDetail() {
               <p>{data.likes}</p>
             </div>
             <div className={classes.likesRight}>
-              <div className={classes.editIcon}>
+              <Link to="editplace" className={classes.editIcon}>
                 <EditIcon />
-              </div>
+              </Link>
               <div className={classes.deleteIcon}>
                 <DeleteIcon />
               </div>

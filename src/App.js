@@ -13,6 +13,8 @@ import Login from "./pages/Authentication/Login";
 import Signup from "./pages/Authentication/Signup";
 import AddPlace from "./pages/Places/AddPlace";
 import ChangePassword from "./pages/Authentication/ChangePassword";
+import ChangePasswordConfirmed from "./pages/Authentication/ChangePasswordConfirmed";
+import EditPlace from "./pages/Places/EditPlace";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
           {
             path: ":placesId",
             element: <PlaceDetail />,
+          },
+          {
+            path: ":placeId/editPlace",
+            element: <EditPlace />,
           },
         ],
       },
@@ -64,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "changepassword",
         element: <ChangePassword />,
+      },
+      {
+        path: "changepasswordconfirmed",
+        element: <ChangePasswordConfirmed />,
       },
     ],
   },

@@ -1,27 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import classes from "./ChangePassword.module.css";
 
 function ChangePassword() {
   return (
-    <div>
-      <h1>ChangePassword.js</h1>
-      <form>
-        <div>
-          <label>Email</label>
-          <input type="email" />
+    <div className={classes.main}>
+      <div className={classes.mainContent}>
+        <form>
+          <div className={classes.formController}>
+            <input placeholder="E-mail or Nickname" type="email" />
+          </div>
+          <div className={classes.submitBtn}>
+            <button>Continue</button>
+          </div>
+        </form>
+        <div className={classes.otherLink}>
+          <Link className={classes.changeLink} to="/signup">
+            Sign up
+          </Link>
+          <span className={classes.dot}>•</span>
+          <Link className={classes.changeLink} to="/login">
+            Login
+          </Link>
         </div>
-        <div>
-          <label>Nickname</label>
-          <input type="text" />
-        </div>
-        <div>
-          <label>Password</label>
-          <input type="password" />
-        </div>
-        <button>Change Password</button>
-
-        <Link to="/login">Go Back</Link>
-      </form>
+      </div>
     </div>
   );
 }

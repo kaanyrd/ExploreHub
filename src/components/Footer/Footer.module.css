@@ -6,7 +6,7 @@
 .mainContent {
   /* border: 3px solid white; */
   width: 90vw;
-  max-width: 1270px;
+  max-width: 1170px;
   margin: 0 auto;
   text-align: center;
   display: flex;
@@ -14,26 +14,15 @@
   row-gap: 0.5rem;
   letter-spacing: 0.5px;
 }
-.mainContent > * {
-  /* border: 3px solid black; */
-}
-.logoSide {
-  max-width: 250px;
-  margin: 0 auto 1rem auto;
-  border-radius: 5px;
-}
+
 .logoSelf {
   /* border: 3px solid black; */
+  width: 200px;
   border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 1.5rem;
 }
-.links {
-  /* border: 3px solid red; */
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  column-gap: 0.3rem;
-}
+
 .link {
   color: white;
   transition: all 0.3s ease-in-out;
@@ -51,4 +40,38 @@
 
 .copyright {
   margin-top: 0.5rem;
+}
+
+.footerRightSide {
+  /* border: 3px solid black; */
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8rem;
+}
+
+.socials {
+  /* border: 3px solid black; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.7rem;
+}
+
+.socials > * {
+  /* border: 3px solid red; */
+  display: inline-block;
+}
+
+@media screen and (min-width: 576px) {
+  .footerRightSide {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logoSelf {
+    margin: 0;
+  }
 }
