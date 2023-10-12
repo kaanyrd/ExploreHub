@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Login.module.css";
 import pp from "../../assets/casualPhotos/icardi.jpg";
 import CancelIcon from "@mui/icons-material/Cancel";
-// import logo from "../../assets/icons/icon10.png";
 import logo from "../../assets/icons/logo2.png";
 
 const DUMMY_DATA = [
@@ -39,7 +38,8 @@ const DUMMY_DATA = [
 
 function Login() {
   // FIXME
-  const [oldLogins, setOldLogins] = useState(true);
+  // const [oldLogins, setOldLogins] = useState(true);
+  const oldLogins = true;
 
   return (
     <div className={classes.main}>
