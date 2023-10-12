@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./ChangePasswordConfirmed.module.css";
+// import classes from "./ChangePasswordConfirmed.module.css";
 
 function ChangePasswordConfirmed() {
   return (
