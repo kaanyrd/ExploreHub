@@ -2,6 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import icon from "../../assets/icons/logo2.png";
+import bigIcon from "../../assets/icons/icon10.png";
 import classes from "./MainNavigation.module.css";
 // import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LoginIcon from "@mui/icons-material/Login";
@@ -22,11 +23,12 @@ function MainNavigation() {
           <div onClick={openSideHandler} className={classes.menuIcon}>
             <MenuIcon />
           </div>
-          <div className={classes.logoSide}>
-            <Link to="/">
-              <img src={icon} className={classes.logoSelf} alt="icon" />
-            </Link>
-          </div>
+          {/* <div className={classes.logoSide}> */}
+          <Link to="/">
+            <img src={icon} className={classes.logoSelf} alt="icon" />
+            <img src={bigIcon} className={classes.bigIcon} alt="icon" />
+          </Link>
+          {/* </div> */}
         </div>
         <ul className={classes.contentRight}>
           {/* <li>

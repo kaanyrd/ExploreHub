@@ -1,11 +1,19 @@
+.main {
+  /* border: 3px solid green; */
+  min-height: calc(100vh - 5rem);
+  display: grid;
+  align-items: center;
+  padding: 2rem 0;
+}
 .mainContent {
-  border: 3px solid red;
+  border: 3px solid black;
+  padding: 0.5rem;
+  border-radius: 10px;
 }
 .mainContent > * {
-  border: 3px solid green;
+  /* border: 3px solid red; */
 }
 .cardTop {
-  border: 3px solid white;
   column-gap: 0.5rem;
   display: grid;
   grid-template-rows: 1fr;
@@ -43,8 +51,7 @@
 }
 
 .imgs {
-  border: 3px solid red;
-  height: 300px;
+  height: 350px;
   position: relative;
 }
 .imgSelf {
@@ -78,10 +85,10 @@
 
 .likes {
   padding: 0.5rem;
-  border: 3px solid black;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 3px solid black;
 }
 .likes > div:first-child {
   display: flex;
@@ -121,4 +128,64 @@
 .commentInfo {
   color: gray;
   cursor: pointer;
+  margin: 0.5rem auto;
+}
+
+.comments {
+  /* border: 3px solid black; */
+  display: flex;
+  flex-direction: column;
+  height: 447px;
+  overflow-y: scroll;
+}
+.comments > * {
+  /* border: 3px solid red; */
+}
+
+/* imgs350px */
+
+@media screen and (min-width: 430px) {
+  .imgs {
+    height: 400px;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .imgs {
+    height: 450px;
+  }
+}
+
+@media screen and (min-width: 540px) {
+  .imgs {
+    height: 500px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .imgs {
+    height: 550px;
+  }
+}
+
+@media screen and (min-width: 680px) {
+  .imgs {
+    height: 650px;
+  }
+}
+
+@media screen and (min-width: 678px) {
+  .mainContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-start;
+  }
+  .imgs {
+    height: 550px;
+    /* width: 450px; */
+    margin: 0 auto;
+  }
+  .main {
+    padding: 0;
+  }
 }

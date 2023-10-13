@@ -145,6 +145,12 @@
   }
 }
 
+@media screen and (min-width: 978px) {
+  .mainContent {
+    width: 90%;
+  }
+}
+
 @media screen and (min-width: 1170px) {
   .contentRight {
     padding: 2.5rem;

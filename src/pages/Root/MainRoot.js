@@ -2,38 +2,38 @@ import React from "react";
 import MainNavigation from "../../components/MainNavigation/MainNavigation";
 import { Link, Outlet } from "react-router-dom";
 import SideBarOpened from "../../components/SideBar/SideBarOpened";
-// import SideBarClosed from "../../components/SideBar/SideBarClosed";
 import classes from "./MainRoot.module.css";
 import { useSelector } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import Footer from "../../components/Footer/Footer";
 import Scroll from "../../components/Scroll/Scroll";
+import LeftSideBar from "../../components/SideBar/LeftSideBar";
 
 function MainRoot() {
   const sidebar = useSelector((state) => state.sidebar.sidebar);
 
   return (
     <div className={classes.main}>
-      <Scroll />
-      <div className={classes.navbar}>
-        <MainNavigation />
+      <div className={classes.mainLeft}>
+        <LeftSideBar />
       </div>
-      <div className={classes.mainContent}>
-        <div className={classes.content}>
-          <Outlet />
+      <div className={classes.mainRight}>
+        <div className={classes.navbar}>
+          <MainNavigation />
         </div>
-        {/* <hr /> */}
-        {/* <SideBarClosed /> */}
+        <div className={classes.mainContent}>
+          <div className={classes.content}>
+            <Outlet />
+          </div>
+        </div>
+        <Footer />
       </div>
+      {/* NOT LAYOUT */}
       <Link to="/addplace" className={classes.addIcon}>
         <AddIcon />
       </Link>
-      {sidebar && (
-        <div className={classes.sideOpen}>
-          <SideBarOpened />
-        </div>
-      )}
-      <Footer />
+      {sidebar && <SideBarOpened />}
+      <Scroll />{" "}
     </div>
   );
 }

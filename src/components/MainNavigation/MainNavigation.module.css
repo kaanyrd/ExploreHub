@@ -1,10 +1,10 @@
 .navbar {
-  /* border: 2px solid black; */
+  border: 2px solid black;
   height: 5rem;
   background: #e7f4fe;
 }
 .navbarContent {
-  /* border: 2px solid red; */
+  border: 2px solid red;
   height: 100%;
   display: flex;
   align-items: center;
@@ -32,17 +32,41 @@
   color: black;
 }
 
-.logoSide {
+/* .logoSide {
   width: 45px;
   height: 45px;
-  border-radius: 50%;
   cursor: pointer;
-}
+  border-radius: 50%;
+} */
 .logoSelf {
-  width: 100%;
-  height: 100%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
   border-radius: 50%;
 }
 .menuIcon {
   cursor: pointer;
+}
+
+.bigIcon {
+  display: none;
+}
+
+@media screen and (min-width: 978px) {
+  .menuIcon {
+    display: none;
+  }
+  /* .bigIcon {
+    display: block;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 5px;
+  } */
+  .logoSelf {
+    display: none;
+  }
+  .navbarContent {
+    width: 95%; /* border: 2px solid red; */
+    margin: 0 auto;
+  }
 }

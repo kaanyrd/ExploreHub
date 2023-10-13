@@ -3,6 +3,9 @@
   background: #015792;
   color: white;
 }
+.main > * {
+  /* border: 3px solid white; */
+}
 .mainContent {
   /* border: 3px solid white; */
   width: 90vw;
@@ -73,5 +76,11 @@
   }
   .logoSelf {
     margin: 0;
+  }
+}
+
+@media screen and (min-width: 978px) {
+  .mainContent {
+    width: 90%;
   }
 }

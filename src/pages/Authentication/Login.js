@@ -44,53 +44,64 @@ function Login() {
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
-        {oldLogins && (
-          <div className={oldLogins}>
-            <div className={classes.topSide}>
-              <div className={classes.topSideHeader}>
-                <img src={logo} className={classes.logoSelf} alt="logo" />
-                <h2>Explore Hub</h2>
-              </div>
-              <p>
-                <small>JUST SHARE!</small>
-              </p>
-            </div>
-            <p className={classes.loginInfos}>
-              {DUMMY_DATA.length !== 0 ? (
-                <h3>Last Logins</h3>
-              ) : (
-                <h4 className={classes.oldLoginLength}>
-                  There aren't any old login
-                </h4>
-              )}
-            </p>
-            <div
-              className={`${
-                DUMMY_DATA.length === 1 ? classes.oneProfile : classes.profiles
-              }`}
-            >
-              {DUMMY_DATA.map((data) => (
-                <div key={data.id} className={classes.card}>
-                  <div className={classes.photo}>
-                    <img className={classes.photoSelf} src={data.pp} alt="pp" />
-                    <span className={classes.closeIcon}>
-                      <CancelIcon />
-                    </span>
-                  </div>
-                  <div className={classes.profileInfo}>
-                    <p>{data.firstName}</p>
-                    <small className={classes.nickName}>@{data.nickName}</small>
+        <div>
+          {oldLogins && (
+            <div className={oldLogins}>
+              <div className={classes.topSide}>
+                <div className={classes.topSideHeader}>
+                  <img src={logo} className={classes.logoSelf} alt="logo" />
+                  <div>
+                    <h2>Explore Hub</h2>
+                    <small>JUST SHARE!</small>
                   </div>
                 </div>
-              ))}
-            </div>
-            {DUMMY_DATA.length !== 0 && (
-              <div className={classes.anyInfo}>
-                <small>or login with your account</small>
+                <p></p>
               </div>
-            )}
-          </div>
-        )}
+              <p className={classes.loginInfos}>
+                {DUMMY_DATA.length !== 0 ? (
+                  <h3>Last Logins</h3>
+                ) : (
+                  <h4 className={classes.oldLoginLength}>
+                    There aren't any old login
+                  </h4>
+                )}
+              </p>
+              <div
+                className={`${
+                  DUMMY_DATA.length === 1
+                    ? classes.oneProfile
+                    : classes.profiles
+                }`}
+              >
+                {DUMMY_DATA.map((data) => (
+                  <div key={data.id} className={classes.card}>
+                    <div className={classes.photo}>
+                      <img
+                        className={classes.photoSelf}
+                        src={data.pp}
+                        alt="pp"
+                      />
+                      <span className={classes.closeIcon}>
+                        <CancelIcon />
+                      </span>
+                    </div>
+                    <div className={classes.profileInfo}>
+                      <p>{data.firstName}</p>
+                      <small className={classes.nickName}>
+                        @{data.nickName}
+                      </small>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {DUMMY_DATA.length !== 0 && (
+                <div className={classes.anyInfo}>
+                  <small>or login with your account</small>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         <div className={classes.formSide}>
           <h3 className={classes.loginTitle}>Login</h3>
           <form className={classes.form}>

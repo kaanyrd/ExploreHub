@@ -1,0 +1,41 @@
+.main {
+  border: 3px solid green;
+  height: 100%;
+}
+.main > * {
+  border: 3px solid red;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.links {
+  /* border: 3px solid black; */
+  display: flex;
+  flex-direction: column;
+}
+.links > * {
+  /* border: 3px solid red; */
+}
+
+.link {
+  /* border: 3px solid black; */
+}
+.link > a {
+  /* border: 3px solid red; */
+  display: grid;
+  grid-template-columns: 30px 1fr;
+}
+a {
+  display: inline-block;
+}
+
+.link > a.active {
+  color: red;
+}
+
+.divider {
+  height: 2px;
+  width: 100%;
+  background-color: black;
+  margin: 2rem auto;
+}

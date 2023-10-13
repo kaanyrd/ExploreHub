@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import classes from "./PlaceDetail.module.css";
 import pp from "../../assets/casualPhotos/icardi.jpg";
-import p1 from "../../assets/casualPhotos/photo1.PNG";
-import p2 from "../../assets/casualPhotos/photo2.PNG";
-import p3 from "../../assets/casualPhotos/icardi.jpg";
+import p1 from "../../assets/casualPhotos/muslera1.PNG";
+import p2 from "../../assets/casualPhotos/muslera2.PNG";
+import p3 from "../../assets/casualPhotos/muslera3.PNG";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -32,6 +32,24 @@ function PlaceDetail() {
         { id: "c4", nickname: "fanriziorom", message: "You deserved!" },
         { id: "c5", nickname: "wilfiriedzaha", message: "We did it 🦾🦾" },
         { id: "c6", nickname: "drmertens", message: "Nice shot bro 😎" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
+        { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
         { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
       ],
       pp: pp,
@@ -70,116 +88,122 @@ function PlaceDetail() {
     <div className={classes.main}>
       {DUMMY_DATA.map((data) => (
         <div key={data.id} className={classes.mainContent}>
-          <div className={classes.cardTop}>
-            <div className={classes.ppSide}>
+          <div className={classes.contentLeft}>
+            <div className={classes.cardTop}>
+              <div className={classes.ppSide}>
+                <img
+                  className={classes.ppSelf}
+                  src={data.pp}
+                  alt={data.nickName}
+                />
+              </div>
+
+              <div>
+                <div className={classes.info}>
+                  <strong>@{data.nickName}</strong>{" "}
+                  <span className={classes.dot}>•</span> {data.duration}{" "}
+                  <span className={classes.dot}>•</span> at {data.place} (
+                  {data.city}, {data.country})
+                  <div className={classes.country}></div>
+                </div>
+              </div>
+            </div>
+            <div className={classes.imgs}>
               <img
-                className={classes.ppSelf}
-                src={data.pp}
+                src={data.photos[image]}
+                className={classes.imgSelf}
                 alt={data.nickName}
               />
-            </div>
-
-            <div>
-              <div className={classes.info}>
-                <strong>@{data.nickName}</strong>{" "}
-                <span className={classes.dot}>•</span> {data.duration}{" "}
-                <span className={classes.dot}>•</span> at {data.place} (
-                {data.city}, {data.country})
-                <div className={classes.country}></div>
+              <div className={classes.buttonSide}>
+                <button
+                  className={`${classes.buttonSelf} ${
+                    image === 1 ? classes.activeBtn : undefined
+                  }`}
+                  onClick={firstPhotoHandler}
+                >
+                  1
+                </button>
+                <button
+                  className={`${classes.buttonSelf} ${
+                    image === 2 ? classes.activeBtn : undefined
+                  }`}
+                  onClick={secondPhotoHandler}
+                >
+                  2
+                </button>
+                <button
+                  className={`${classes.buttonSelf} ${
+                    image === 3 ? classes.activeBtn : undefined
+                  }`}
+                  onClick={thirdPhotoHandler}
+                >
+                  3
+                </button>
               </div>
             </div>
-          </div>
-          <div className={classes.imgs}>
-            <img
-              src={data.photos[image]}
-              className={classes.imgSelf}
-              alt={data.nickName}
-            />
-            <div className={classes.buttonSide}>
-              <button
-                className={`${classes.buttonSelf} ${
-                  image === 1 ? classes.activeBtn : undefined
-                }`}
-                onClick={firstPhotoHandler}
-              >
-                1
-              </button>
-              <button
-                className={`${classes.buttonSelf} ${
-                  image === 2 ? classes.activeBtn : undefined
-                }`}
-                onClick={secondPhotoHandler}
-              >
-                2
-              </button>
-              <button
-                className={`${classes.buttonSelf} ${
-                  image === 3 ? classes.activeBtn : undefined
-                }`}
-                onClick={thirdPhotoHandler}
-              >
-                3
-              </button>
-            </div>
-          </div>
-          <div className={classes.likes}>
-            <div>
-              <span
-                onClick={likeHandler}
-                className={`${classes.likeBtn} ${liked && classes.liked}`}
-              >
-                <FavoriteIcon />
-              </span>
-              <p>{data.likes}</p>
-            </div>
-            <div className={classes.likesRight}>
-              <Link to="editplace" className={classes.editIcon}>
-                <EditIcon />
-              </Link>
-              <div className={classes.deleteIcon}>
-                <DeleteIcon />
+            <div className={classes.likes}>
+              <div>
+                <span
+                  onClick={likeHandler}
+                  className={`${classes.likeBtn} ${liked && classes.liked}`}
+                >
+                  <FavoriteIcon />
+                </span>
+                <p>{data.likes}</p>
               </div>
-              <div
-                className={`${classes.bookmarkBtn} ${
-                  bookmarked && classes.bookmarked
-                }`}
-                onClick={bookmarkHandler}
-              >
-                <BookmarkIcon />
+              <div className={classes.likesRight}>
+                <Link to="editplace" className={classes.editIcon}>
+                  <EditIcon />
+                </Link>
+                <div className={classes.deleteIcon}>
+                  <DeleteIcon />
+                </div>
+                <div
+                  className={`${classes.bookmarkBtn} ${
+                    bookmarked && classes.bookmarked
+                  }`}
+                  onClick={bookmarkHandler}
+                >
+                  <BookmarkIcon />
+                </div>
               </div>
             </div>
-          </div>
-          <div className={classes.explanation}>
-            <p>
-              <strong>
-                {data.firstName} {data.lastName} says:{" "}
-              </strong>
-              {data.explanation}
-            </p>
-          </div>
-          {data.comments.length === 0 && (
-            <p className={classes.commentInfo}>There is no comment...</p>
-          )}
-          {data.comments.length > 0 && showComments ? (
-            <ul className={classes.comments}>
-              <p className={classes.commentInfo} onClick={commentHandler}>
-                Close...
+            <div className={classes.explanation}>
+              <p>
+                <strong>
+                  {data.firstName} {data.lastName} says:{" "}
+                </strong>
+                {data.explanation}
               </p>
-              {data.comments.map((comment) => (
-                <li key={comment.id}>
-                  <strong>@{comment.nickname}:</strong> {comment.message}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            data.comments.length > 0 && (
-              <p onClick={commentHandler} className={classes.commentInfo}>
-                {`See other ${data.comments.length} ${
-                  data.comments.length === 1 ? "comment..." : "comments..."
-                }`}
-              </p>
-            )
-          )}
+            </div>
+          </div>
+          <div>
+            {data.comments.length === 0 && (
+              <p className={classes.commentInfo}>There is no comment...</p>
+            )}
+            {data.comments.length > 0 && showComments ? (
+              <div>
+                <p className={classes.commentInfo} onClick={commentHandler}>
+                  Close comments...
+                </p>
+                <ul className={classes.comments}>
+                  {data.comments.map((comment) => (
+                    <li key={comment.id}>
+                      <strong>@{comment.nickname}:</strong> {comment.message}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              data.comments.length > 0 && (
+                <p onClick={commentHandler} className={classes.commentInfo}>
+                  {`See other ${data.comments.length} ${
+                    data.comments.length === 1 ? "comment..." : "comments..."
+                  }`}
+                </p>
+              )
+            )}
+          </div>
         </div>
       ))}
     </div>

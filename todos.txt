@@ -1,0 +1,6 @@
+
+2- Places.js içerisi düzenlenecek
+3- PlaceDetail içerisi düzenlenecek
+4- PlaceEdit.js içerisi düzenlenecek
+5- SideBar düzenlenecek
+6- Ana ekrana sideBar kalıcı olarak eklenecek

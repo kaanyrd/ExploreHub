@@ -24,28 +24,40 @@ function SideBarOpened() {
         <CloseIcon />
       </div>
       <div className={classes.sideContent}>
-        <ul>
-          <li onClick={closeSideHandler}>
-            <Link to="/">Home</Link>
-          </li>
-          <li onClick={closeSideHandler}>
-            <Link to="/places">Places</Link>
-          </li>
-          <li onClick={closeSideHandler}>
-            <p>
-              You don't have an account? <Link to="/signup">Sign-up</Link>
-            </p>
-          </li>
-        </ul>
         <div className={classes.sideFooter}>
-          <h2>Explore Hub</h2>
+          <h2 className={classes.title}>Explore Hub</h2>
+          <div className={classes.divider}></div>
           <div className={classes.iconSide}>
             <img className={classes.iconSelf} src={icon} alt="icon" />
           </div>
-          <small>Developed by Kaan YARDIMCI</small>
+
           <div>
-            <h2>Socails</h2>
-            <div>
+            {/* FIXME LINKLER AUTH A GÖRE DEĞİŞECEK */}
+            <div className={classes.linkControl}>
+              <p className={classes.info}>You have an account?</p>
+              <Link
+                className={classes.navLink}
+                onClick={closeSideHandler}
+                to={"/login"}
+              >
+                Login
+              </Link>
+            </div>
+            <div className={classes.linkControl}>
+              <p className={classes.info}>You don't have an account?</p>
+              <Link
+                className={classes.navLink}
+                onClick={closeSideHandler}
+                to="/signup"
+              >
+                Sign-up
+              </Link>
+            </div>
+          </div>
+          <h4 className={classes.developer}>Developed by Kaan Yardımcı</h4>
+          <div className={classes.bottomSide}>
+            <h3 className={classes.socialsTitle}>My Socails</h3>
+            <div className={classes.socials}>
               <a href="https://twitter.com/Kaanyrd1" target="blank">
                 <TwitterIcon />
               </a>
