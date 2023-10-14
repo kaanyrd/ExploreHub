@@ -1,6 +1,7 @@
 .main {
   border: 3px solid green;
   height: 100%;
+  background-color: #f1f5f8;
 }
 .main > * {
   border: 3px solid red;
@@ -24,9 +25,20 @@
   /* border: 3px solid red; */
   display: grid;
   grid-template-columns: 30px 1fr;
+  background: white;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  color: black;
+  background: #dedede;
 }
 a {
   display: inline-block;
+}
+
+.link > a:hover {
+  background: #c7c7c7;
 }
 
 .link > a.active {

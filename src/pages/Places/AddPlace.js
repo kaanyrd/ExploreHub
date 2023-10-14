@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classes from "./AddPlace.module.css";
 import SendIcon from "@mui/icons-material/Send";
+import noImg from "../../assets/icons/noImg.png";
 import "./styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -82,13 +83,13 @@ function AddPlace() {
             className="mySwiper"
           >
             <SwiperSlide>
-              <img className="img" src={photo1} alt="img" />
+              <img className="img" src={noImg} alt="img" />
             </SwiperSlide>
             <SwiperSlide>
-              <img className="img" src={photo2} alt="img" />
+              <img className="img" src={noImg} alt="img" />
             </SwiperSlide>
             <SwiperSlide>
-              <img className="img" src={photo3} alt="img" />
+              <img className="img" src={noImg} alt="img" />
             </SwiperSlide>
           </Swiper>
         </div>

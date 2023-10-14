@@ -1,0 +1,21 @@
+.main {
+  padding: 2rem 0;
+}
+.lastVisits {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 0.5rem;
+}
+.lastVisits > h4 {
+  color: #015792;
+}
+.lastVisits > p {
+  padding: 0.2rem 0.7rem;
+  background: white;
+  border-radius: 5px;
+  color: #015792;
+  cursor: pointer;
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); */
+  border: 1px solid gray;
+}

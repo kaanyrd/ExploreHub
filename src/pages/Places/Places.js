@@ -4,6 +4,7 @@ import pp from "../../assets/casualPhotos/icardi.jpg";
 import p1 from "../../assets/casualPhotos/photo1.PNG";
 import p2 from "../../assets/casualPhotos/photo2.PNG";
 import PlacesList from "../../components/Places/PlacesList";
+import classes from "./Places.module.css";
 
 const DUMMY_DATA = [
   {
@@ -59,13 +60,14 @@ const DUMMY_DATA = [
 
 function Places() {
   return (
-    <div>
-      <div className="tags">
-        <button>#Turkey</button>
-        <button>#US</button>
-        <button>#Bungalov</button>
-        <button>#Beach</button>
-        <button>#Town</button>
+    <div className={classes.main}>
+      <div className={classes.lastVisits}>
+        <h4>Active Tags: </h4>
+        <p>#Turkey</p>
+        <p>#US</p>
+        <p>#Bungalov</p>
+        <p>#Beach</p>
+        <p>#Town</p>
       </div>
       <SearchBar />
       <h1>Places.js</h1>

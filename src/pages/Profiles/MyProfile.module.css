@@ -1,30 +1,11 @@
 .main {
   /* border: 3px solid black; */
   min-height: calc(100vh - 5rem);
-  padding: 0.5rem 0;
-  display: grid;
-  align-items: center;
+  padding: 0 0 2rem 0;
 }
 .mainContent {
   /* border: 3px solid red; */
   /* margin-bottom: 2rem; */
-}
-.backButton {
-  margin-top: 0rem;
-  /* border: 3px solid black; */
-  /* display: flex; */
-  width: fit-content;
-}
-.backButton > * {
-  display: inline-block;
-  background: #1877f2;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  transition: all 0.2s ease-in-out;
-}
-.backButton:hover.backButton > * {
-  background: #015792;
 }
 
 .card {
@@ -308,7 +289,6 @@
   .main {
     width: 90%;
     margin: 0 auto;
-    padding: 0;
   }
   .pp {
     left: 20%;
@@ -331,9 +311,6 @@
   }
   .otherInfos {
     justify-content: space-between;
-  }
-  .backButton {
-    padding-top: 0.5rem;
   }
 }
 

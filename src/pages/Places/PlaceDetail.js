@@ -9,6 +9,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function PlaceDetail() {
   const DUMMY_DATA = [
@@ -60,7 +61,7 @@ function PlaceDetail() {
   const [image, setImage] = useState(1);
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(true);
 
   const firstPhotoHandler = () => {
     setImage(1);
@@ -86,126 +87,132 @@ function PlaceDetail() {
 
   return (
     <div className={classes.main}>
-      {DUMMY_DATA.map((data) => (
-        <div key={data.id} className={classes.mainContent}>
-          <div className={classes.contentLeft}>
-            <div className={classes.cardTop}>
-              <div className={classes.ppSide}>
+      <Link className={classes.backButton} to=".." relative="path">
+        <ArrowBackIcon fontSize="large" />
+      </Link>
+      <div className={classes.mainContent}></div>
+      <div className={classes.list}>
+        {DUMMY_DATA.map((data) => (
+          <div key={data.id} className={classes.card}>
+            <div className={classes.contentLeft}>
+              <div className={classes.cardTop}>
+                <div className={classes.ppSide}>
+                  <img
+                    className={classes.ppSelf}
+                    src={data.pp}
+                    alt={data.nickName}
+                  />
+                </div>
+
+                <div>
+                  <div className={classes.info}>
+                    <strong>@{data.nickName}</strong>{" "}
+                    <span className={classes.dot}>•</span> {data.duration}{" "}
+                    <span className={classes.dot}>•</span> at {data.place} (
+                    {data.city}, {data.country})
+                    <div className={classes.country}></div>
+                  </div>
+                </div>
+              </div>
+              <div className={classes.imgs}>
                 <img
-                  className={classes.ppSelf}
-                  src={data.pp}
+                  src={data.photos[image]}
+                  className={classes.imgSelf}
                   alt={data.nickName}
                 />
-              </div>
-
-              <div>
-                <div className={classes.info}>
-                  <strong>@{data.nickName}</strong>{" "}
-                  <span className={classes.dot}>•</span> {data.duration}{" "}
-                  <span className={classes.dot}>•</span> at {data.place} (
-                  {data.city}, {data.country})
-                  <div className={classes.country}></div>
+                <div className={classes.buttonSide}>
+                  <button
+                    className={`${classes.buttonSelf} ${
+                      image === 1 ? classes.activeBtn : undefined
+                    }`}
+                    onClick={firstPhotoHandler}
+                  >
+                    1
+                  </button>
+                  <button
+                    className={`${classes.buttonSelf} ${
+                      image === 2 ? classes.activeBtn : undefined
+                    }`}
+                    onClick={secondPhotoHandler}
+                  >
+                    2
+                  </button>
+                  <button
+                    className={`${classes.buttonSelf} ${
+                      image === 3 ? classes.activeBtn : undefined
+                    }`}
+                    onClick={thirdPhotoHandler}
+                  >
+                    3
+                  </button>
                 </div>
               </div>
-            </div>
-            <div className={classes.imgs}>
-              <img
-                src={data.photos[image]}
-                className={classes.imgSelf}
-                alt={data.nickName}
-              />
-              <div className={classes.buttonSide}>
-                <button
-                  className={`${classes.buttonSelf} ${
-                    image === 1 ? classes.activeBtn : undefined
-                  }`}
-                  onClick={firstPhotoHandler}
-                >
-                  1
-                </button>
-                <button
-                  className={`${classes.buttonSelf} ${
-                    image === 2 ? classes.activeBtn : undefined
-                  }`}
-                  onClick={secondPhotoHandler}
-                >
-                  2
-                </button>
-                <button
-                  className={`${classes.buttonSelf} ${
-                    image === 3 ? classes.activeBtn : undefined
-                  }`}
-                  onClick={thirdPhotoHandler}
-                >
-                  3
-                </button>
-              </div>
-            </div>
-            <div className={classes.likes}>
-              <div>
-                <span
-                  onClick={likeHandler}
-                  className={`${classes.likeBtn} ${liked && classes.liked}`}
-                >
-                  <FavoriteIcon />
-                </span>
-                <p>{data.likes}</p>
-              </div>
-              <div className={classes.likesRight}>
-                <Link to="editplace" className={classes.editIcon}>
-                  <EditIcon />
-                </Link>
-                <div className={classes.deleteIcon}>
-                  <DeleteIcon />
+              <div className={classes.likes}>
+                <div>
+                  <span
+                    onClick={likeHandler}
+                    className={`${classes.likeBtn} ${liked && classes.liked}`}
+                  >
+                    <FavoriteIcon />
+                  </span>
+                  <p>{data.likes}</p>
                 </div>
-                <div
-                  className={`${classes.bookmarkBtn} ${
-                    bookmarked && classes.bookmarked
-                  }`}
-                  onClick={bookmarkHandler}
-                >
-                  <BookmarkIcon />
+                <div className={classes.likesRight}>
+                  <Link to="editplace" className={classes.editIcon}>
+                    <EditIcon />
+                  </Link>
+                  <div className={classes.deleteIcon}>
+                    <DeleteIcon />
+                  </div>
+                  <div
+                    className={`${classes.bookmarkBtn} ${
+                      bookmarked && classes.bookmarked
+                    }`}
+                    onClick={bookmarkHandler}
+                  >
+                    <BookmarkIcon />
+                  </div>
                 </div>
               </div>
+              <div className={classes.explanation}>
+                <p>
+                  <strong>
+                    {data.firstName} {data.lastName} says:{" "}
+                  </strong>
+                  {data.explanation}
+                </p>
+              </div>
             </div>
-            <div className={classes.explanation}>
-              <p>
-                <strong>
-                  {data.firstName} {data.lastName} says:{" "}
-                </strong>
-                {data.explanation}
-              </p>
+            <div>
+              {data.comments.length === 0 && (
+                <p className={classes.commentInfo}>There is no comment...</p>
+              )}
+              {data.comments.length > 0 && showComments ? (
+                <div>
+                  <p className={classes.commentInfo} onClick={commentHandler}>
+                    Close comments...
+                  </p>
+                  <ul className={classes.comments}>
+                    {data.comments.map((comment) => (
+                      <li key={comment.id}>
+                        <strong>@{comment.nickname}:</strong> {comment.message}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                data.comments.length > 0 && (
+                  <p onClick={commentHandler} className={classes.commentInfo}>
+                    {`See other ${data.comments.length} ${
+                      data.comments.length === 1 ? "comment..." : "comments..."
+                    }`}
+                  </p>
+                )
+              )}
             </div>
           </div>
-          <div>
-            {data.comments.length === 0 && (
-              <p className={classes.commentInfo}>There is no comment...</p>
-            )}
-            {data.comments.length > 0 && showComments ? (
-              <div>
-                <p className={classes.commentInfo} onClick={commentHandler}>
-                  Close comments...
-                </p>
-                <ul className={classes.comments}>
-                  {data.comments.map((comment) => (
-                    <li key={comment.id}>
-                      <strong>@{comment.nickname}:</strong> {comment.message}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              data.comments.length > 0 && (
-                <p onClick={commentHandler} className={classes.commentInfo}>
-                  {`See other ${data.comments.length} ${
-                    data.comments.length === 1 ? "comment..." : "comments..."
-                  }`}
-                </p>
-              )
-            )}
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

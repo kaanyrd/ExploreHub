@@ -28,6 +28,16 @@ a {
   color: black;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  word-wrap: break-word;
+}
+
 h1 {
   font-size: 3rem;
 }
@@ -39,6 +49,25 @@ h3 {
 }
 h4 {
   font-size: 0.875rem;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  cursor: pointer;
+}
+::-webkit-scrollbar-track {
+  background: white;
+}
+::-webkit-scrollbar-thumb {
+  background: #004e8375;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #004f83c2;
+}
+::-webkit-scrollbar-button {
+  /* background: green; */
+  display: none;
 }
 
 @media screen and (min-width: 800px) {
