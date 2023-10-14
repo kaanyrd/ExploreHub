@@ -13,11 +13,6 @@ import "./styles.css";
 
 // import required modules
 import { EffectCards } from "swiper/modules";
-
-import photo1 from "../../assets/casualPhotos/muslera1.PNG";
-import photo2 from "../../assets/casualPhotos/muslera2.PNG";
-import photo3 from "../../assets/casualPhotos/muslera3.PNG";
-
 function AddPlace() {
   const [length, setLength] = useState(0);
 
