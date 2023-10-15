@@ -32,7 +32,8 @@
   resize: none;
   padding: 0 0.3rem;
   border-radius: 5px;
-  border: 1px solid #ebecee;
+  border: 1px solid #8eb2e1;
+  /* border: 1px solid #ebecee; */
   margin-bottom: 1rem;
   font-size: 1rem;
 }
@@ -64,7 +65,8 @@
   height: 42px;
   padding: 0 0.3rem;
   border-radius: 5px;
-  border: 1px solid #ebecee;
+  border: 1px solid #8eb2e1;
+  /* border: 1px solid #ebecee; */
   width: 100%;
   margin-bottom: 1rem;
   font-size: 1rem;

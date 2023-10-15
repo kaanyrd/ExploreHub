@@ -4,7 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import icon from "../../assets/icons/logo2.png";
 import bigIcon from "../../assets/icons/icon10.png";
 import classes from "./MainNavigation.module.css";
-// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LoginIcon from "@mui/icons-material/Login";
 import { useDispatch } from "react-redux";
 import { sideBarAction } from "../../store/sidebar-slice";
@@ -24,18 +24,21 @@ function MainNavigation() {
             <MenuIcon />
           </div>
           {/* <div className={classes.logoSide}> */}
-          <Link to="/">
+          <Link to="/" end>
             <img src={icon} className={classes.logoSelf} alt="icon" />
             <img src={bigIcon} className={classes.bigIcon} alt="icon" />
           </Link>
           {/* </div> */}
         </div>
         <ul className={classes.contentRight}>
-          {/* <li>
+          <li>
             <NavLink to="/favs" end>
               <FavoriteBorderIcon />
             </NavLink>
-          </li> */}
+          </li>
+          <li>
+            <NavLink to="/myprofile">My Profile</NavLink>
+          </li>
           <li>
             <NavLink to="/places" end>
               Places

@@ -15,6 +15,7 @@ import AddPlace from "./pages/Places/AddPlace";
 import ChangePassword from "./pages/Authentication/ChangePassword";
 import ChangePasswordConfirmed from "./pages/Authentication/ChangePasswordConfirmed";
 import EditPlace from "./pages/Places/EditPlace";
+import EditProfile from "./pages/Profiles/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,16 @@ const router = createBrowserRouter([
       },
       {
         path: "myprofile",
-        element: <MyProfile />,
+        children: [
+          {
+            index: true,
+            element: <MyProfile />,
+          },
+          {
+            path: ":profileId",
+            element: <EditProfile />,
+          },
+        ],
       },
       {
         path: "otherprofile",

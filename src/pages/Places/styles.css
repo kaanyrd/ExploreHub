@@ -23,15 +23,18 @@
 .swiper-slide:nth-child(1n) {
   background-color: rgb(206, 17, 17);
   border-radius: 10px;
+  border: 5px solid #015792;
 }
 
 .swiper-slide:nth-child(2n) {
   background-color: rgb(0, 140, 255);
+  border: 5px solid #015792;
   border-radius: 10px;
 }
 
 .swiper-slide:nth-child(3n) {
   background-color: rgb(10, 184, 111);
+  border: 5px solid #015792;
   border-radius: 10px;
 }
 

@@ -124,9 +124,9 @@ function MyProfile() {
     <div className={classes.main}>
       <div className={classes.mainContent}>
         <div className={classes.photoSide}>
-          <span className={classes.editProfile}>
+          <Link to={DUMMY_DATA[0].id} className={classes.editProfile}>
             Edit Profile <EditIcon />
-          </span>
+          </Link>
           <img src={banner} className={classes.bannerPhoto} alt="banner" />
           <img src={pp} className={classes.pp} alt="banner" />
         </div>
@@ -142,7 +142,7 @@ function MyProfile() {
             </p>
             <p>
               <CalendarMonthIcon />
-              Birth of date<strong> 19 Feb, 1993 (30)</strong>
+              Birth<strong> 19/03/1993 (30)</strong>
             </p>
             <p>
               <LocationCityIcon />
