@@ -1,0 +1,4 @@
+.main {
+  border: 3px solid black;
+  min-height: calc(100vh - 4rem);
+}

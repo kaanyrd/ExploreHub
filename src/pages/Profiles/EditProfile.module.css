@@ -1,6 +1,6 @@
 .main {
   /* border: 3px solid black; */
-  min-height: calc(100vh - 5rem);
+  min-height: calc(100vh - 4rem);
   padding: 0 0 2rem 0;
 }
 .mainContent {

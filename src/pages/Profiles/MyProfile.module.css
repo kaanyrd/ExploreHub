@@ -1,6 +1,5 @@
 .main {
-  /* border: 3px solid black; */
-  min-height: calc(100vh - 5rem);
+  min-height: calc(100vh - 4rem);
   padding: 0 0 2rem 0;
 }
 .mainContent {
@@ -99,7 +98,13 @@
   color: #015792;
   cursor: pointer;
   /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); */
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-out;
+}
+
+.lastVisits > p:hover {
+  transform: scale(1.05);
 }
 
 .posts {

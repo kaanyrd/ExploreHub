@@ -21,7 +21,7 @@
   width: 100%;
   height: 100vh;
   background: white;
-  z-index: 2;
+  z-index: 3;
   color: #015792;
 }
 .sideContent {
@@ -97,6 +97,7 @@
 }
 .developer {
   text-align: center;
+  margin-top: 1rem;
 }
 
 .bottomSide {
@@ -115,6 +116,28 @@
 
 .socials > a {
   color: #015792;
+}
+
+.generalLinks {
+  /* border: 3px solid black; */
+  margin: 1.5rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 90%;
+}
+.generalLinks > * {
+  border: 3px dashed #015792;
+  display: flex;
+  align-items: center;
+  column-gap: 0.2rem;
+  color: #015792;
+  justify-content: center;
+  padding: 0.5rem 0.2rem;
+}
+
+.activeLink {
+  color: red;
 }
 
 @media screen and (min-width: 978px) {

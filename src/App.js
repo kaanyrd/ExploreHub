@@ -16,6 +16,7 @@ import ChangePassword from "./pages/Authentication/ChangePassword";
 import ChangePasswordConfirmed from "./pages/Authentication/ChangePasswordConfirmed";
 import EditPlace from "./pages/Places/EditPlace";
 import EditProfile from "./pages/Profiles/EditProfile";
+import PhotoGallery from "./pages/Places/PhotoGallery";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "favs",
         element: <Favs />,
+      },
+      {
+        path: "photogallery",
+        element: <PhotoGallery />,
       },
       {
         path: "myprofile",

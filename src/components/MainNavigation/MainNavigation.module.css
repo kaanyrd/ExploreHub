@@ -1,10 +1,12 @@
 .navbar {
-  border: 2px solid black;
-  height: 5rem;
-  background: #e7f4fe;
+  /* border: 2px solid black; */
+  height: 4rem;
+  background: white;
+  /* background: #e7f4fe; */
+  border-bottom: 1px solid #2972a3;
 }
 .navbarContent {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   height: 100%;
   display: flex;
   align-items: center;
@@ -24,12 +26,12 @@
   column-gap: 0.3rem;
 }
 .logoutBtn {
-  padding: 0.3rem 0.2rem 0 0.2rem;
-  background: rgb(218, 218, 218);
+  padding: 0.4rem 0.5rem 0.2rem 0.4rem;
+  background: #015792;
   border-radius: 50%;
 }
 .logoutBtn > * {
-  color: black;
+  color: white;
 }
 
 /* .logoSide {
@@ -50,6 +52,52 @@
 
 .bigIcon {
   display: none;
+}
+
+.profileSide {
+  background: #015792;
+  color: white;
+  padding: 0.5rem;
+  /* padding: 0.2rem 0.5rem; */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  border: 3px solid #015792;
+}
+
+.profileSection {
+  position: fixed;
+  top: 0;
+  right: 0%;
+  width: 200px;
+  min-height: 200px;
+  transform: translate(-5%, 3%);
+  border: 3px solid #015792;
+  z-index: 2;
+  background: white;
+  border-radius: 5px;
+}
+
+.profileSide > * {
+  font-size: 1.1rem;
+}
+
+.profileSide:hover {
+  /* background: #137abf; */
+  /* transform: scale(1.1); */
+  background-color: white;
+  color: #015792;
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+  column-gap: 0.3rem;
+}
+.rightSide > li > * {
+  color: #015792;
+  padding: 0.2rem 0 0 0;
+  display: inline-block;
 }
 
 @media screen and (min-width: 978px) {

@@ -1,14 +1,14 @@
 import React from "react";
-import classes from "./Home.module.css";
+import classes from "./PhotoGallery.module.css";
 
-function Home() {
+function PhotoGallery() {
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
-        <h1>Home.js</h1>
+        <h1>Photo Gallery.js</h1>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default PhotoGallery;

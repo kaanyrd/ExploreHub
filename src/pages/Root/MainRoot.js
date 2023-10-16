@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import MainNavigation from "../../components/MainNavigation/MainNavigation";
 import { Link, Outlet } from "react-router-dom";
 import SideBarOpened from "../../components/SideBar/SideBarOpened";
@@ -11,6 +12,10 @@ import LeftSideBar from "../../components/SideBar/LeftSideBar";
 
 function MainRoot() {
   const sidebar = useSelector((state) => state.sidebar.sidebar);
+
+  const SideBar = () => {
+    return <SideBarOpened />;
+  };
 
   return (
     <div className={classes.main}>
@@ -32,7 +37,8 @@ function MainRoot() {
       <Link to="/addplace" className={classes.addIcon}>
         <AddIcon />
       </Link>
-      {sidebar && <SideBarOpened />}
+      {sidebar &&
+        ReactDOM.createPortal(<SideBar />, document.getElementById("sidebar"))}
       <Scroll />{" "}
     </div>
   );

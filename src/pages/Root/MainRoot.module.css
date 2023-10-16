@@ -1,9 +1,7 @@
 .main {
   /* border: 10px solid red; */
-  /* border: 3px solid red; */
 }
 .main > * {
-  /* border: 10px solid black; */
   /* border: 3px solid black; */
 }
 .mainLeft {
@@ -18,8 +16,8 @@
   width: 100%;
 }
 .mainContent {
-  /* border: 3px solid black; */
-  margin-top: 5rem;
+  /* border: 3px solid green; */
+  margin-top: 4rem;
 }
 .content {
   /* border: 3px solid red; */
@@ -57,7 +55,7 @@
     margin-left: 200px;
   }
   .mainContent {
-    margin: 5rem auto 0 auto;
+    margin: 4rem auto 0 auto;
   }
   .content {
     margin: 0 auto;

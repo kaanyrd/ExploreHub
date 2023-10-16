@@ -1,19 +1,36 @@
 .main {
-  border: 3px solid green;
+  /* border: 3px solid green; */
   height: 100%;
-  background-color: #f1f5f8;
+  background-color: white;
+  border-right: 3px solid #2872a3;
 }
 .main > * {
-  border: 3px solid red;
-  width: 90%;
+  /* border: 3px solid red; */
+  width: 100%;
   margin: 0 auto;
 }
-
+.mainContent {
+  height: 100%;
+  overflow-y: auto;
+}
+.logo {
+  height: 4rem;
+  width: 100%;
+  object-fit: cover;
+}
 .links {
   /* border: 3px solid black; */
   display: flex;
   flex-direction: column;
+  padding: 1rem 0.5rem;
 }
+
+.infoAboutSite {
+  padding: 0.5rem;
+  color: #2872a3;
+  text-align: center;
+}
+
 .links > * {
   /* border: 3px solid red; */
 }
@@ -21,33 +38,71 @@
 .link {
   /* border: 3px solid black; */
 }
-.link > a {
+.nonActive {
   /* border: 3px solid red; */
   display: grid;
-  grid-template-columns: 30px 1fr;
-  background: white;
+  grid-template-columns: 40px 1fr;
   border-radius: 5px;
   margin-bottom: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.3rem 1rem;
   transition: all 0.3s ease-in-out;
   color: black;
+  /* background: white; */
   background: #dedede;
+  background: #2872a3;
+  color: white;
+  border: 3px solid #2872a3;
 }
-a {
+.nonActivenonActive {
   display: inline-block;
+  border: 3px solid #2872a3;
 }
 
 .link > a:hover {
-  background: #c7c7c7;
+  background: white;
+  color: #2872a3;
 }
 
 .link > a.active {
-  color: red;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 1rem;
+  transition: all 0.3s ease-in-out;
+  background: white;
+  color: #2872a3;
+  border: 3px solid #2872a3;
 }
 
 .divider {
-  height: 2px;
-  width: 100%;
-  background-color: black;
-  margin: 2rem auto;
+  height: 1.5px;
+  width: 90%;
+  background-color: #2872a3;
+  margin: 0.5rem auto 1rem auto;
+}
+
+.loginButton {
+  /* border: 3px solid black; */
+  display: flex;
+  align-items: center;
+  width: 50%;
+  justify-content: center;
+  column-gap: 0.5rem;
+  margin: 1rem auto;
+  background: #2872a3;
+  color: white;
+  padding: 0.3rem;
+  /* color: #2872a3; */
+  border-radius: 5px;
+}
+
+.loginButton > * {
+  /* border: 3px solid red; */
+}
+
+.developer {
+  padding: 0.3rem;
+  text-align: center;
+  color: #2872a3;
 }

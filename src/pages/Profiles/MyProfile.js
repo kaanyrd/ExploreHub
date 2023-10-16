@@ -228,7 +228,10 @@ function MyProfile() {
                     <p>{data.likes}</p>
                   </div>
                   <div className={classes.likesRight}>
-                    <Link to="editplace" className={classes.editIcon}>
+                    <Link
+                      // to="editplace"
+                      className={classes.editIcon}
+                    >
                       <EditIcon />
                     </Link>
                     <div className={classes.deleteIcon}>
