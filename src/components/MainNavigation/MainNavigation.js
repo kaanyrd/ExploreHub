@@ -24,9 +24,11 @@ function MainNavigation() {
     dispatch(ProfileAction.openProfile());
   };
 
-  const login = true;
+  const closeProfileSide = () => {
+    dispatch(ProfileAction.closeProfile());
+  };
 
-  console.log(profileBar);
+  const login = true;
 
   return (
     <div className={classes.navbar}>
@@ -60,6 +62,14 @@ function MainNavigation() {
             </li>
             <div className={classes.profileSide}>
               <h4 onClick={openProfileSide}>MI</h4>
+              {profileBar &&
+                ReactDOM.createPortal(
+                  <div
+                    onClick={closeProfileSide}
+                    className={classes.background}
+                  ></div>,
+                  document.getElementById("background")
+                )}
               {profileBar &&
                 ReactDOM.createPortal(
                   <div className={classes.profileSection}>
