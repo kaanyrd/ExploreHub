@@ -88,7 +88,7 @@ function PlaceDetail() {
   return (
     <div className={classes.main}>
       <Link className={classes.backButton} to=".." relative="path">
-        <ArrowBackIcon fontSize="large" />
+        <ArrowBackIcon fontSize="large" className={classes.backLink} />
       </Link>
       <div className={classes.mainContent}></div>
       <div className={classes.list}>

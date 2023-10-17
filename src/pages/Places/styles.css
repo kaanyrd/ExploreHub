@@ -1,6 +1,6 @@
 .swiper {
-  width: 250px;
-  height: 350px;
+  width: 230px;
+  height: 230px;
   border-radius: 10px;
   /* border: 3px solid black; */
 }
@@ -22,51 +22,88 @@
 
 .swiper-slide:nth-child(1n) {
   background-color: rgb(206, 17, 17);
-  border-radius: 10px;
-  border: 5px solid #015792;
+  /* border-radius: 10px; */
+  border: 3px solid #015792;
 }
 
 .swiper-slide:nth-child(2n) {
   background-color: rgb(0, 140, 255);
-  border: 5px solid #015792;
-  border-radius: 10px;
+  border: 3px solid #015792;
+  /* border-radius: 10px; */
 }
 
 .swiper-slide:nth-child(3n) {
   background-color: rgb(10, 184, 111);
-  border: 5px solid #015792;
-  border-radius: 10px;
+  border: 3px solid #015792;
+  /* border-radius: 10px; */
 }
 
-@media screen and (min-width: 850px) {
+/* .swiper {
+  width: 230px;
+  height: 230px;
+  border-radius: 10px;
+} */
+
+@media screen and (min-width: 389px) {
   .swiper {
-    width: 300px;
-    height: 420px;
+    width: 80%;
   }
 }
 
-@media screen and (min-width: 978px) {
+@media screen and (min-width: 567px) {
   .swiper {
-    width: 325px;
-    height: 440px;
+    height: 290px;
+  }
+}
+
+@media screen and (min-width: 678px) {
+  .swiper {
+    height: 320px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .swiper {
+    width: 250px;
+    height: 210px;
+  }
+}
+
+@media screen and (min-width: 1070px) {
+  .swiper {
+    width: 350px;
+    height: 240px;
   }
 }
 
 @media screen and (min-width: 1170px) {
   .swiper {
-    width: 420px;
+    width: 450px;
+    height: 300px;
   }
 }
 
 @media screen and (min-width: 1270px) {
   .swiper {
-    width: 460px;
-    height: 470px;
+    width: 510px;
+    height: 380px;
+  }
+}
+
+@media screen and (min-width: 478px) {
+  .swiper {
+    width: 360px;
+  }
+}
+
+@media screen and (min-width: 1370px) {
+  .swiper {
+    width: 430px;
   }
 }
 
 @media screen and (min-width: 1400px) {
   .swiper {
-    width: 520px;
+    width: 510px;
   }
 }

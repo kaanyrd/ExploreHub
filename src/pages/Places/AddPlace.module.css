@@ -10,6 +10,18 @@
   width: 90vw;
   max-width: 1170px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+
+.mainContent > * {
+  /* border: 3px solid black; */
+}
+.photoTitle {
+  text-align: center;
+  margin: 1rem 0;
+  color: #004299;
 }
 
 .formSide {
@@ -22,7 +34,7 @@
 }
 
 .photoSide {
-  display: none;
+  display: block;
 }
 
 .textArea {
@@ -46,7 +58,7 @@
   align-items: center;
   margin: 1.5rem auto 0 auto;
   column-gap: 0.5rem;
-  background: #0054c1;
+  background: #015792;
   cursor: pointer;
   color: white;
   border-radius: 5px;
@@ -57,7 +69,7 @@
 }
 
 .submitBtn > button:hover {
-  background-color: #004299;
+  background-color: #003f69;
 }
 
 .formControl > input {
@@ -78,11 +90,13 @@
 .postTitle {
   text-align: center;
   margin: 0 auto 1rem auto;
+  color: #015792;
 }
 
 .length {
   padding-left: 0.2rem;
   margin-bottom: 0.2rem;
+  color: #015792;
 }
 
 @media screen and (min-width: 576px) {

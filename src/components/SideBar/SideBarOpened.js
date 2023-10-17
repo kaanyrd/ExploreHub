@@ -14,6 +14,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import PersonIcon from "@mui/icons-material/Person";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 
 function SideBarOpened() {
   const dispatch = useDispatch();
@@ -61,6 +62,15 @@ function SideBarOpened() {
                 >
                   <InsertPhotoIcon fontSize="large" />
                   <span>All Places</span>
+                </NavLink>
+                <NavLink
+                  to="/photogallery"
+                  className={({ isActive }) =>
+                    isActive ? classes.activeLink : classes.nonActive
+                  }
+                >
+                  <PhotoLibraryIcon fontSize="large" />
+                  <span>Photo Gallery</span>
                 </NavLink>
               </ul>
               <div className={classes.linkControl}>
@@ -129,6 +139,16 @@ function SideBarOpened() {
                 >
                   <BookmarksIcon />
                   <span>Bookmarks</span>
+                </NavLink>
+                <NavLink
+                  onClick={closeSideHandler}
+                  to="/photogallery"
+                  className={({ isActive }) =>
+                    isActive ? classes.activeLink : classes.nonActive
+                  }
+                >
+                  <PhotoLibraryIcon fontSize="large" />
+                  <span>Photo Gallery</span>
                 </NavLink>
               </ul>
               {!login && (

@@ -13,13 +13,14 @@
 
 .closeButton {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   background: red;
   color: white;
   border: none;
-  /* padding: 0 0.2rem 0.3rem 0.2rem; */
+  padding: 0.1rem 0rem 0rem 0rem;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .pp {

@@ -81,7 +81,7 @@
   width: 200px;
   min-height: 200px;
   transform: translate(-5%, 3%);
-  border: 3px solid #015792;
+  /* border: 3px solid #015792; */
   z-index: 3;
   background: white;
   border-radius: 5px;

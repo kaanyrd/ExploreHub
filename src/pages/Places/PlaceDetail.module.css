@@ -14,17 +14,18 @@
   /* border: 3px solid black; */
   /* display: flex; */
   width: fit-content;
+  transition: all 0.3s ease-in-out;
 }
-.backButton > * {
+.backLink {
   display: inline-block;
-  background: #1877f2;
+  background: #015792;
   color: white;
   border: none;
   border-radius: 50%;
   transition: all 0.2s ease-in-out;
 }
 .backButton:hover.backButton > * {
-  background: #015792;
+  background: #00416c;
 }
 
 .card {

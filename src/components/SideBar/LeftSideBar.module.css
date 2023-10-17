@@ -12,6 +12,7 @@
 .mainContent {
   height: 100%;
   overflow-y: auto;
+  position: relative;
 }
 .logo {
   height: 4rem;
@@ -100,9 +101,14 @@
 .loginButton > * {
   /* border: 3px solid red; */
 }
+.mainContent {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+}
 
 .developer {
   padding: 0.3rem;
   text-align: center;
   color: #2872a3;
+  align-self: flex-end;
 }

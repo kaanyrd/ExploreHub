@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import classes from "./AddPlace.module.css";
 import SendIcon from "@mui/icons-material/Send";
-import noImg from "../../assets/icons/noImg.png";
+// import noImg from "../../assets/icons/noImg.png";
 import "./styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import photo from "../../assets/casualPhotos/icardi.jpg";
 
 // Import Swiper styles
 import "swiper/css";
@@ -71,6 +72,7 @@ function AddPlace() {
           </form>
         </div>
         <div className={classes.photoSide}>
+          <h3 className={classes.photoTitle}>Your Photos</h3>
           <Swiper
             effect={"cards"}
             grabCursor={true}
@@ -78,13 +80,13 @@ function AddPlace() {
             className="mySwiper"
           >
             <SwiperSlide>
-              <img className="img" src={noImg} alt="img" />
+              <img className="img" src={photo} alt="img" />
             </SwiperSlide>
             <SwiperSlide>
-              <img className="img" src={noImg} alt="img" />
+              <img className="img" src={photo} alt="img" />
             </SwiperSlide>
             <SwiperSlide>
-              <img className="img" src={noImg} alt="img" />
+              <img className="img" src={photo} alt="img" />
             </SwiperSlide>
           </Swiper>
         </div>
