@@ -1,5 +1,4 @@
 import React from "react";
-import SearchBar from "../../components/SearchBar/SearchBar";
 import pp from "../../assets/casualPhotos/icardi.jpg";
 import p1 from "../../assets/casualPhotos/photo1.PNG";
 import p2 from "../../assets/casualPhotos/photo2.PNG";
@@ -69,7 +68,6 @@ function Places() {
         <p>#Beach</p>
         <p>#Town</p>
       </div>
-      <SearchBar />
       <h1>Places.js</h1>
       <PlacesList data={DUMMY_DATA} />
     </div>
