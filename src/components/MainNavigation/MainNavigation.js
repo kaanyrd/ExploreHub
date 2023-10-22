@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import icon from "../../assets/icons/logo2.png";
 import classes from "./MainNavigation.module.css";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LoginIcon from "@mui/icons-material/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { sideBarAction } from "../../store/sidebar-slice";
@@ -14,9 +13,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import { NavigationAction } from "../../store/navigation-slice";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import { login } from "../../util/Authentication";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
 
 function MainNavigation() {
-  const location = useLocation();
   const dispatch = useDispatch();
   const profileBar = useSelector((state) => state.profileSide.toggle);
   const navigationBar = useSelector((state) => state.navigationSlice.toggle);
@@ -41,12 +41,11 @@ function MainNavigation() {
     dispatch(NavigationAction.closeToggle());
   };
 
-  const login = true;
-
-  console.log(location.pathname);
+  const Auth = login;
 
   return (
     <div className={classes.navbar}>
+      {/* FIXME LOADER BORDER */}
       {navigationBar && (
         <div className={classes.inputSide}>
           <ArrowBackIosIcon
@@ -94,7 +93,7 @@ function MainNavigation() {
               </button>
             </form>
           </div>
-          {!login && (
+          {!Auth && (
             <ul className={classes.contentRight}>
               <li className={classes.logoutBtn}>
                 <NavLink to="/login" end>
@@ -103,11 +102,11 @@ function MainNavigation() {
               </li>
             </ul>
           )}
-          {login && (
+          {Auth && (
             <div className={classes.rightSide}>
               <li>
-                <NavLink to="/favs" end>
-                  <FavoriteBorderIcon />
+                <NavLink to="/bookmarks" end>
+                  <BookmarksIcon />
                 </NavLink>
               </li>
               <div className={classes.profileSide}>

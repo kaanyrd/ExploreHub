@@ -47,7 +47,7 @@
   padding: 0.2rem 0.2rem 0rem 0.2rem;
   cursor: pointer;
   background-color: #015792;
-  border: 3px solid white;
+  border: 5px solid #6cadd9;
 }
 
 @media screen and (min-width: 978px) {

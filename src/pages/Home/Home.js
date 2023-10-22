@@ -5,7 +5,7 @@ function Home() {
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
-        <h1>Home.js</h1>
+        <h2>Home.js</h2>
       </div>
     </div>
   );

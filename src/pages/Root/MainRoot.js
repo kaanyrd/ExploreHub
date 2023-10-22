@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Footer from "../../components/Footer/Footer";
 import Scroll from "../../components/Scroll/Scroll";
 import LeftSideBar from "../../components/SideBar/LeftSideBar";
+import { login } from "../../util/Authentication";
 
 function MainRoot() {
   const sidebar = useSelector((state) => state.sidebar.sidebar);
@@ -16,6 +17,8 @@ function MainRoot() {
   const SideBar = () => {
     return <SideBarOpened />;
   };
+
+  const Auth = login;
 
   return (
     <div className={classes.main}>
@@ -34,9 +37,11 @@ function MainRoot() {
         <Footer />
       </div>
       {/* NOT LAYOUT */}
-      <Link to="/addplace" className={classes.addIcon}>
-        <AddIcon />
-      </Link>
+      {Auth && (
+        <Link to="/addplace" className={classes.addIcon}>
+          <AddIcon />
+        </Link>
+      )}
       {sidebar &&
         ReactDOM.createPortal(<SideBar />, document.getElementById("sidebar"))}
       <Scroll />{" "}

@@ -13,8 +13,8 @@ import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import PersonIcon from "@mui/icons-material/Person";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import { login } from "../../util/Authentication";
 
 function SideBarOpened() {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function SideBarOpened() {
     dispatch(sideBarAction.closeSide());
   };
 
-  const login = true;
+  const Auth = login;
 
   return (
     <div className={classes.side}>
@@ -38,7 +38,7 @@ function SideBarOpened() {
             <img className={classes.iconSelf} src={icon} alt="icon" />
           </div>
 
-          {!login && (
+          {!Auth && (
             <div>
               {/* FIXME LINKLER AUTH A GÖRE DEĞİŞECEK */}
               <ul className={classes.generalLinks}>
@@ -63,15 +63,6 @@ function SideBarOpened() {
                   <InsertPhotoIcon fontSize="large" />
                   <span>All Places</span>
                 </NavLink>
-                <NavLink
-                  to="/photogallery"
-                  className={({ isActive }) =>
-                    isActive ? classes.activeLink : classes.nonActive
-                  }
-                >
-                  <PhotoLibraryIcon fontSize="large" />
-                  <span>Photo Gallery</span>
-                </NavLink>
               </ul>
               <div className={classes.linkControl}>
                 <p className={classes.info}>You have an account?</p>
@@ -95,7 +86,7 @@ function SideBarOpened() {
               </div>
             </div>
           )}
-          {login && (
+          {Auth && (
             <div>
               {/* FIXME LINKLER AUTH A GÖRE DEĞİŞECEK */}
               <ul className={classes.generalLinks}>
@@ -132,16 +123,6 @@ function SideBarOpened() {
                 </NavLink>
                 <NavLink
                   onClick={closeSideHandler}
-                  to="/favs"
-                  className={({ isActive }) =>
-                    isActive ? classes.activeLink : classes.nonActive
-                  }
-                >
-                  <BookmarksIcon />
-                  <span>Bookmarks</span>
-                </NavLink>
-                <NavLink
-                  onClick={closeSideHandler}
                   to="/photogallery"
                   className={({ isActive }) =>
                     isActive ? classes.activeLink : classes.nonActive
@@ -151,7 +132,7 @@ function SideBarOpened() {
                   <span>Photo Gallery</span>
                 </NavLink>
               </ul>
-              {!login && (
+              {!Auth && (
                 <div>
                   <div className={classes.linkControl}>
                     <p className={classes.info}>You have an account?</p>
@@ -179,7 +160,7 @@ function SideBarOpened() {
           )}
           <h4 className={classes.developer}>Developed by Kaan Yardımcı</h4>
           <div className={classes.bottomSide}>
-            <h3 className={classes.socialsTitle}>My Socails</h3>
+            <h3 className={classes.socialsTitle}>My Socials</h3>
             <div className={classes.socials}>
               <a href="https://twitter.com/Kaanyrd1" target="blank">
                 <TwitterIcon />

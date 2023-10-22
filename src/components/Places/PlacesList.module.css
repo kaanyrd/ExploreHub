@@ -1,8 +1,38 @@
-.item {
-  background-color: white;
-  border-radius: 10px;
-  padding: 0.1rem 0;
+.list {
+  /* border: 3px solid black; */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
 }
+
+.item {
+  display: inline-block;
+}
+.item > * {
+  /* border: 3px solid green; */
+}
+.item {
+  /* border: 5px solid #015792; */
+  background-color: white;
+  height: 440px;
+  border-radius: 10px;
+  /* padding: 0.1rem 0; */
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr;
+  box-shadow: 0px 5px 15px rgba(39, 113, 163, 0.4);
+  /* border: 2.5px solid rgb(39, 113, 163); */
+  transition: all 0.3s ease-in-out;
+}
+.item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 15px rgba(39, 113, 163, 1);
+}
+.durat {
+  color: white;
+}
+
 .imgs {
   position: relative;
   height: 300px;
@@ -32,7 +62,8 @@
 }
 
 .dot {
-  color: rgb(184, 184, 184);
+  color: white;
+  padding: 0 0.2rem;
 }
 .cardTopInfo {
   display: flex;
@@ -42,6 +73,7 @@
   column-gap: 1.2rem;
   margin-bottom: 0.25rem;
   padding: 0.2rem 0.1rem;
+  color: #2770a2;
 }
 .imgInfo {
   position: absolute;
@@ -63,10 +95,21 @@
 .location {
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .description {
-  padding: 0.3rem 0;
+  padding: 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* İki satıra kadar metin göster */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 6em; /* İki satıra kadar metin göster (örnekte 3em kullanıldı) */
+  overflow: hidden;
+  align-self: flex-start;
+  color: #1d6696;
 }
 
 .nickName {

@@ -6,6 +6,7 @@ import photo from "../../assets/casualPhotos/icardi.jpg";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CloseIcon from "@mui/icons-material/Close";
+// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function ProfileInfo() {
   const dispatch = useDispatch();
@@ -17,7 +18,9 @@ function ProfileInfo() {
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
+        {/* FIXME */}
         <img src={photo} alt="img" className={classes.pp} />
+        {/* <AccountCircleIcon fontSize="large" className={classes.pp} /> */}
         <h4 className={classes.name}>Mauro Icardi</h4>
         <h4 className={classes.nickname}>@mauroicardi</h4>
         <Link className={classes.logoutButton}>

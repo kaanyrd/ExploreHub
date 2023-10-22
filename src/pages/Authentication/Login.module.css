@@ -27,6 +27,7 @@
   width: 100%;
   margin-bottom: 1rem;
   font-size: 1rem;
+  color: #015792;
 }
 
 .form > div > input:focus {
@@ -37,7 +38,8 @@
   text-align: center;
 }
 .loginBtn > button {
-  background: #1877f2;
+  /* background: #1877f2; */
+  background: #015792;
   color: white;
   border: none;
   border-radius: 5px;
@@ -163,6 +165,7 @@
 .loginInfos {
   text-align: center;
   margin-bottom: 1rem;
+  color: #015792;
 }
 
 .oldLogins {
@@ -173,12 +176,14 @@
 .loginTitle {
   text-align: center;
   margin-bottom: 1rem;
+  color: #015792;
 }
 
 .anyInfo {
   text-align: center;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  color: #015792;
 }
 
 .topSide {
@@ -195,6 +200,7 @@
   column-gap: 1rem;
   margin-bottom: 1.5rem;
   text-align: left;
+  color: #015792;
 }
 
 .logoSelf {

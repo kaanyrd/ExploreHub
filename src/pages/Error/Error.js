@@ -1,6 +1,7 @@
 import React from "react";
 import MainNavigation from "../../components/MainNavigation/MainNavigation";
 import { useNavigate } from "react-router-dom";
+import classes from "./Error.module.css";
 
 function Error() {
   const navigate = useNavigate();
@@ -9,11 +10,12 @@ function Error() {
   };
 
   return (
-    <div>
+    <div className={classes.main}>
       <MainNavigation />
-      <hr />
-      <h2>An error has occured</h2>
-      <button onClick={goHomeHandler}>Go Home</button>
+      <div className={classes.mainContent}>
+        <h2>An error has occured</h2>
+        <button onClick={goHomeHandler}>Go Home</button>
+      </div>
     </div>
   );
 }

@@ -4,10 +4,10 @@ import logo from "../../assets/icons/icon10.png";
 import { Link, NavLink } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import PanoramaIcon from "@mui/icons-material/Panorama";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import PersonIcon from "@mui/icons-material/Person";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import { login } from "../../util/Authentication";
 
 function LeftSideBar() {
   const date = new Date();
@@ -15,13 +15,13 @@ function LeftSideBar() {
 
   // FIXME AS TOKEN
 
-  const login = true;
+  const Auth = login;
 
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
         <img src={logo} alt="logo" className={classes.logo} />
-        {login && (
+        {Auth && (
           <div>
             <ul className={classes.links}>
               <li className={classes.link}>
@@ -83,21 +83,10 @@ function LeftSideBar() {
                   New Post
                 </NavLink>
               </li>
-              <li className={classes.link}>
-                <NavLink
-                  to="/favs"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : classes.nonActive
-                  }
-                >
-                  <BookmarksIcon />
-                  Bookmarks
-                </NavLink>
-              </li>
             </ul>
           </div>
         )}
-        {!login && (
+        {!Auth && (
           <div>
             <ul className={classes.links}>
               <li className={classes.link}>

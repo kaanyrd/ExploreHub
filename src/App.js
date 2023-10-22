@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         element: <AddPlace />,
       },
       {
-        path: "favs",
+        path: "bookmarks",
         element: <Favs />,
       },
       {

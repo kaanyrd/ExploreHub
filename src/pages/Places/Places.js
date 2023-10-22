@@ -13,6 +13,8 @@ const DUMMY_DATA = [
     lastName: "Icardi",
     explanation:
       "What a paradox of life that in the 𝐓𝐞𝐚𝐭𝐫𝐨 𝐝𝐞 𝐥𝐨𝐬 𝐒𝐮𝐞𝐧̃𝐨𝐬, I would become 𝐏𝐞𝐬𝐚𝐝𝐢𝐥𝐥 𝐚.𝐒𝐮𝐞𝐧̃𝐚. Only those who dream learn to fly.",
+    // explanation:
+    //   "What a paradox of life that in the 𝐓𝐞𝐚𝐭𝐫𝐨 𝐝𝐞 𝐥𝐨𝐬 𝐒𝐮𝐞𝐧̃𝐨𝐬, I would become 𝐏𝐞𝐬𝐚𝐝𝐢𝐥𝐥 𝐚.𝐒𝐮𝐞𝐧̃𝐚. Only those who dream learn to fly.",
     nickName: "mauroicardi",
     country: "England",
     city: "Manchester",
@@ -38,7 +40,7 @@ const DUMMY_DATA = [
     lastName: "Muslera",
     explanation: "With my Family ❤",
     nickName: "muslera",
-    country: "Turkey",
+    country: "Tur",
     city: "Istanbul",
     place: "My Home",
     likes: 5,
@@ -62,13 +64,11 @@ function Places() {
     <div className={classes.main}>
       <div className={classes.lastVisits}>
         <h4>Active Tags: </h4>
+        <p>#Old Trafford, Manchester</p>
         <p>#Turkey</p>
         <p>#US</p>
-        <p>#Bungalov</p>
-        <p>#Beach</p>
-        <p>#Town</p>
+        <p>#Tulsa</p>
       </div>
-      <h1>Places.js</h1>
       <PlacesList data={DUMMY_DATA} />
     </div>
   );

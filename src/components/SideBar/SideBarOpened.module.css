@@ -82,6 +82,9 @@
 
 .navLink {
   color: #0054c1;
+  display: inline-block;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .linkControl:first-child {
@@ -124,20 +127,27 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  width: 90%;
+  width: 95%;
+  text-align: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 .generalLinks > * {
-  border: 3px dashed #015792;
+  /* border: 3px dashed #015792; */
   display: flex;
   align-items: center;
-  column-gap: 0.2rem;
+  column-gap: 0.1rem;
   color: #015792;
   justify-content: center;
   padding: 0.5rem 0.2rem;
+  border-radius: 5px;
 }
-
 .activeLink {
   color: red;
+  background: #cee2f2;
+}
+.nonActive {
+  background: #cee2f2;
 }
 
 @media screen and (min-width: 978px) {

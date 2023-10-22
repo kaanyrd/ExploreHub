@@ -2,7 +2,8 @@
   height: 4rem;
   background: white;
   /* background: #e7f4fe; */
-  border-bottom: 1px solid #2972a3;
+  /* border-bottom: 3px solid rgb(41, 114, 163); */
+  box-shadow: 0px 5px 15px rgba(41, 114, 163, 0.5);
 }
 
 .background {
@@ -65,6 +66,7 @@
 }
 .bigScreenForm > input:focus {
   outline: none;
+  border: 2px solid #015792;
 }
 .bigScreenForm > button {
   border: none;
@@ -96,9 +98,13 @@
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-right: none;
+  /* outline: 1px solid blue; */
+  /* border: 2px solid #015792; */
 }
 .formSide > input:focus {
   outline: none;
+  /* border: 3px solid #015792; */
+  border: 2px solid #015792;
 }
 
 .formSubmitButton {
@@ -229,9 +235,6 @@
     margin: 0 auto;
   }
   .searchButton {
-    display: none;
-  }
-  .inputSide {
     display: none;
   }
   .contentLeft {

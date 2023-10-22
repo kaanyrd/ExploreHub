@@ -12,7 +12,8 @@
   margin-bottom: 3rem;
   border-radius: 10px;
   padding: 0.5rem;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0px 5px 15px rgba(1, 87, 146, 0.8);
 }
 .photoSide {
   /* border: 3px solid green; */
@@ -146,6 +147,10 @@
 
 .info {
   font-size: 0.925rem;
+  color: #015792;
+}
+.explanation {
+  color: #015792;
 }
 
 .country {
@@ -191,7 +196,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid #015792;
 }
 .likes > div:first-child {
   display: flex;
@@ -240,6 +245,7 @@
   flex-direction: column;
   height: 200px;
   overflow-y: scroll;
+  color: rgb(1, 87, 146);
 }
 .comments > * {
   /* border: 3px solid red; */
