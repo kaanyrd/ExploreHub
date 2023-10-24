@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Signup.module.css";
 import logo from "../../assets/icons/logo2.png";
+import SmallInfo from "../../components/SmallInfo/SmallInfo";
 
 function Signup() {
   const navigate = useNavigate();
-  const [confirmPassword, setConfirmPassword] = useState(false);
-  // FIXME FOR INPUTS
+  const [resData, setResData] = useState(null);
+  const [sended, setSended] = useState(false);
 
+  // FIXME FOR INPUTS
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,38 +19,58 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const passwordChangeHandler = (e) => {
-    setPassword(e.target.value);
-  };
-  const password2ChangeHandler = (e) => {
-    setPassword2(e.target.value);
-  };
-  const firstNameHandler = (e) => {
+  // FIXME EXIST ACCOUNT, SMALL DIV INFORMATION
+  const [formValid, setFormValid] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
+  const [nameValid, setNameValid] = useState(null);
+  const [lastNameValid, setLastNameValid] = useState(null);
+  const [emailValid, setEmailValid] = useState(null);
+  const [nickValid, setNickValid] = useState(null);
+  const [genderValid, setGenderValid] = useState(null);
+  const [birthValid, setBirthValid] = useState(null);
+  const [passwordValid, setPasswordValid] = useState(null);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const nameChangeHandler = (e) => {
     setFirstName(e.target.value);
   };
-  const lastNameHandler = (e) => {
+  const surnameChangeHandler = (e) => {
     setLastName(e.target.value);
   };
-  const emailHandler = (e) => {
+  const emailChangeHandler = (e) => {
     setEmail(e.target.value);
   };
-  const nickNameHandler = (e) => {
+
+  const nicknameChangeHandler = (e) => {
     setNickName(e.target.value);
   };
-  const genderHandler = (e) => {
+
+  const genderChangeHandler = (e) => {
     setGender(e.target.value);
   };
-  const birthHandler = (e) => {
+
+  const birthChangeHandler = (e) => {
     setBirth(e.target.value);
   };
 
+  const passwordChangeHandler = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const passwordChangeHandler2 = (e) => {
+    setPassword2(e.target.value);
+  };
+
+  // CONFIRMED PASSWORD
   useEffect(() => {
     if (
+      password === password2 &&
+      password.length >= 8 &&
+      password2.length >= 8 &&
       (password.includes("@") ||
         password.includes("/") ||
-        password.includes("&")) &&
-      password.length >= 8 &&
-      password === password2
+        password.includes("&"))
     ) {
       setConfirmPassword(true);
     } else {
@@ -56,50 +78,141 @@ function Signup() {
     }
   }, [password, password2]);
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    const data = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      nickName: nickName,
-      password: password,
-      gender: gender,
-      birth: birth,
-    };
-    // FIXME SMALL DIV IS HERE
+  // FORM CONFIRMED
+  useEffect(() => {
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
-      email.length === 0 ||
       password.length === 0 ||
       password2.length === 0 ||
-      gender.length === 0 ||
+      birth.length === 0 ||
       nickName.length === 0 ||
-      birth.length === 0
+      gender.length === 0 ||
+      email.length === 0
     ) {
-      return;
+      setFormValid(true);
+    } else {
+      setFormValid(false);
     }
+  }, [
+    firstName,
+    lastName,
+    password,
+    password2,
+    birth,
+    nickName,
+    gender,
+    email,
+  ]);
 
-    try {
-      await fetch(
-        "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json",
-        {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      navigate("/login");
-    } catch (error) {
-      // FIXME ERROR MODELING
-      console.log(error);
+  useEffect(() => {
+    if (firstName.length > 0) {
+      setNameValid(false);
+    }
+  }, [firstName]);
+
+  useEffect(() => {
+    if (lastName.length > 0) {
+      setLastNameValid(false);
+    }
+  }, [lastName]);
+
+  useEffect(() => {
+    if (email.length > 0 && email.includes("@")) {
+      setEmailValid(false);
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (nickName.length > 0) {
+      setNickValid(false);
+    }
+  }, [nickName]);
+
+  useEffect(() => {
+    if (password.length > 0) {
+      setPasswordValid(false);
+    }
+  }, [password]);
+
+  useEffect(() => {
+    if (gender.length > 0) {
+      setGenderValid(false);
+    }
+  }, [gender]);
+
+  useEffect(() => {
+    if (birth.length > 0) {
+      setBirthValid(false);
+    }
+  }, [birth]);
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (firstName.length === 0) {
+      setNameValid(true);
+    }
+    if (lastName.length === 0) {
+      setLastNameValid(true);
+    }
+    if (nickName.length === 0) {
+      setNickValid(true);
+    }
+    if (email.length === 0 && !email.includes("@")) {
+      setEmailValid(true);
+    }
+    if (password.length === 0) {
+      setPasswordValid(true);
+    }
+    if (gender.length === 0) {
+      setGenderValid(true);
+    }
+    if (birth.length === 0) {
+      setBirthValid(true);
+    }
+    if (!formValid && confirmPassword) {
+      const data = {
+        token: Math.random(),
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        gender: gender.trim(),
+        password: password.trim(),
+        password2: password2.trim(),
+        birth: birth.trim(),
+        email: email.trim(),
+        nickName: nickName.trim(),
+      };
+      try {
+        setSended(true);
+        const response = await fetch(
+          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+        setResData(response);
+      } catch (error) {
+        setResData(error);
+      }
+      setShowModal(true);
     }
   };
 
-  // FIXME EXIST ACCOUNT, SMALL DIV INFORMATION
+  useEffect(() => {
+    setTimeout(() => {
+      if (resData) {
+        setShowModal(false);
+        setSended(false);
+        navigate("/login");
+      } else {
+        return;
+      }
+    }, 2000);
+  }, [resData, navigate]);
 
   return (
     <div className={classes.main}>
@@ -121,49 +234,57 @@ function Signup() {
             <div className={classes.formLayout}>
               <div>
                 <input
-                  onChange={firstNameHandler}
                   value={firstName}
                   name="firstName"
                   placeholder="Firstname"
                   type="text"
-                  className={classes.normalInput}
+                  onChange={nameChangeHandler}
+                  className={`${classes.normalInput} ${
+                    nameValid && classes.inputFree
+                  }`}
                 />
               </div>
               <div className={classes.formControl}>
                 <input
-                  onChange={lastNameHandler}
                   value={lastName}
-                  className={classes.normalInput}
+                  className={`${classes.normalInput} ${
+                    lastNameValid && classes.inputFree
+                  }`}
                   name="lastName"
                   placeholder="Lastname"
                   type="text"
+                  onChange={surnameChangeHandler}
                 />
               </div>
             </div>
             <div className={classes.formLayout}>
               <div className={classes.formControl}>
                 <input
-                  onChange={emailHandler}
                   value={email}
                   name="email"
                   placeholder="E-mail"
                   type="email"
-                  className={classes.normalInput}
+                  className={`${classes.normalInput} ${
+                    emailValid && classes.inputFree
+                  }`}
+                  onChange={emailChangeHandler}
                 />
               </div>
               <div className={classes.formControl}>
                 <input
-                  onChange={nickNameHandler}
                   value={nickName}
                   name="nickName"
                   placeholder="Nickname"
                   type="text"
-                  className={classes.normalInput}
+                  className={`${classes.normalInput} ${
+                    nickValid && classes.inputFree
+                  }`}
+                  onChange={nicknameChangeHandler}
                 />
               </div>
             </div>
             <div>
-              {!confirmPassword && (
+              {!confirmPassword && password.length > 0 && (
                 <small className={classes.info}>
                   Min. 8 chars, requires: &, @, or /
                 </small>
@@ -172,24 +293,26 @@ function Signup() {
             <div className={classes.formLayout}>
               <div className={classes.formControl}>
                 <input
-                  onChange={passwordChangeHandler}
                   value={password}
                   name="password"
                   placeholder="Password"
                   type="password"
-                  className={classes.normalInput}
+                  className={`${classes.normalInput} ${
+                    passwordValid && classes.inputFree
+                  }`}
+                  onChange={passwordChangeHandler}
                 />
               </div>
               <div className={classes.formControl}>
                 <div>
                   <input
-                    onChange={password2ChangeHandler}
                     value={password2}
                     placeholder="Confirm Password"
                     type="password"
                     className={`${
                       confirmPassword ? classes.confirmed : classes.notConfirmed
                     }`}
+                    onChange={passwordChangeHandler2}
                   />
                 </div>
               </div>
@@ -198,28 +321,34 @@ function Signup() {
               <div>
                 <select
                   defaultValue="female"
-                  onChange={genderHandler}
                   value={gender}
                   name="gender"
-                  className={classes.genderInput}
+                  className={`${classes.genderInput} ${
+                    genderValid && classes.inputFree
+                  }`}
+                  onChange={genderChangeHandler}
                 >
                   <option value="female">Female</option>
                   <option value="male">Male</option>
                   <option value="other">Other</option>
                 </select>
               </div>
-              <div className={classes.formControl}>
+              <div className={`${classes.formControl} ${classes.birthSide}`}>
                 <input
-                  onChange={birthHandler}
                   value={birth}
-                  className={classes.normalInput}
+                  className={`${classes.normalInput} ${
+                    birthValid && classes.inputFree
+                  }`}
                   name="birth"
                   type="date"
+                  onChange={birthChangeHandler}
                 />
               </div>
             </div>
             <div className={classes.signBtn}>
-              <button type="submit">Signup</button>
+              <button className={sended && classes.sending} type="submit">
+                {sended ? "Submitting!" : "Signup"}
+              </button>
             </div>
           </form>
           <div className={classes.divider}></div>
@@ -230,6 +359,7 @@ function Signup() {
           </div>
         </div>
       </div>
+      {showModal && resData && <SmallInfo res={resData} />}
     </div>
   );
 }

@@ -81,7 +81,7 @@ function SideBarOpened() {
                   onClick={closeSideHandler}
                   to="/signup"
                 >
-                  Sign-up
+                  Signup
                 </Link>
               </div>
             </div>
@@ -151,7 +151,7 @@ function SideBarOpened() {
                       onClick={closeSideHandler}
                       to="/signup"
                     >
-                      Sign-up
+                      Signup
                     </Link>
                   </div>
                 </div>

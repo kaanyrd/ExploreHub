@@ -1,5 +1,0 @@
-Signup.js
-1- Inputlar eğer boş ise inputların yanına spanler oluştur. Veya placeholder color ve içerik değiştir.
-2- mevcut email için error modal
-
-Login.js

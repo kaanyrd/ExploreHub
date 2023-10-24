@@ -39,10 +39,16 @@
   font-size: 1.1rem;
   font-weight: bolder;
 }
-
 .signBtn > button:hover {
   background: #389c24;
 }
+.signBtn > .sending {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .otherLink {
   text-align: center;
   margin-top: 1rem;
@@ -159,7 +165,6 @@
 .normalInput:focus {
   outline: 1px solid #1877f2;
 }
-
 .genderInput {
   /* border: 3px solid red; */
   width: 100%;
@@ -173,9 +178,16 @@
   color: #015792;
   cursor: pointer;
 }
-
 .genderInput:focus {
   outline: 1px solid #1877f2;
+}
+
+.inputFree {
+  border: 3px solid red;
+}
+
+.birthSide {
+  margin-top: 0.5rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -219,5 +231,8 @@
   }
   .generalInfos > * {
     height: 100%;
+  }
+  .birthSide {
+    margin-top: 0rem;
   }
 }
