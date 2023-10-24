@@ -4,7 +4,7 @@ import pp from "../../assets/casualPhotos/icardi.jpg";
 import p1 from "../../assets/casualPhotos/muslera1.PNG";
 import p2 from "../../assets/casualPhotos/muslera2.PNG";
 import p3 from "../../assets/casualPhotos/muslera3.PNG";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const DUMMY_DATA = [
   {
@@ -40,8 +40,14 @@ const DUMMY_DATA = [
 ];
 
 function EditPlace() {
-  const navigate = useNavigate();
   const [image, setImage] = useState(1);
+
+  const [length, setLength] = useState(0);
+
+  const lengthHandler = (e) => {
+    setLength(e.target.value.length);
+  };
+  console.log(length);
 
   const firstPhotoHandler = () => {
     setImage(1);
@@ -51,10 +57,6 @@ function EditPlace() {
   };
   const thirdPhotoHandler = () => {
     setImage(3);
-  };
-
-  const cancelHandler = () => {
-    navigate("/places");
   };
 
   return (
@@ -131,8 +133,18 @@ function EditPlace() {
                 </div>
               </div>
               <div className={classes.editSide}>
+                <h3 className={classes.editTitle}>Edit Your Post!</h3>
+                <div className={classes.divider}></div>
                 <div className={classes.formControl}>
-                  <input placeholder="Your Description" type="text" />
+                  <div className={classes.length}>
+                    <strong>({250 - length})</strong>
+                  </div>
+                  <textarea
+                    onChange={lengthHandler}
+                    placeholder="Your description"
+                    className={classes.textArea}
+                    maxLength={`250 - ${length}`}
+                  />
                 </div>
                 <div className={classes.formControl}>
                   <input placeholder="Photo 1 (as URL)" type="text" />
@@ -144,8 +156,8 @@ function EditPlace() {
                   <input placeholder="Photo 3 (as URL)" type="text" />
                 </div>
                 <div className={classes.submitButtons}>
-                  <Link to="/">Save!</Link>
-                  <button onClick={cancelHandler}>Cancel</button>
+                  <Link to="/">Save</Link>
+                  <Link to="/">Cancel</Link>
                 </div>
               </div>
             </div>
