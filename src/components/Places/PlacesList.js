@@ -12,20 +12,14 @@ function PlacesList({ data }) {
       if (photoData === 1) {
         setPhotoSelf(data[0].p1);
         setPhotoData((prev) => prev + 1);
-        console.log(photoUsage);
-        console.log(photoData);
         return;
       } else if (photoData === 2) {
         setPhotoSelf(data[0].p2);
         setPhotoData((prev) => prev + 1);
-        console.log(photoData);
-        console.log(photoUsage);
         return;
       } else if (photoData === 3) {
         setPhotoSelf(data[0].pp);
         setPhotoData(1);
-        console.log(photoData);
-        console.log(photoUsage);
         return;
       }
     }, 1500);

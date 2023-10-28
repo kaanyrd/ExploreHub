@@ -47,7 +47,6 @@ function EditPlace() {
   const lengthHandler = (e) => {
     setLength(e.target.value.length);
   };
-  console.log(length);
 
   const firstPhotoHandler = () => {
     setImage(1);

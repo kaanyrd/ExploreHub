@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { sideBarAction } from "../../store/sidebar-slice";
@@ -14,16 +14,15 @@ import HomeIcon from "@mui/icons-material/Home";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import PersonIcon from "@mui/icons-material/Person";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
-import { login } from "../../util/Authentication";
+import AuthContext from "../../context/Authentication";
 
 function SideBarOpened() {
   const dispatch = useDispatch();
+  const { auth } = useContext(AuthContext);
 
   const closeSideHandler = () => {
     dispatch(sideBarAction.closeSide());
   };
-
-  const Auth = login;
 
   return (
     <div className={classes.side}>
@@ -38,7 +37,7 @@ function SideBarOpened() {
             <img className={classes.iconSelf} src={icon} alt="icon" />
           </div>
 
-          {!Auth && (
+          {!auth && (
             <div>
               {/* FIXME LINKLER AUTH A GÖRE DEĞİŞECEK */}
               <ul className={classes.generalLinks}>
@@ -86,7 +85,7 @@ function SideBarOpened() {
               </div>
             </div>
           )}
-          {Auth && (
+          {auth && (
             <div>
               {/* FIXME LINKLER AUTH A GÖRE DEĞİŞECEK */}
               <ul className={classes.generalLinks}>
@@ -132,7 +131,7 @@ function SideBarOpened() {
                   <span>Photo Gallery</span>
                 </NavLink>
               </ul>
-              {!Auth && (
+              {!auth && (
                 <div>
                   <div className={classes.linkControl}>
                     <p className={classes.info}>You have an account?</p>

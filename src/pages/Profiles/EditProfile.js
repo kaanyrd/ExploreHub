@@ -1,5 +1,8 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNavigate,
+  // useParams
+} from "react-router-dom";
 import pp from "../../assets/casualPhotos/icardi.jpg";
 import banner from "../../assets/casualPhotos/banner.jpg";
 import classes from "./EditProfile.module.css";
@@ -8,8 +11,7 @@ import classes from "./EditProfile.module.css";
 // import GiteIcon from "@mui/icons-material/Gite";
 
 function EditProfile() {
-  const params = useParams();
-  console.log(params);
+  // const params = useParams();
 
   const navigate = useNavigate();
 

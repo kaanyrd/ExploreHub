@@ -10,7 +10,7 @@
   text-align: center;
   padding: 0.5rem 1.2rem;
   border-radius: 5px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
   color: #015792;
 }
 
@@ -29,7 +29,8 @@
 }
 
 .confirmed {
-  background-color: #015792;
+  /* background-color: #015792; */
+  background: green;
   color: white;
   border-radius: 50%;
 }
@@ -37,6 +38,10 @@
   background-color: red;
   color: white;
   border-radius: 50%;
+}
+
+.main {
+  /* border: 5px solid #015792; */
 }
 
 .mainContent > * {

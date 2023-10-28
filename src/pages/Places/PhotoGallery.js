@@ -23,7 +23,6 @@ function PhotoGallery() {
   const [image, setImage] = useState(null);
 
   const onSeeBigImg = (data) => {
-    console.log(data);
     setImage(data);
   };
 

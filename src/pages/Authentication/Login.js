@@ -1,9 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
 import pp from "../../assets/casualPhotos/icardi.jpg";
 import CancelIcon from "@mui/icons-material/Cancel";
 import logo from "../../assets/icons/logo2.png";
+import AuthContext from "../../context/Authentication";
 
 const DUMMY_DATA = [
   {
@@ -37,6 +38,48 @@ const DUMMY_DATA = [
 ];
 
 function Login() {
+  const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [user, setUser] = useState(null);
+  // const [submitting, setSubmitting] = useState(false);
+
+  const emailChangeHandler = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const passwordChangeHandler = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json`
+      );
+      const data = await response.json();
+      let dataArray = [];
+      for (let key in data) {
+        dataArray.push({
+          id: key.toString(),
+          ...data[key],
+        });
+      }
+      const userSelf =
+        dataArray.find((user) => user.email === email) &&
+        dataArray.find((user) => user.password === password);
+      localStorage.setItem("token", userSelf.token);
+      setAuth(userSelf.token);
+      // setUser(userSelf);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // FIXME
   // const [oldLogins, setOldLogins] = useState(true);
   const oldLogins = true;
@@ -104,15 +147,23 @@ function Login() {
         </div>
         <div className={classes.formSide}>
           <h3 className={classes.loginTitle}>Login</h3>
-          <form className={classes.form}>
+          <form onSubmit={onSubmitHandler} className={classes.form}>
             <div>
-              <input placeholder="Email adress or nickname" type="email" />
+              <input
+                type="email"
+                onChange={emailChangeHandler}
+                placeholder="Email adress or nickname"
+              />
             </div>
             <div>
-              <input placeholder="Password" type="password" />
+              <input
+                onChange={passwordChangeHandler}
+                placeholder="Password"
+                type="password"
+              />
             </div>
             <div className={classes.loginBtn}>
-              <button>Login</button>
+              <button type="submit">Login</button>
             </div>
           </form>
           <div className={classes.otherLinks}>

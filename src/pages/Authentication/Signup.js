@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Signup.module.css";
 import logo from "../../assets/icons/logo2.png";
 import SmallInfo from "../../components/SmallInfo/SmallInfo";
+import ExistUser from "../../components/ExistUser/ExistUser";
 
 function Signup() {
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ function Signup() {
   const [passwordValid, setPasswordValid] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
+  const [existUser, setExistUser] = useState(null);
 
   const nameChangeHandler = (e) => {
     setFirstName(e.target.value);
@@ -181,20 +184,47 @@ function Signup() {
         birth: birth.trim(),
         email: email.trim(),
         nickName: nickName.trim(),
+        pp: "",
+        banner: "",
       };
       try {
-        setSended(true);
-        const response = await fetch(
-          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json",
-          {
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
+        const control = await fetch(
+          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
         );
-        setResData(response);
+
+        const controlResponse = await control.json();
+
+        let dataArr = [];
+
+        for (let key in controlResponse) {
+          dataArr.push({
+            id: key,
+            ...controlResponse[key],
+          });
+        }
+        const userControl =
+          dataArr.find((user) => user.email === email) &&
+          dataArr.find((user) => user.firstName === firstName) &&
+          dataArr.find((user) => user.lastName === lastName) &&
+          dataArr.find((user) => user.nickName === nickName);
+
+        if (userControl) {
+          setExistUser(userControl);
+          return;
+        } else {
+          setSended(true);
+          const response = await fetch(
+            "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json",
+            {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            }
+          );
+          setResData(response);
+        }
       } catch (error) {
         setResData(error);
       }
@@ -213,6 +243,15 @@ function Signup() {
       }
     }, 2000);
   }, [resData, navigate]);
+
+  let ExistUserLayout = () => {
+    return <ExistUser setExistUser={setExistUser} existUser={existUser} />;
+  };
+
+  const onCloseErrorModal = () => {
+    navigate("/login");
+    setExistUser(null);
+  };
 
   return (
     <div className={classes.main}>
@@ -284,7 +323,10 @@ function Signup() {
               </div>
             </div>
             <div>
-              {!confirmPassword && password.length > 0 && (
+              {(password.length < 8 ||
+                (!password.includes("@") &&
+                  !password.includes("/") &&
+                  !password.includes("&"))) && (
                 <small className={classes.info}>
                   Min. 8 chars, requires: &, @, or /
                 </small>
@@ -317,7 +359,7 @@ function Signup() {
                 </div>
               </div>
             </div>
-            <div className={classes.generalInfos}>
+            <div>
               <div>
                 <select
                   defaultValue="female"
@@ -334,6 +376,7 @@ function Signup() {
                 </select>
               </div>
               <div className={`${classes.formControl} ${classes.birthSide}`}>
+                <small>*birth</small>
                 <input
                   value={birth}
                   className={`${classes.normalInput} ${
@@ -360,6 +403,19 @@ function Signup() {
         </div>
       </div>
       {showModal && resData && <SmallInfo res={resData} />}
+      {existUser &&
+        ReactDOM.createPortal(
+          <div
+            onClick={onCloseErrorModal}
+            className={classes.background}
+          ></div>,
+          document.getElementById("background")
+        )}
+      {existUser &&
+        ReactDOM.createPortal(
+          <ExistUserLayout />,
+          document.getElementById("existuser")
+        )}
     </div>
   );
 }

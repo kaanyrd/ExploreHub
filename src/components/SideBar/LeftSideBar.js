@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./LeftSideBar.module.css";
 import logo from "../../assets/icons/icon10.png";
 import { Link, NavLink } from "react-router-dom";
@@ -7,21 +7,20 @@ import PanoramaIcon from "@mui/icons-material/Panorama";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import PersonIcon from "@mui/icons-material/Person";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
-import { login } from "../../util/Authentication";
+import AuthContext from "../../context/Authentication";
 
 function LeftSideBar() {
+  const { auth } = useContext(AuthContext);
   const date = new Date();
   const year = date.getFullYear();
 
   // FIXME AS TOKEN
 
-  const Auth = login;
-
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
         <img src={logo} alt="logo" className={classes.logo} />
-        {Auth && (
+        {auth && (
           <div>
             <ul className={classes.links}>
               <li className={classes.link}>
@@ -86,7 +85,7 @@ function LeftSideBar() {
             </ul>
           </div>
         )}
-        {!Auth && (
+        {!auth && (
           <div>
             <ul className={classes.links}>
               <li className={classes.link}>

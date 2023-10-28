@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Link, NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,10 +13,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import { NavigationAction } from "../../store/navigation-slice";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
-import { login } from "../../util/Authentication";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import AuthContext from "../../context/Authentication";
 
 function MainNavigation() {
+  const [user, setUser] = useState(null);
+  const { auth } = useContext(AuthContext);
   const dispatch = useDispatch();
   const profileBar = useSelector((state) => state.profileSide.toggle);
   const navigationBar = useSelector((state) => state.navigationSlice.toggle);
@@ -41,7 +43,29 @@ function MainNavigation() {
     dispatch(NavigationAction.closeToggle());
   };
 
-  const Auth = login;
+  useEffect(() => {
+    const asyncFunc = async () => {
+      try {
+        const response = await fetch(
+          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json`
+        );
+
+        const resData = await response.json();
+        let dataArr = [];
+        for (let key in resData) {
+          dataArr.push({
+            id: key.toString(),
+            ...resData[key],
+          });
+        }
+        let userSelf = dataArr.find((user) => user.token.toString() === auth);
+        setUser(userSelf);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    asyncFunc();
+  }, [auth]);
 
   return (
     <div className={classes.navbar}>
@@ -93,7 +117,7 @@ function MainNavigation() {
               </button>
             </form>
           </div>
-          {!Auth && (
+          {!auth && (
             <ul className={classes.contentRight}>
               <li className={classes.logoutBtn}>
                 <NavLink to="/login" end>
@@ -102,7 +126,7 @@ function MainNavigation() {
               </li>
             </ul>
           )}
-          {Auth && (
+          {auth && (
             <div className={classes.rightSide}>
               <li>
                 <NavLink to="/bookmarks" end>
@@ -110,7 +134,10 @@ function MainNavigation() {
                 </NavLink>
               </li>
               <div className={classes.profileSide}>
-                <h4 onClick={openProfileSide}>MI</h4>
+                <h4 onClick={openProfileSide}>
+                  {user?.firstName[0]}
+                  {user?.lastName[0]}
+                </h4>
                 {profileBar &&
                   ReactDOM.createPortal(
                     <div

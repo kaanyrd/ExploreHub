@@ -20,7 +20,6 @@ function AddPlace() {
   const lengthHandler = (e) => {
     setLength(e.target.value.length);
   };
-  console.log(length);
 
   return (
     <div className={classes.main}>
