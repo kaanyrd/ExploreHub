@@ -1,0 +1,43 @@
+.main {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  max-width: 550px;
+  z-index: 3;
+}
+
+.mainContent {
+  text-align: center;
+  background: white;
+  padding: 1.5rem 0.5rem;
+  border-radius: 5px;
+}
+
+.errorText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.5rem;
+  color: #015792;
+}
+
+.errorIcon {
+  color: red;
+}
+
+.doneBtn {
+  background: #015792;
+  color: white;
+  border: none;
+  padding: 0.4rem 1.2rem;
+  border-radius: 5px;
+  margin: 1rem auto 0 auto;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.doneBtn:hover {
+  background-color: #004674;
+}

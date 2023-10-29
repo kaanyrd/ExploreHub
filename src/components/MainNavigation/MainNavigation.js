@@ -8,7 +8,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { sideBarAction } from "../../store/sidebar-slice";
 import { ProfileAction } from "../../store/profileInfo-slice";
-import ProfileInfo from "../ProfileInfo/ProfileInfo";
+import ProfileInfo from "./ProfileInfo.js";
 import SearchIcon from "@mui/icons-material/Search";
 import { NavigationAction } from "../../store/navigation-slice";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
