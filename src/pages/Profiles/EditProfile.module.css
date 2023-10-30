@@ -28,9 +28,25 @@
   object-fit: cover;
   transform: translate(-50%, 50%);
   border: 6px solid white;
-  border-bottom-color: rgb(0, 0, 175);
-  border-left-color: rgb(0, 0, 175);
-  border-right-color: rgb(0, 0, 175);
+  background: white;
+}
+
+.ppOther {
+  border-bottom-color: #a7a9ac;
+  border-left-color: #a7a9ac;
+  border-right-color: #a7a9ac;
+}
+
+.ppMale {
+  /* border-bottom-color: rgb(0, 0, 175); */
+  border-bottom-color: #015792;
+  border-left-color: #015792;
+  border-right-color: #015792;
+}
+.ppFemale {
+  border-bottom-color: rgb(255, 111, 135);
+  border-left-color: rgb(255, 111, 135);
+  border-right-color: rgb(255, 111, 135);
 }
 
 .infoSide {
@@ -52,31 +68,6 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.otherInfos {
-  /* border: 3px solid black; */
-  display: flex;
-  flex-wrap: wrap;
-  /* flex-direction: column; */
-  row-gap: 0.5rem;
-  padding-top: 2rem;
-  justify-content: center;
-  column-gap: 1rem;
-  text-align: center;
-  /* justify-content: space-between; */
-  /* align-items: center; */
-}
-
-.otherInfos > p {
-  color: #015792;
-  display: flex;
-  align-items: center;
-  column-gap: 0.3rem;
-  /* border-right: 3px solid #015792;
-    border-left: 3px solid #015792; */
-  /* border-bottom: 3px solid #015792; */
-  padding: 0 0.5rem;
 }
 
 .topInfo {
@@ -178,6 +169,15 @@
   column-gap: 0.5rem;
 }
 
+.genderSide label {
+  color: #015792;
+  font-weight: bolder;
+}
+
+.invalidInput {
+  border: 3px solid red;
+}
+
 @media screen and (min-width: 578px) {
   .photoSide {
     height: 250px;
@@ -200,6 +200,12 @@
   .topInfo > * {
     /* border: 3px solid red; */
     width: 100%;
+  }
+  .genderSide {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
   }
 }
 

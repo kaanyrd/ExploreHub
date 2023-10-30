@@ -62,7 +62,7 @@ function ProfileInfo() {
           {user?.pp ? (
             <img src={user?.pp} alt="pp" className={classes.pp} />
           ) : (
-            <PersonIcon className={classes.profilePhoto} />
+            <PersonIcon fontSize="large" className={classes.profilePhoto} />
           )}
         </div>
 

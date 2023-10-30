@@ -29,11 +29,15 @@
   display: flex;
   align-items: center;
   background: #015792;
-  border-bottom-left-radius: 5px;
+  /* border-radius: 5px; */
   column-gap: 0.5rem;
   backdrop-filter: blur(10px);
   padding: 0.2rem 0.7rem;
   cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+.editProfile:hover {
+  background: #00426d;
 }
 
 .photoSide > * {
@@ -44,6 +48,9 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
+}
+.bannerPhotoDefault {
+  object-position: center;
 }
 
 .pp {
@@ -56,17 +63,40 @@
   object-fit: cover;
   transform: translate(-50%, 50%);
   border: 6px solid white;
-  border-bottom-color: rgb(0, 0, 175);
-  border-left-color: rgb(0, 0, 175);
-  border-right-color: rgb(0, 0, 175);
+  background: white;
 }
+
+.ppOther {
+  border-bottom-color: #a7a9ac;
+  border-left-color: #a7a9ac;
+  border-right-color: #a7a9ac;
+}
+
+.ppMale {
+  /* border-bottom-color: rgb(0, 0, 175); */
+  border-bottom-color: #015792;
+  border-left-color: #015792;
+  border-right-color: #015792;
+}
+.ppFemale {
+  border-bottom-color: rgb(255, 111, 135);
+  border-left-color: rgb(255, 111, 135);
+  border-right-color: rgb(255, 111, 135);
+}
+
 .infoSide {
   margin-top: 3rem;
   padding: 1rem;
   background: white;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 .infoSide > * {
+}
+
+.noPostText {
+  text-align: center;
+  color: #00426d;
+  margin: 1rem auto;
 }
 
 .name,
