@@ -108,9 +108,6 @@
 .oldLogins {
   /* margin-top: 2rem; */
 }
-.oldLoginLength {
-  display: none;
-}
 .profiles {
   /* border: 3px solid black; */
   display: grid;
