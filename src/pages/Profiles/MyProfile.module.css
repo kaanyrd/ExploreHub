@@ -98,7 +98,12 @@
   color: #00426d;
   margin: 1rem auto;
 }
-
+.name {
+  text-transform: capitalize;
+}
+.nickName {
+  text-transform: lowercase;
+}
 .name,
 .nickName {
   text-align: center;
@@ -106,6 +111,10 @@
 .name {
   color: #015792;
 }
+.townSide {
+  text-transform: capitalize;
+}
+
 .nickName {
   color: gray;
   margin-bottom: 1rem;

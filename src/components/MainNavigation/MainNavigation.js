@@ -17,7 +17,7 @@ import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import AuthContext from "../../context/Authentication";
 
 function MainNavigation() {
-  const [user, setUser] = useState(null);
+  const [user, setNewUser] = useState(null);
   const { auth } = useContext(AuthContext);
   const dispatch = useDispatch();
   const profileBar = useSelector((state) => state.profileSide.toggle);
@@ -59,7 +59,7 @@ function MainNavigation() {
           });
         }
         let userSelf = dataArr.find((user) => user.token.toString() === auth);
-        setUser(userSelf);
+        setNewUser(userSelf);
       } catch (error) {
         console.log(error);
       }
@@ -135,8 +135,8 @@ function MainNavigation() {
               </li>
               <div className={classes.profileSide}>
                 <h4 onClick={openProfileSide}>
-                  {user?.firstName[0]}
-                  {user?.lastName[0]}
+                  {user?.firstName[0].toUpperCase()}
+                  {user?.lastName[0].toUpperCase()}
                 </h4>
                 {profileBar &&
                   ReactDOM.createPortal(

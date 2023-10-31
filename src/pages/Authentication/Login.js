@@ -2,53 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
-import pp from "../../assets/casualPhotos/icardi.jpg";
 import CancelIcon from "@mui/icons-material/Cancel";
 import logo from "../../assets/icons/logo2.png";
 import AuthContext from "../../context/Authentication";
 import InvalidLogin from "../../components/InvalidLogin/InvalidLogin";
-
-const DUMMY_DATA = [
-  {
-    id: "p1",
-    firstName: "Mauro",
-    lastName: "Icardi",
-    nickName: "mauroicardi",
-    pp: pp,
-  },
-  {
-    id: "p2",
-    firstName: "Fernando",
-    lastName: "Muslera",
-    nickName: "muslera",
-    pp: pp,
-  },
-  // {
-  //   id: "p3",
-  //   firstName: "Kaan",
-  //   lastName: "Yardımcı",
-  //   nickName: "kaanyrd",
-  //   pp: pp,
-  // },
-  // {
-  //   id: "4",
-  //   firstName: "Kaan",
-  //   lastName: "Yardımcı",
-  //   nickName: "kaanyrd",
-  //   pp: pp,
-  // },
-];
+import avatar from "../../assets/casualPhotos/avatar5.jpeg";
 
 function Login() {
-  // const [oldLogins, setOldLogins] = useState(true);
-  const { setAuth } = useContext(AuthContext);
+  const [submitting, setSubmitting] = useState(false);
+  const { setAuth, lastLogins, setLastLogins } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [emailValid, setEmailValid] = useState(null);
   const [password, setPassword] = useState("");
   const [passwordValid, setPasswordValid] = useState(null);
-  // const [user, setUser] = useState(null);
   const [formValid, setFormValid] = useState(false);
   const [login, setLogin] = useState(null);
 
@@ -72,6 +40,7 @@ function Login() {
       return;
     } else {
       try {
+        setSubmitting(true);
         const response = await fetch(
           `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json`
         );
@@ -85,7 +54,7 @@ function Login() {
         }
 
         const emailMatched = dataArray.find((user) => user.email === email);
-
+        setSubmitting(false);
         if (!emailMatched) {
           setLogin("User Not Exist");
           return;
@@ -96,7 +65,13 @@ function Login() {
           setLogin(null);
           localStorage.setItem("token", emailMatched.token);
           setAuth(emailMatched.token);
-          // setUser(emailMatched);
+          setLastLogins({
+            nickName: emailMatched.nickName,
+            firstName: emailMatched.firstName,
+            pp: emailMatched.pp,
+            email: emailMatched.email,
+            password: emailMatched.password,
+          });
           navigate("/");
           return;
         }
@@ -134,6 +109,17 @@ function Login() {
     setLogin(null);
   };
 
+  const deleteReadyAccount = () => {
+    setLastLogins([]);
+  };
+
+  const readyAccount = () => {
+    setEmail(lastLogins.email);
+    setPassword(lastLogins.password);
+  };
+
+  console.log(lastLogins);
+
   // FIXME
   let oldLogins = true;
 
@@ -141,62 +127,65 @@ function Login() {
     <div className={classes.main}>
       <div className={classes.mainContent}>
         <div>
-          {oldLogins && (
-            <div className={oldLogins}>
-              <div className={classes.topSide}>
-                <div className={classes.topSideHeader}>
-                  <img src={logo} className={classes.logoSelf} alt="logo" />
-                  <div>
-                    <h2>Explore Hub</h2>
-                    <small>JUST SHARE!</small>
-                  </div>
+          <div className={oldLogins}>
+            <div className={classes.topSide}>
+              <div className={classes.topSideHeader}>
+                <img src={logo} className={classes.logoSelf} alt="logo" />
+                <div>
+                  <h2>Explore Hub</h2>
+                  <small>JUST SHARE!</small>
                 </div>
-                <p></p>
               </div>
-              <p className={classes.loginInfos}>
-                {DUMMY_DATA.length !== 0 ? (
-                  <h3>Last Logins</h3>
-                ) : (
-                  <h4 className={classes.oldLoginLength}>
-                    There aren't any old login
-                  </h4>
-                )}
-              </p>
-              <div
-                className={`${
-                  DUMMY_DATA.length === 1
-                    ? classes.oneProfile
-                    : classes.profiles
-                }`}
-              >
-                {DUMMY_DATA.map((data) => (
-                  <div key={data.id} className={classes.card}>
-                    <div className={classes.photo}>
+              <p></p>
+            </div>
+            <p className={classes.loginInfos}>
+              {lastLogins?.length !== 0 ? (
+                <h3>Last Login</h3>
+              ) : (
+                <h3 className={classes.oldLoginLength}>
+                  There aren't any old login
+                </h3>
+              )}
+            </p>
+            {lastLogins?.length !== 0 && (
+              <div className={classes.oneProfile}>
+                <div onClick={readyAccount} className={classes.card}>
+                  <div className={classes.photo}>
+                    {lastLogins.pp.length !== 0 ? (
                       <img
                         className={classes.photoSelf}
-                        src={data.pp}
+                        src={lastLogins?.pp}
                         alt="pp"
                       />
-                      <span className={classes.closeIcon}>
-                        <CancelIcon />
-                      </span>
-                    </div>
-                    <div className={classes.profileInfo}>
-                      <p>{data.firstName}</p>
-                      <small className={classes.nickName}>
-                        @{data.nickName}
-                      </small>
-                    </div>
+                    ) : (
+                      <img
+                        src={avatar}
+                        alt="ppIcon"
+                        className={classes.photoSelf}
+                      />
+                    )}
+
+                    <span
+                      onClick={deleteReadyAccount}
+                      className={classes.closeIcon}
+                    >
+                      <CancelIcon />
+                    </span>
                   </div>
-                ))}
-              </div>
-              {DUMMY_DATA.length !== 0 && (
-                <div className={classes.anyInfo}>
-                  <small>or login with your account</small>
+                  <div className={classes.profileInfo}>
+                    <p>{lastLogins?.firstName}</p>
+                    <small className={classes.nickName}>
+                      @{lastLogins?.nickName}
+                    </small>
+                  </div>
                 </div>
-              )}
+              </div>
+            )}
+
+            <div className={classes.anyInfo}>
+              <small>or login with your account</small>
             </div>
-          )}
+          </div>
         </div>
         <div className={classes.formSide}>
           <h3 className={classes.loginTitle}>Login</h3>
@@ -224,7 +213,13 @@ function Login() {
               />
             </div>
             <div className={classes.loginBtn}>
-              <button type="submit">Login</button>
+              <button
+                className={submitting && classes.submitting}
+                disabled={submitting}
+                type="submit"
+              >
+                {submitting ? "Loading" : "Login"}
+              </button>
             </div>
           </form>
           <div className={classes.otherLinks}>

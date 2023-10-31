@@ -38,9 +38,11 @@
 
 .name {
   /* margin: 0.1rem 0; */
+  text-transform: capitalize;
 }
 .nickname {
   color: gray;
+  text-transform: lowercase;
 }
 
 .logoutButton {

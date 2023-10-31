@@ -203,7 +203,12 @@ function MyProfile() {
           <div className={classes.otherInfos}>
             <p>
               <GiteIcon />
-              Town is <strong>-</strong>
+              Town is{" "}
+              {user?.town ? (
+                <strong className={classes.townSide}>{user?.town}</strong>
+              ) : (
+                <strong>-</strong>
+              )}
             </p>
             <p>
               <CalendarMonthIcon />
@@ -211,7 +216,12 @@ function MyProfile() {
             </p>
             <p>
               <LocationCityIcon />
-              Living in <strong>-</strong>
+              Living in{" "}
+              {user?.living ? (
+                <strong className={classes.townSide}>{user?.living}</strong>
+              ) : (
+                <strong>-</strong>
+              )}
             </p>
           </div>
         </div>
@@ -295,10 +305,7 @@ function MyProfile() {
                       <p>{data?.likes}</p>
                     </div>
                     <div className={classes.likesRight}>
-                      <Link
-                        // to="editplace"
-                        className={classes.editIcon}
-                      >
+                      <Link className={classes.editIcon}>
                         <EditIcon />
                       </Link>
                       <div className={classes.deleteIcon}>

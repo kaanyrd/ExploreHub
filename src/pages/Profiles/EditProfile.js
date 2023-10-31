@@ -1,13 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import classes from "./EditProfile.module.css";
 import AuthContext from "../../context/Authentication";
 import bannerPhoto from "../../assets/casualPhotos/nobanner.png";
 import profilePhoto from "../../assets/casualPhotos/profileImg2.png";
+import EditProfileInfo from "../../components/EditProfileInfo/EditProfileInfo";
 
 function EditProfile() {
+  const [submitting, setSubmitting] = useState(false);
+  const [ppSide, setPpSide] = useState(null);
+  const [bannerSide, setBannerSide] = useState(null);
+
   const { auth } = useContext(AuthContext);
   const [user, setUser] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
   const cancelHandler = () => {
     navigate("/myprofile");
@@ -29,10 +36,12 @@ function EditProfile() {
 
   const bannerChangeHandler = (e) => {
     setBannerPP(e.target.value);
+    setBannerSide(e.target.value);
   };
 
   const pPhotoChangeHandler = (e) => {
     setPPhoto(e.target.value);
+    setPpSide(e.target.value);
   };
 
   const townChangeHandler = (e) => {
@@ -85,7 +94,6 @@ function EditProfile() {
   const [gendersValid, setGendersValid] = useState(null);
   const [nick, setNick] = useState("");
   const [nickValid, setNickValid] = useState(null);
-
   const [formValid, setFormValid] = useState(false);
 
   const onSubmitHandler = (e) => {
@@ -121,20 +129,50 @@ function EditProfile() {
     if (!formValid) {
       return;
     } else {
-      console.log(
-        name,
-        surname,
-        nick,
-        birthDate,
-        bannerPP,
-        pPhoto,
-        town,
-        living,
-        genders
-      );
-      console.log("Gönderildi");
+      setSubmitting(true);
+      const submitFunc = async () => {
+        const response = await fetch(
+          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
+        );
+        const resData = await response.json();
+        let dataArr = [];
+        for (let key in resData) {
+          dataArr.push({
+            id: key.toString(),
+            ...resData[key],
+          });
+        }
+        const userSelf = dataArr.find((user) => user.token.toString() === auth);
+        const userID = userSelf.id;
+
+        const dataPatching = await fetch(
+          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users/${userID}.json`,
+          {
+            headers: { "Content-Type": "application/json" },
+            method: "PATCH",
+            body: JSON.stringify({
+              id: userID,
+              firstName: name,
+              lastName: surname,
+              nickName: nick,
+              password: userSelf.password,
+              password2: userSelf.password2,
+              pp: pPhoto,
+              banner: bannerPP,
+              birth: birthDate,
+              token: auth,
+              gender: genders,
+              email: userSelf.email,
+              town: town,
+              living: living,
+            }),
+          }
+        );
+        // const res = await dataPatching.json();
+        setUserInfo(dataPatching);
+      };
+      submitFunc();
     }
-    // navigate()
   };
 
   useEffect(() => {
@@ -195,17 +233,30 @@ function EditProfile() {
     nickValid,
   ]);
 
+  let InfoContent = () => {
+    return <EditProfileInfo userInfo={userInfo} setUserInfo={setUserInfo} />;
+  };
+
+  useEffect(() => {
+    if (userInfo) {
+      setTimeout(() => {
+        setSubmitting(false);
+        navigate("/myprofile");
+      }, 1000);
+    }
+  }, [userInfo, navigate]);
+
   return (
     <div className={classes.main}>
       <form onSubmit={onSubmitHandler} className={classes.mainContent}>
         <div className={classes.photoSide}>
           <img
-            src={user?.banner || bannerPhoto}
+            src={user?.banner || bannerSide || bannerPhoto}
             className={classes.bannerPhoto}
             alt="banner"
           />
           <img
-            src={user?.pp || profilePhoto}
+            src={user?.pp || ppSide || profilePhoto}
             className={`${classes.pp} ${
               user?.gender === "male" && classes.ppMale
             } ${user?.gender === "female" && classes.ppFemale} ${
@@ -330,11 +381,32 @@ function EditProfile() {
             </div>
           </div>
           <div className={classes.saveButton}>
-            <button type="submit">Save</button>
-            <button onClick={cancelHandler}>Cancel</button>
+            <button
+              className={
+                submitting ? classes.submittingActive : classes.nonSubmitting
+              }
+              disabled={submitting}
+              type="submit"
+            >
+              {submitting ? "Submitting" : "Save"}
+            </button>
+            <button
+              className={
+                submitting ? classes.submittingActive : classes.nonSubmitting
+              }
+              disabled={submitting}
+              onClick={cancelHandler}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </form>
+      {userInfo &&
+        ReactDOM.createPortal(
+          <InfoContent />,
+          document.getElementById("editprofileinfo")
+        )}
     </div>
   );
 }

@@ -6,6 +6,10 @@
 .mainContent {
   /* border: 3px solid red; */
   /* margin-bottom: 2rem; */
+  border-radius: 10px;
+  animation-name: card;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
 }
 .photoSide {
   /* border: 3px solid green; */
@@ -141,7 +145,7 @@
   text-align: center;
   border: none;
   font-weight: bolder;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 .saveButton > button:first-child:hover {
   background: #389c24;
@@ -176,6 +180,15 @@
 
 .invalidInput {
   border: 3px solid red;
+}
+.nonSubmitting {
+  cursor: pointer;
+}
+
+.submittingActive {
+  opacity: 0.6;
+  cursor: no-drop;
+  pointer-events: none;
 }
 
 @media screen and (min-width: 578px) {
@@ -239,5 +252,17 @@
 @media screen and (min-width: 1370px) {
   .main {
     width: 100%;
+  }
+}
+
+@keyframes card {
+  0% {
+    box-shadow: 0px 5px 15px white;
+  }
+  50% {
+    box-shadow: 0px 15px 35px rgb(1, 87, 146);
+  }
+  100% {
+    box-shadow: 0px 5px 15px white;
   }
 }
