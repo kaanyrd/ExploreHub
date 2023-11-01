@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import classes from "./AddPlace.module.css";
 import SendIcon from "@mui/icons-material/Send";
 import noImg from "../../assets/icons/noImg.png";
@@ -10,8 +11,10 @@ import "./styles.css";
 import { EffectCards } from "swiper/modules";
 import AuthContext from "../../context/Authentication";
 import { useNavigate } from "react-router-dom";
+import PostInfo from "../../components/PostingInformation/PostInfo";
 
 function AddPlace() {
+  const [responseInfo, setResponseInfo] = useState(null);
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
   const nowDate = new Date();
@@ -116,7 +119,8 @@ function AddPlace() {
             }),
           }
         );
-        navigate("/places");
+        setResponseInfo(response);
+        // navigate("/places");
       } catch (error) {
         console.log(error);
       }
@@ -208,6 +212,21 @@ function AddPlace() {
     secondPhotoValid,
     thirdPhotoValid,
   ]);
+
+  let PostContent = () => {
+    return (
+      <PostInfo responseInfo={responseInfo} setResponseInfo={setResponseInfo} />
+    );
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (responseInfo) {
+        setResponseInfo(null);
+        navigate("/places");
+      }
+    }, 1200);
+  }, [navigate, responseInfo]);
 
   return (
     <div className={classes.main}>
@@ -328,6 +347,11 @@ function AddPlace() {
           </Swiper>
         </div>
       </div>
+      {responseInfo &&
+        ReactDOM.createPortal(
+          <PostContent />,
+          document.getElementById("postinfo")
+        )}
     </div>
   );
 }
