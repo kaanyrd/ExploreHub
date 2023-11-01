@@ -1,7 +1,7 @@
 .list {
   /* border: 3px solid black; */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
 }
 
@@ -92,6 +92,11 @@
   padding: 0.5rem;
 }
 
+.infoText {
+  text-align: center;
+  color: #1d6696;
+}
+
 .location {
   display: flex;
   align-items: center;
@@ -101,7 +106,7 @@
 }
 
 .description {
-  padding: 0.25rem;
+  /* padding: 0.25rem; */
   display: -webkit-box;
   -webkit-line-clamp: 4; /* İki satıra kadar metin göster */
   -webkit-box-orient: vertical;

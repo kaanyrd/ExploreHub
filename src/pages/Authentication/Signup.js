@@ -241,7 +241,7 @@ function Signup() {
       } else {
         return;
       }
-    }, 2000);
+    }, 1500);
   }, [resData, navigate]);
 
   let ExistUserLayout = () => {
