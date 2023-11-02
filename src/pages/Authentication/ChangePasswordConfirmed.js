@@ -24,13 +24,13 @@ function ChangePasswordConfirmed() {
   const pass2ChangeHandler = (e) => {
     setPassword2(e.target.value);
   };
-
+  console.log(passwordVal);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (
-      password < 8 &&
-      (!password.includes("@") ||
-        !password.includes("/") ||
+      password < 8 ||
+      (!password.includes("@") &&
+        !password.includes("/") &&
         !password.includes("&"))
     ) {
       setPasswordVal(false);
@@ -146,7 +146,9 @@ function ChangePasswordConfirmed() {
               <input
                 value={password}
                 onChange={passChangeHandler}
-                className={`${classes.inputSelf}`}
+                className={`${classes.inputSelf} ${
+                  passwordVal === false && classes.invalidInput
+                }`}
                 placeholder="New password"
                 type="password"
               />
