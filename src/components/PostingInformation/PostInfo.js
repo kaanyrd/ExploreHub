@@ -4,8 +4,6 @@ import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
 
 function PostInfo(props) {
-  console.log(props.responseInfo);
-
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>

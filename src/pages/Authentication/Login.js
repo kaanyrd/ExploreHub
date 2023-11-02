@@ -118,7 +118,7 @@ function Login() {
     setPassword(lastLogins.password);
   };
 
-  console.log(lastLogins);
+
 
   // FIXME
   let oldLogins = true;
@@ -149,35 +149,36 @@ function Login() {
             </p>
             {lastLogins?.length !== 0 && (
               <div className={classes.oneProfile}>
-                <div onClick={readyAccount} className={classes.card}>
-                  <div className={classes.photo}>
-                    {lastLogins.pp.length !== 0 ? (
-                      <img
-                        className={classes.photoSelf}
-                        src={lastLogins?.pp}
-                        alt="pp"
-                      />
-                    ) : (
-                      <img
-                        src={avatar}
-                        alt="ppIcon"
-                        className={classes.photoSelf}
-                      />
-                    )}
-
-                    <span
-                      onClick={deleteReadyAccount}
-                      className={classes.closeIcon}
-                    >
-                      <CancelIcon />
-                    </span>
+                <div className={classes.cardInside}>
+                  <div onClick={readyAccount} className={classes.card}>
+                    <div className={classes.photo}>
+                      {lastLogins.pp.length !== 0 ? (
+                        <img
+                          className={classes.photoSelf}
+                          src={lastLogins?.pp}
+                          alt="pp"
+                        />
+                      ) : (
+                        <img
+                          src={avatar}
+                          alt="ppIcon"
+                          className={classes.photoSelf}
+                        />
+                      )}
+                    </div>
+                    <div className={classes.profileInfo}>
+                      <p>{lastLogins?.firstName}</p>
+                      <small className={classes.nickName}>
+                        @{lastLogins?.nickName}
+                      </small>
+                    </div>
                   </div>
-                  <div className={classes.profileInfo}>
-                    <p>{lastLogins?.firstName}</p>
-                    <small className={classes.nickName}>
-                      @{lastLogins?.nickName}
-                    </small>
-                  </div>
+                  <span
+                    onClick={deleteReadyAccount}
+                    className={classes.closeIcon}
+                  >
+                    <CancelIcon />
+                  </span>
                 </div>
               </div>
             )}

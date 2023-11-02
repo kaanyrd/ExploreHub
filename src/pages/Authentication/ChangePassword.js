@@ -1,9 +1,68 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./ChangePassword.module.css";
 import logo from "../../assets/icons/logo2.png";
+import { useDispatch } from "react-redux";
+import ChangePasswordInfo from "../../components/ChangePassword/ChangePasswordInfo";
+import { ChangePasswordAction } from "../../store/changepassword-slice";
 
 function ChangePassword() {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [emailValid, setEmailValid] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const navigate = useNavigate();
+
+  const emailChangeHandler = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (email.length === 0 && !email.includes("@")) {
+      setEmailValid(false);
+    }
+    if (emailValid) {
+      setSubmitting(true);
+      const response = await fetch(
+        "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
+      );
+      const responseData = await response.json();
+      let arrData = [];
+      for (let key in responseData) {
+        arrData.push({
+          id: key,
+          ...responseData[key],
+        });
+      }
+      const user = arrData.find((data) => data.email === email);
+      setSubmitting(false);
+      if (user === undefined) {
+        setUserInfo(true);
+      } else {
+        dispatch(ChangePasswordAction.catchUser(user));
+        navigate("/changepasswordconfirmed");
+      }
+      return;
+    } else {
+      return;
+    }
+  };
+
+  useEffect(() => {
+    if (email.length > 0 && email.includes("@")) {
+      setEmailValid(true);
+    }
+  }, [email]);
+
+  let UserInfoContent = () => {
+    return <ChangePasswordInfo setUserInfo={setUserInfo} />;
+  };
+
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
@@ -20,13 +79,21 @@ function ChangePassword() {
           </p>
         </div>
         <div className={classes.formSide}>
-          <h3 className={classes.formTitle}>Enter your E-mail or Nickname</h3>
-          <form>
+          <h3 className={classes.formTitle}>Enter your E-mail</h3>
+          <form onSubmit={onSubmitHandler}>
             <div className={classes.formController}>
-              <input placeholder="example@test.com" type="email" />
+              <input
+                className={`${classes.inputSelf} ${
+                  emailValid === false && classes.invalidInput
+                }`}
+                value={email}
+                onChange={emailChangeHandler}
+                placeholder="example@test.com"
+                type="email"
+              />
             </div>
             <div className={classes.submitBtn}>
-              <button>Continue</button>
+              <button>{submitting ? "Loading..." : "Continue"}</button>
             </div>
           </form>
           <div className={classes.otherLink}>
@@ -40,6 +107,16 @@ function ChangePassword() {
           </div>
         </div>
       </div>
+      {userInfo &&
+        ReactDOM.createPortal(
+          <div className={classes.background}></div>,
+          document.getElementById("confirmpassword")
+        )}
+      {userInfo &&
+        ReactDOM.createPortal(
+          <UserInfoContent />,
+          document.getElementById("confirmpassword")
+        )}
     </div>
   );
 }

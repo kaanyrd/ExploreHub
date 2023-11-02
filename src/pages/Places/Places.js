@@ -21,20 +21,14 @@ function Places() {
           ...resPostsData[key],
         });
       }
-      setPosts(arrPostsData);
+      const reverseData = arrPostsData.reverse();
+      setPosts(reverseData);
     };
     getData();
   }, []);
 
   return (
     <div className={classes.main}>
-      <div className={classes.lastVisits}>
-        <h4>Active Tags: </h4>
-        <p>#Old Trafford, Manchester</p>
-        <p>#Turkey</p>
-        <p>#US</p>
-        <p>#Tulsa</p>
-      </div>
       <PlacesList data={posts} />
     </div>
   );

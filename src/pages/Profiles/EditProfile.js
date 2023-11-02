@@ -251,12 +251,12 @@ function EditProfile() {
       <form onSubmit={onSubmitHandler} className={classes.mainContent}>
         <div className={classes.photoSide}>
           <img
-            src={user?.banner || bannerSide || bannerPhoto}
+            src={bannerSide || user?.banner || bannerPhoto}
             className={classes.bannerPhoto}
             alt="banner"
           />
           <img
-            src={user?.pp || ppSide || profilePhoto}
+            src={ppSide || user?.pp || profilePhoto}
             className={`${classes.pp} ${
               user?.gender === "male" && classes.ppMale
             } ${user?.gender === "female" && classes.ppFemale} ${
@@ -271,12 +271,12 @@ function EditProfile() {
               <div>
                 <label>Firstname</label>
                 <input
-                  onChange={nameChangeHandler}
                   value={name}
+                  onChange={nameChangeHandler}
                   className={`${classes.input} ${
                     nameValid === false && classes.invalidInput
                   }`}
-                  placeholder="Your Firstname"
+                  placeholder={user?.firstName || "Your name"}
                 />
               </div>
               <div>
@@ -287,7 +287,7 @@ function EditProfile() {
                   className={`${classes.input} ${
                     surnameValid === false && classes.invalidInput
                   }`}
-                  placeholder="Your Lastname"
+                  placeholder={user?.lastName || "Your surname"}
                 />
               </div>
               <div>
@@ -298,7 +298,7 @@ function EditProfile() {
                   className={`${classes.input} ${
                     nickValid === false && classes.invalidInput
                   }`}
-                  placeholder="Your Nickname"
+                  placeholder={user?.nickName || "Your nick"}
                 />
               </div>
               <div>
@@ -335,7 +335,7 @@ function EditProfile() {
                     townValid === false && classes.invalidInput
                   }`}
                   value={town}
-                  placeholder="Your town"
+                  placeholder={user?.town || "Your town"}
                 />
               </div>
               <div>
@@ -346,7 +346,7 @@ function EditProfile() {
                     livingValid === false && classes.invalidInput
                   }`}
                   value={living}
-                  placeholder="Any city..."
+                  placeholder={user?.living || "Any city..."}
                 />
               </div>
 
@@ -359,7 +359,6 @@ function EditProfile() {
                       birthDateValid === false && classes.invalidInput
                     }`}
                     type="date"
-                    defaultValue={user?.birth}
                     value={birthDate}
                   />
                 </div>
