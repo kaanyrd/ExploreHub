@@ -1,11 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import classes from "./MyProfile.module.css";
-// import pp from "../../assets/casualPhotos/icardi.jpg";
-// import banner from "../../assets/casualPhotos/banner.jpg";
-// import banner from "../../assets/casualPhotos/NoImg.jpg";
-// import p1 from "../../assets/casualPhotos/muslera1.PNG";
-// import p2 from "../../assets/casualPhotos/muslera2.PNG";
-// import p3 from "../../assets/casualPhotos/muslera3.PNG";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,101 +12,13 @@ import AuthContext from "../../context/Authentication";
 import avatar from "../../assets/casualPhotos/profileImg2.png";
 import banner from "../../assets/casualPhotos/nobanner.png";
 
-const DUMMY_DATA = [
-  // {
-  //   id: "p1",
-  //   duration: "3h ago",
-  //   firstName: "Mauro",
-  //   lastName: "Icardi",
-  //   explanation:
-  //     "What a paradox of life that in the 𝐓𝐞𝐚𝐭𝐫𝐨 𝐝𝐞 𝐥𝐨𝐬 𝐒𝐮𝐞𝐧̃𝐨𝐬, I would become 𝐏𝐞𝐬𝐚𝐝𝐢𝐥𝐥 𝐚.𝐒𝐮𝐞𝐧̃𝐚. Only those who dream learn to fly. Especially this was very imported before Turkish Leauge. Now the target is top of the Turkish League 📸📸",
-  //   nickName: "mauroicardi",
-  //   country: "England",
-  //   city: "Manchester",
-  //   place: "Old Trafford",
-  //   likes: 12,
-  //   comments: [
-  //     // FIXME YORUMLARDA TARİH OLSUN
-  //     { id: "c1", nickname: "kaanyrd", message: "Great won 🔥🔥🔥" },
-  //     { id: "c2", nickname: "muslera", message: "What a game!" },
-  //     { id: "c3", nickname: "ltorreira34", message: "On fire..." },
-  //     { id: "c4", nickname: "fanriziorom", message: "You deserved!" },
-  //     { id: "c5", nickname: "wilfiriedzaha", message: "We did it 🦾🦾" },
-  //     { id: "c6", nickname: "drmertens", message: "Nice shot bro 😎" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //   ],
-  //   pp: pp,
-  //   photos: { 1: p1, 2: p2, 3: p3 },
-  // },
-  // {
-  //   id: "p2",
-  //   duration: "3h ago",
-  //   firstName: "Mauro",
-  //   lastName: "Icardi",
-  //   town: "Argentina",
-  //   birthOfDate: "19/03/1993",
-  //   living: "Istanbul",
-  //   explanation:
-  //     "What a paradox of life that in the 𝐓𝐞𝐚𝐭𝐫𝐨 𝐝𝐞 𝐥𝐨𝐬 𝐒𝐮𝐞𝐧̃𝐨𝐬, I would become 𝐏𝐞𝐬𝐚𝐝𝐢𝐥𝐥 𝐚.𝐒𝐮𝐞𝐧̃𝐚. Only those who dream learn to fly.",
-  //   nickName: "mauroicardi",
-  //   country: "England",
-  //   city: "Manchester",
-  //   place: "Old Trafford",
-  //   likes: 12,
-  //   comments: [
-  //     // FIXME YORUMLARDA TARİH OLSUN
-  //     { id: "c1", nickname: "kaanyrd", message: "Great won 🔥🔥🔥" },
-  //     { id: "c2", nickname: "muslera", message: "What a game!" },
-  //     { id: "c3", nickname: "ltorreira34", message: "On fire..." },
-  //     { id: "c4", nickname: "fanriziorom", message: "You deserved!" },
-  //     { id: "c5", nickname: "wilfiriedzaha", message: "We did it 🦾🦾" },
-  //     { id: "c6", nickname: "drmertens", message: "Nice shot bro 😎" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //     { id: "c7", nickname: "kakturkoglu", message: "This is Gala 🤓" },
-  //   ],
-  //   pp: pp,
-  //   photos: { 1: p1, 2: p2, 3: p3 },
-  // },
-];
-
 function MyProfile() {
   const { auth } = useContext(AuthContext);
+  const [posts, setPost] = useState(null);
   const [user, setUser] = useState(null);
-  const [image, setImage] = useState(1);
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [showComments, setShowComments] = useState(true);
-
-  const firstPhotoHandler = () => {
-    setImage(1);
-  };
-  const secondPhotoHandler = () => {
-    setImage(2);
-  };
-  const thirdPhotoHandler = () => {
-    setImage(3);
-  };
 
   const likeHandler = () => {
     setLiked((prev) => !prev);
@@ -148,6 +54,75 @@ function MyProfile() {
     };
     asyncFunc();
   }, [auth]);
+
+  useEffect(() => {
+    const gettingPost = async () => {
+      try {
+        const response = await fetch(
+          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json"
+        );
+        const resData = await response.json();
+        let arrData = [];
+        for (let key in resData) {
+          arrData.push({
+            id: key,
+            ...resData[key],
+          });
+        }
+        const userPosts = arrData.filter((post) => post.user === auth);
+        const reverseData = userPosts.reverse();
+        setPost(reverseData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    gettingPost();
+  }, [auth]);
+
+  const [imageStates, setImageStates] = useState([]);
+
+  // POST CHANGE PHOTO
+  useEffect(() => {
+    if (posts) {
+      const initialImageStates = Array(posts.length).fill(1);
+      setImageStates(initialImageStates);
+    }
+  }, [posts]);
+
+  const updateImageState = (postIndex, newImage) => {
+    const newImageStates = [...imageStates];
+    newImageStates[postIndex] = newImage;
+    setImageStates(newImageStates);
+  };
+
+  function formatTimeAgo(dateData) {
+    const now = new Date();
+    const postDate = new Date(
+      dateData.year,
+      dateData.month,
+      dateData.day,
+      dateData.hour,
+      dateData.minutes,
+      dateData.seconds
+    );
+    const timeDifference = now - postDate;
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days}d ago`;
+    } else if (hours > 0) {
+      return `${hours}h ago`;
+    } else if (minutes > 1) {
+      return `${minutes}m ago`;
+    } else if (minutes === 1) {
+      return `1m ago`;
+    } else {
+      return `${seconds}s ago`;
+    }
+  }
 
   return (
     <div className={classes.main}>
@@ -231,13 +206,13 @@ function MyProfile() {
           <p>#Antalya, Turkey</p>
           <p>#Munichen, Deutschland</p> */}
         </div>
-        {DUMMY_DATA.length === 0 ? (
+        {posts?.length === 0 ? (
           <div>
             <h3 className={classes.noPostText}>No post yet...</h3>
           </div>
         ) : (
           <div className={classes.list}>
-            {DUMMY_DATA.map((data) => (
+            {posts?.map((data, index) => (
               <div key={data?.id} className={classes.card}>
                 <div className={classes.contentLeft}>
                   <div className={classes.cardTop}>
@@ -251,8 +226,9 @@ function MyProfile() {
 
                     <div>
                       <div className={classes.info}>
-                        <strong>@{data?.nickName}</strong>{" "}
-                        <span className={classes.dot}>•</span> {data?.duration}{" "}
+                        <strong>@{data?.nickName} </strong> {data?.duration}{" "}
+                        <span className={classes.dot}>•</span>{" "}
+                        {formatTimeAgo(data?.date)}{" "}
                         <span className={classes.dot}>•</span> at {data?.place}{" "}
                         ({data?.city}, {data?.country})
                         <div className={classes.country}></div>
@@ -260,33 +236,55 @@ function MyProfile() {
                     </div>
                   </div>
                   <div className={classes.imgs}>
-                    <img
-                      src={data?.photos[image]}
-                      className={classes.imgSelf}
-                      alt={data?.nickName}
-                    />
+                    {imageStates[index] === 1 && (
+                      <img
+                        src={data?.mainPhoto}
+                        className={classes.imgSelf}
+                        alt={data?.nickName}
+                      />
+                    )}
+                    {imageStates[index] === 2 && (
+                      <img
+                        src={data?.secondPhoto}
+                        alt={data?.nickName}
+                        className={classes.imgSelf}
+                      />
+                    )}
+                    {imageStates[index] === 3 && (
+                      <img
+                        src={data?.thirdPhoto}
+                        alt={data?.nickName}
+                        className={classes.imgSelf}
+                      />
+                    )}
                     <div className={classes.buttonSide}>
                       <button
                         className={`${classes.buttonSelf} ${
-                          image === 1 ? classes.activeBtn : undefined
+                          imageStates[index] === 1
+                            ? classes.activeBtn
+                            : undefined
                         }`}
-                        onClick={firstPhotoHandler}
+                        onClick={() => updateImageState(index, 1)}
                       >
                         1
                       </button>
                       <button
                         className={`${classes.buttonSelf} ${
-                          image === 2 ? classes.activeBtn : undefined
+                          imageStates[index] === 2
+                            ? classes.activeBtn
+                            : undefined
                         }`}
-                        onClick={secondPhotoHandler}
+                        onClick={() => updateImageState(index, 2)}
                       >
                         2
                       </button>
                       <button
                         className={`${classes.buttonSelf} ${
-                          image === 3 ? classes.activeBtn : undefined
+                          imageStates[index] === 3
+                            ? classes.activeBtn
+                            : undefined
                         }`}
-                        onClick={thirdPhotoHandler}
+                        onClick={() => updateImageState(index, 3)}
                       >
                         3
                       </button>
@@ -326,17 +324,17 @@ function MyProfile() {
                       <strong>
                         {data?.firstName} {data?.lastName} says:{" "}
                       </strong>
-                      {data?.explanation}
+                      {data?.description}
                     </p>
                   </div>
                 </div>
                 <div>
-                  {data.comments.length === 0 && (
+                  {!data?.comments && (
                     <p className={classes.commentInfo}>
                       There is no comment...
                     </p>
                   )}
-                  {data.comments.length > 0 && showComments ? (
+                  {data?.comments?.length > 0 && showComments ? (
                     <div>
                       <p
                         className={classes.commentInfo}
@@ -345,7 +343,7 @@ function MyProfile() {
                         Close comments...
                       </p>
                       <ul className={classes.comments}>
-                        {data.comments.map((comment) => (
+                        {data?.comments.map((comment) => (
                           <li key={comment?.id}>
                             <strong>@{comment?.nickname}:</strong>{" "}
                             {comment?.message}

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import classes from "./ChangePasswordConfirmed.module.css";
 import logo from "../../assets/icons/logo2.png";
 import avatar from "../../assets/casualPhotos/avatar2.jpg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordAction } from "../../store/changepassword-slice";
+import PasswordConfirmed from "../../components/PasswordConfirmed/PasswordConfirmed";
 
 function ChangePasswordConfirmed() {
   const navigate = useNavigate();
@@ -13,6 +15,8 @@ function ChangePasswordConfirmed() {
   const [passwordVal, setPasswordVal] = useState(null);
   const [passwordVal2, setPasswordVal2] = useState(null);
   const [formVal, setFormVal] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const user = useSelector((state) => state.changePasswordSlice.user);
   const dispatch = useDispatch();
@@ -24,7 +28,6 @@ function ChangePasswordConfirmed() {
   const pass2ChangeHandler = (e) => {
     setPassword2(e.target.value);
   };
-  console.log(passwordVal);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (
@@ -39,6 +42,7 @@ function ChangePasswordConfirmed() {
       setPasswordVal2(false);
     }
     if (formVal) {
+      setSubmitting(true);
       const response = await fetch(
         `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users/${user.id}.json`,
         {
@@ -64,14 +68,21 @@ function ChangePasswordConfirmed() {
           }),
         }
       );
-      const resData = await response.json();
-      console.log(resData);
-      dispatch(ChangePasswordAction.removeUser());
-      navigate("/login");
+      setUserInfo(response);
     } else {
       return;
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (userInfo) {
+        dispatch(ChangePasswordAction.removeUser());
+        navigate("/login");
+        setSubmitting(false);
+      }
+    }, 1000);
+  }, [userInfo, navigate, dispatch]);
 
   useEffect(() => {
     if (
@@ -101,6 +112,10 @@ function ChangePasswordConfirmed() {
       setFormVal(false);
     }
   }, [passwordVal, passwordVal2, password, password2]);
+
+  let PasswordConfirmedContent = () => {
+    return <PasswordConfirmed userInfo={userInfo} />;
+  };
 
   return (
     <div className={classes.content}>
@@ -165,8 +180,12 @@ function ChangePasswordConfirmed() {
               />
             </div>
             <div className={classes.submitBtn}>
-              <button type="submit" className={classes.resetBtn}>
-                Submit
+              <button
+                disabled={submitting}
+                type="submit"
+                className={classes.resetBtn}
+              >
+                {submitting ? "Loading..." : "Submit"}
               </button>
               <button onClick={goHomeHandler} className={classes.cancelBtn}>
                 Cancel
@@ -175,6 +194,11 @@ function ChangePasswordConfirmed() {
           </form>
         </div>
       </div>
+      {userInfo &&
+        ReactDOM.createPortal(
+          <PasswordConfirmedContent />,
+          document.getElementById("confirmedpassword")
+        )}
     </div>
   );
 }

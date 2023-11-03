@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function PlacesList({ data }) {
   const [activeTags, setActiveTags] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
+  const [index, setIndex] = useState(1);
 
   useEffect(() => {
     setFilteredData(data);
@@ -15,11 +16,52 @@ function PlacesList({ data }) {
     setActiveTags(e);
     setFilteredData(data.filter((post) => post.place === e));
   };
-
   const onAllTagHandler = () => {
     setActiveTags(null);
     setFilteredData(data);
   };
+
+  function formatTimeAgo(dateData) {
+    const now = new Date();
+    const postDate = new Date(
+      dateData?.year,
+      dateData?.month,
+      dateData?.day,
+      dateData?.hour,
+      dateData?.minutes,
+      dateData?.seconds
+    );
+    const timeDifference = now - postDate;
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days}d ago`;
+    } else if (hours > 0) {
+      return `${hours}h ago`;
+    } else if (minutes > 1) {
+      return `${minutes}m ago`;
+    } else if (minutes === 1) {
+      return `1m ago`;
+    } else {
+      return `${seconds}s ago`;
+    }
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (index === 1) {
+        setIndex(2);
+      } else if (index === 2) {
+        setIndex(3);
+      } else {
+        setIndex(1);
+      }
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [index]);
 
   return (
     <div>
@@ -142,11 +184,27 @@ function PlacesList({ data }) {
                 </div>
               </div>
               <div className={classes.imgs}>
-                <img
-                  className={classes.imgsSelf}
-                  src={item?.mainPhoto}
-                  alt="icon"
-                />
+                {index === 1 && (
+                  <img
+                    className={classes.imgsSelf}
+                    src={item?.mainPhoto}
+                    alt="img"
+                  />
+                )}
+                {index === 2 && (
+                  <img
+                    src={item?.secondPhoto}
+                    className={classes.imgsSelf}
+                    alt="img"
+                  />
+                )}
+                {index === 3 && (
+                  <img
+                    src={item?.thirdPhoto}
+                    alt="img"
+                    className={classes.imgsSelf}
+                  />
+                )}
                 <div className={classes.ppImgSide}>
                   <img
                     className={classes.ppImgSelf}
@@ -158,7 +216,9 @@ function PlacesList({ data }) {
                       @{item?.nickName} at {item?.place}
                     </strong>
                     <span className={classes.dot}>•</span>{" "}
-                    <small className={classes.durat}>1d ago</small>
+                    <small className={classes.durat}>
+                      {formatTimeAgo(item?.date)}
+                    </small>
                   </small>
                 </div>
                 <div className={classes.imgInfo}></div>

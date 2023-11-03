@@ -18,6 +18,7 @@ function AddPlace() {
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
   const nowDate = new Date();
+
   const { auth } = useContext(AuthContext);
   const [country, setCountry] = useState("");
   const [countryValid, setCountryValid] = useState(null);
@@ -104,7 +105,14 @@ function AddPlace() {
               city: city,
               country: country,
               place: place,
-              date: nowDate,
+              date: {
+                day: nowDate.getDate(),
+                month: nowDate.getMonth(),
+                year: nowDate.getFullYear(),
+                hour: nowDate.getHours(),
+                minutes: nowDate.getMinutes(),
+                seconds: nowDate.getSeconds(),
+              },
               description: description,
               likes: 0,
               commments: [],
