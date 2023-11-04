@@ -200,12 +200,7 @@ function MyProfile() {
             </p>
           </div>
         </div>
-        <div className={classes.lastVisits}>
-          {/* <h4>Active Tags: </h4>- */}
-          {/* <p>#Old Trafford, Manchester</p>
-          <p>#Antalya, Turkey</p>
-          <p>#Munichen, Deutschland</p> */}
-        </div>
+        <div className={classes.lastVisits}></div>
         {posts?.length === 0 ? (
           <div>
             <h3 className={classes.noPostText}>No post yet...</h3>
@@ -303,7 +298,10 @@ function MyProfile() {
                       <p>{data?.likes}</p>
                     </div>
                     <div className={classes.likesRight}>
-                      <Link className={classes.editIcon}>
+                      <Link
+                        to={`${data?.id}/editPlace`}
+                        className={classes.editIcon}
+                      >
                         <EditIcon />
                       </Link>
                       <div className={classes.deleteIcon}>

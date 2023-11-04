@@ -39,10 +39,6 @@ const router = createBrowserRouter([
             path: ":placesId",
             element: <PlaceDetail />,
           },
-          {
-            path: ":placeId/editPlace",
-            element: <EditPlace />,
-          },
         ],
       },
       {
@@ -67,6 +63,10 @@ const router = createBrowserRouter([
           {
             path: ":profileId",
             element: <EditProfile />,
+          },
+          {
+            path: ":placeId/editPlace",
+            element: <EditPlace />,
           },
         ],
       },

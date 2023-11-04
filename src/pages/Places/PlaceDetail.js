@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./PlaceDetail.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { Link, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
@@ -173,11 +172,8 @@ function PlaceDetail() {
                 <p>{post?.likes}</p>
               </div>
               <div className={classes.likesRight}>
-                <Link to="editplace" className={classes.editIcon}>
-                  <EditIcon />
-                </Link>
-                <div className={classes.deleteIcon}>
-                  <DeleteIcon />
+                <div className={classes.commentIcon}>
+                  <InsertCommentIcon />
                 </div>
                 <div
                   className={`${classes.bookmarkBtn} ${

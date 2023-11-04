@@ -4,8 +4,6 @@ import DoneIcon from "@mui/icons-material/Done";
 import ErrorIcon from "@mui/icons-material/Error";
 
 function PasswordConfirmed(props) {
-  console.log(props.userInfo);
-
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>

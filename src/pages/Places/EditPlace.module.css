@@ -59,7 +59,7 @@
   /* border: 3px solid green; */
 }
 
-.formControl > input {
+.inputSelf {
   height: 32px;
   padding: 0 0.3rem;
   border-radius: 5px;
@@ -72,7 +72,7 @@
   /* border: 1px solid #ebecee; */
 }
 
-.formControl > input:focus {
+.inputSelf:focus {
   outline: 1px solid #1877f2;
 }
 
@@ -84,7 +84,7 @@
   padding: 0.5rem 0;
 }
 
-.submitButtons > a:first-child {
+.submitButtons > button:first-child {
   background-color: #015792;
   color: white;
   padding: 0.4rem 0.7rem;
@@ -94,8 +94,10 @@
   border: none;
   transition: all 0.3s ease-in-out;
 }
-
-.submitButtons > a:last-child {
+.submitButtons > button:first-child:hover {
+  background: #003f69;
+}
+.submitButtons > button:last-child {
   background-color: red;
   color: white;
   padding: 0.4rem 0.7rem;
@@ -104,6 +106,10 @@
   cursor: pointer;
   border: none;
   transition: all 0.3s ease-in-out;
+}
+
+.submitButtons > button:last-child:hover {
+  background-color: rgb(204, 0, 0);
 }
 
 .submitButtons > a:first-child:hover {
@@ -123,6 +129,10 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+.invalidInput {
+  border: 3px solid red;
 }
 
 .pp {
@@ -316,6 +326,10 @@
 
 .textArea:focus {
   outline: 1px solid #1877f2;
+}
+
+.invalidTextArea {
+  border: 3px solid red;
 }
 
 .length {
