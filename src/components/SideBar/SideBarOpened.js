@@ -39,7 +39,6 @@ function SideBarOpened() {
 
           {!auth && (
             <div>
-              {/* FIXME LINKLER AUTH A GÖRE DEĞİŞECEK */}
               <ul className={classes.generalLinks}>
                 <NavLink
                   onClick={closeSideHandler}

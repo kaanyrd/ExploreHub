@@ -11,14 +11,14 @@ function PostInfo(props) {
       <div className={classes.mainContent}>
         {props?.responseInfo?.status === 200 && (
           <div className={classes.confirmedSide}>
-            <DoneIcon fontSize="large" className={classes.confirmed} />{" "}
+            <DoneIcon fontSize="medium" className={classes.confirmed} />{" "}
             <span>Posted</span>
           </div>
         )}
         {props?.responseInfo?.status !== 200 && (
           <div>
             <div className={classes.infos}>
-              <ClearIcon fontSize="large" className={classes.failed} />{" "}
+              <ClearIcon fontSize="medium" className={classes.failed} />{" "}
               <span>Post Failed</span>
             </div>
 

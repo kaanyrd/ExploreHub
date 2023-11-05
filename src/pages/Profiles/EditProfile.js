@@ -246,6 +246,14 @@ function EditProfile() {
     }
   }, [userInfo, navigate]);
 
+  useEffect(() => {
+    if (!auth) {
+      navigate("/");
+    }
+  }, [navigate, auth]);
+
+  console.log(name, surname, nick);
+
   return (
     <div className={classes.main}>
       <form onSubmit={onSubmitHandler} className={classes.mainContent}>

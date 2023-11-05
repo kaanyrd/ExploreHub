@@ -1,2 +1,9 @@
-1- Auth Page Provide
-2- Last Logins Photo for new User
+1-Home
+2-Bookmarks
+3-Photo Gallery (random photos?)
+4-Adding Comment
+5-Likes
+6-Searching
+7-Audio
+8-Pagination
+9-Edit Profile Can Be More Useful 

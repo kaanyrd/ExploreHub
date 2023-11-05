@@ -240,6 +240,7 @@
 }
 .explanation {
   color: #015792;
+  padding-top: 0.2rem;
 }
 
 .country {
@@ -326,6 +327,10 @@
 
 .textArea:focus {
   outline: 1px solid #1877f2;
+}
+
+.texting {
+  word-break: break-all;
 }
 
 .invalidTextArea {

@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./PhotoGallery.module.css";
+import AuthContext from "../../context/Authentication";
+import { useNavigate } from "react-router-dom";
 
 function PhotoGallery() {
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [images, setImages] = useState(null);
 
   useEffect(() => {
@@ -19,7 +23,7 @@ function PhotoGallery() {
             ...resData[key],
           });
         }
-        const data = arrData.reverse().slice(0, 20);
+        const data = arrData.reverse().slice(0, 3);
         setImages(data);
       } catch (error) {
         console.log(error);
@@ -27,6 +31,14 @@ function PhotoGallery() {
     };
     gettingPhotos();
   }, [images]);
+
+  console.log(images);
+
+  useEffect(() => {
+    if (!auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
 
   return (
     <div className={classes.main}>

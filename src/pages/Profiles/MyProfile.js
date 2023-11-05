@@ -1,24 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import classes from "./MyProfile.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import GiteIcon from "@mui/icons-material/Gite";
 import AuthContext from "../../context/Authentication";
 import avatar from "../../assets/casualPhotos/profileImg2.png";
 import banner from "../../assets/casualPhotos/nobanner.png";
+import PostDelete from "../../components/PostDelete/PostDelete";
 
 function MyProfile() {
+  const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
+  useEffect(() => {
+    if (!auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
   const [posts, setPost] = useState(null);
   const [user, setUser] = useState(null);
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [showComments, setShowComments] = useState(true);
+  const [removing, setRemoving] = useState(null);
 
   const likeHandler = () => {
     setLiked((prev) => !prev);
@@ -124,6 +133,18 @@ function MyProfile() {
     }
   }
 
+  let DeletingContent = () => {
+    return <PostDelete removing={removing} setRemoving={setRemoving} />;
+  };
+
+  const onDeleteHandler = (id) => {
+    setRemoving(id);
+  };
+
+  const onCancelHandler = () => {
+    setRemoving(null);
+  };
+
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
@@ -214,7 +235,7 @@ function MyProfile() {
                     <div className={classes.ppSide}>
                       <img
                         className={classes.ppSelf}
-                        src={data?.pp}
+                        src={data?.pp || avatar}
                         alt={data?.nickName}
                       />
                     </div>
@@ -305,7 +326,7 @@ function MyProfile() {
                         <EditIcon />
                       </Link>
                       <div className={classes.deleteIcon}>
-                        <DeleteIcon />
+                        <DeleteIcon onClick={() => onDeleteHandler(data?.id)} />
                       </div>
                       <div
                         className={`${classes.bookmarkBtn} ${
@@ -369,6 +390,16 @@ function MyProfile() {
           </div>
         )}
       </div>
+      {removing &&
+        ReactDOM.createPortal(
+          <div onClick={onCancelHandler} className={classes.background}></div>,
+          document.getElementById("background")
+        )}
+      {removing &&
+        ReactDOM.createPortal(
+          <DeletingContent />,
+          document.getElementById("postdelete")
+        )}
     </div>
   );
 }

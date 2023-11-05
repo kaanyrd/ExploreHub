@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./ChangePassword.module.css";
@@ -6,10 +6,11 @@ import logo from "../../assets/icons/logo2.png";
 import { useDispatch } from "react-redux";
 import ChangePasswordInfo from "../../components/ChangePassword/ChangePasswordInfo";
 import { ChangePasswordAction } from "../../store/changepassword-slice";
+import AuthContext from "../../context/Authentication";
 
 function ChangePassword() {
+  const { auth } = useContext(AuthContext);
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState("");
   const [emailValid, setEmailValid] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -62,6 +63,13 @@ function ChangePassword() {
   let UserInfoContent = () => {
     return <ChangePasswordInfo setUserInfo={setUserInfo} />;
   };
+  console.log(auth);
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
 
   return (
     <div className={classes.main}>

@@ -1,0 +1,47 @@
+.mainContent {
+  min-height: calc(100vh - 4rem);
+  display: grid;
+  place-items: center;
+  width: 90vw;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.2rem;
+  color: #015792;
+  text-align: center;
+}
+
+.errorIcon {
+  color: red;
+}
+
+.homeBtn {
+  text-align: center;
+}
+
+.homeBtn > button {
+  text-align: center;
+  background: #015792;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  margin-top: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem auto;
+  column-gap: 0.3rem;
+}
+
+.homeBtn > button:hover {
+  background: #004675;
+}

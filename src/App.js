@@ -6,7 +6,6 @@ import Error from "./pages/Error/Error";
 import Home from "./pages/Home/Home";
 import Favs from "./pages/Favs/Favs";
 import MyProfile from "./pages/Profiles/MyProfile";
-import OtherProfile from "./pages/Profiles/OtherProfile";
 import Places from "./pages/Places/Places";
 import PlaceDetail from "./pages/Places/PlaceDetail";
 import Login from "./pages/Authentication/Login";
@@ -69,10 +68,6 @@ const router = createBrowserRouter([
             element: <EditPlace />,
           },
         ],
-      },
-      {
-        path: "otherprofile",
-        element: <OtherProfile />,
       },
       {
         path: "login",

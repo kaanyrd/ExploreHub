@@ -9,6 +9,7 @@ import InvalidLogin from "../../components/InvalidLogin/InvalidLogin";
 import avatar from "../../assets/casualPhotos/avatar5.jpeg";
 
 function Login() {
+  const auth = useContext(AuthContext);
   const [submitting, setSubmitting] = useState(false);
   const { setAuth, lastLogins, setLastLogins } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -118,16 +119,17 @@ function Login() {
     setPassword(lastLogins.password);
   };
 
-
-
-  // FIXME
-  let oldLogins = true;
+  useEffect(() => {
+    if (auth?.auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
 
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
         <div>
-          <div className={oldLogins}>
+          <div className={classes.oldLogins}>
             <div className={classes.topSide}>
               <div className={classes.topSideHeader}>
                 <img src={logo} className={classes.logoSelf} alt="logo" />
@@ -199,7 +201,7 @@ function Login() {
                 value={email}
                 type="email"
                 onChange={emailChangeHandler}
-                placeholder="Email adress or nickname"
+                placeholder="Email adress"
               />
             </div>
             <div>

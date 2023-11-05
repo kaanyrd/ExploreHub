@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import classes from "./ChangePasswordConfirmed.module.css";
 import logo from "../../assets/icons/logo2.png";
@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordAction } from "../../store/changepassword-slice";
 import PasswordConfirmed from "../../components/PasswordConfirmed/PasswordConfirmed";
+import AuthContext from "../../context/Authentication";
 
 function ChangePasswordConfirmed() {
+  const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -116,6 +118,12 @@ function ChangePasswordConfirmed() {
   let PasswordConfirmedContent = () => {
     return <PasswordConfirmed userInfo={userInfo} />;
   };
+
+  useEffect(() => {
+    if (user === null) {
+      navigate("/");
+    }
+  }, [auth, navigate, user]);
 
   return (
     <div className={classes.content}>

@@ -15,6 +15,7 @@ import PostInfo from "../../components/PostingInformation/PostInfo";
 
 function AddPlace() {
   const [responseInfo, setResponseInfo] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
   const nowDate = new Date();
@@ -93,6 +94,7 @@ function AddPlace() {
       return;
     } else {
       try {
+        setSubmitting(true);
         const response = await fetch(
           `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json`,
           {
@@ -232,9 +234,16 @@ function AddPlace() {
       if (responseInfo) {
         setResponseInfo(null);
         navigate("/places");
+        setSubmitting(false);
       }
     }, 1200);
   }, [navigate, responseInfo]);
+
+  useEffect(() => {
+    if (!auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
 
   return (
     <div className={classes.main}>
@@ -328,8 +337,8 @@ function AddPlace() {
               />
             </div>
             <div className={classes.submitBtn}>
-              <button type="submit">
-                Share
+              <button disabled={submitting} type="submit">
+                {submitting ? "Sending..." : "Share"}
                 <SendIcon className={classes.shareIcon} />
               </button>
             </div>

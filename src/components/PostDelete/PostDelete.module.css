@@ -1,0 +1,78 @@
+.main {
+  position: fixed;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  width: 70vw;
+  max-width: 500px;
+  padding: 1.5rem 1rem;
+  border-radius: 10px;
+}
+
+.mainContent {
+  /* border: 3px solid red; */
+}
+
+.text {
+  color: #015792;
+  text-align: center;
+  font-weight: bolder;
+  word-break: keep-all;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  justify-content: center;
+  padding: 1rem 0 0.2rem 0;
+}
+
+.buttons > button {
+  cursor: pointer;
+  border-radius: 5px;
+  width: 70px;
+  /* padding: 0.5rem 0; */
+  height: 40px;
+  border: none;
+  font-weight: bolder;
+  transition: all 0.2s ease-in-out;
+}
+
+.yesBtn {
+  background: #015792;
+  color: white;
+}
+
+.noBtn {
+  background: red;
+  color: white;
+}
+
+.yesBtn:hover {
+  background: #004572;
+}
+
+.noBtn:hover {
+  background: rgb(202, 0, 0);
+}
+
+.deleteIcon {
+  color: white;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.1rem;
+}
+
+.buttons > button:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.2rem;
+}

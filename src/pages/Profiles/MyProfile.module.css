@@ -190,6 +190,7 @@
 }
 .explanation {
   color: #015792;
+  padding-top: 0.2rem;
 }
 
 .country {
@@ -247,21 +248,32 @@
   align-items: center;
   column-gap: 0.2rem;
 }
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
 .likeBtn {
-  color: gray;
+  color: rgb(179, 179, 179);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
 .editIcon {
-  color: gray;
+  color: #015792;
   cursor: pointer;
 }
 .deleteIcon {
   color: gray;
   cursor: pointer;
+  color: red;
 }
 .bookmarkBtn {
-  color: gray;
+  /* color: #a7a9ac; */
+  color: #7ac9fe;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
@@ -269,7 +281,7 @@
   color: red;
 }
 .bookmarked {
-  color: rgb(236, 211, 73);
+  color: #015792;
 }
 
 .commentInfo {

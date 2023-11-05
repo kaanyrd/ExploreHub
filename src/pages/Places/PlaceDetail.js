@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./PlaceDetail.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { Link, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import avatar from "../../assets/casualPhotos/avatar5.jpeg";
+import AuthContext from "../../context/Authentication";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 function PlaceDetail() {
   const params = useParams();
+  const { auth } = useContext(AuthContext);
   const postId = params.placesId;
   const [post, setPost] = useState(null);
   const [image, setImage] = useState(1);
@@ -44,8 +48,6 @@ function PlaceDetail() {
           `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}.json`
         );
         const responseData = await response.json();
-        // let arrData = [];
-        // arrData.push(responseData);
         setPost(responseData);
       } catch (error) {
         console.log(error);
@@ -96,7 +98,7 @@ function PlaceDetail() {
               <div className={classes.ppSide}>
                 <img
                   className={classes.ppSelf}
-                  src={post?.pp}
+                  src={post?.pp || avatar}
                   alt={post?.nickName}
                 />
               </div>
@@ -163,27 +165,40 @@ function PlaceDetail() {
             </div>
             <div className={classes.likes}>
               <div>
-                <span
-                  onClick={likeHandler}
-                  className={`${classes.likeBtn} ${liked && classes.liked}`}
-                >
-                  <FavoriteIcon />
-                </span>
-                <p>{post?.likes}</p>
+                {!auth ? (
+                  <div>
+                    <span onClick={likeHandler} className={classes.likeBtn}>
+                      <FavoriteIcon />
+                    </span>
+                    <p>?</p>
+                  </div>
+                ) : (
+                  <div>
+                    <span
+                      onClick={likeHandler}
+                      className={`${classes.likeBtn} ${liked && classes.liked}`}
+                    >
+                      <FavoriteIcon />
+                    </span>
+                    <p>{auth ? post?.likes : "?"}</p>
+                  </div>
+                )}
               </div>
-              <div className={classes.likesRight}>
-                <div className={classes.commentIcon}>
-                  <InsertCommentIcon />
+              {auth && (
+                <div className={classes.likesRight}>
+                  <div className={classes.commentIcon}>
+                    <InsertCommentIcon />
+                  </div>
+                  <div
+                    className={`${classes.bookmarkBtn} ${
+                      bookmarked && classes.bookmarked
+                    }`}
+                    onClick={bookmarkHandler}
+                  >
+                    <BookmarkIcon />
+                  </div>
                 </div>
-                <div
-                  className={`${classes.bookmarkBtn} ${
-                    bookmarked && classes.bookmarked
-                  }`}
-                  onClick={bookmarkHandler}
-                >
-                  <BookmarkIcon />
-                </div>
-              </div>
+              )}
             </div>
             <div className={classes.explanation}>
               <p>
@@ -194,33 +209,46 @@ function PlaceDetail() {
               </p>
             </div>
           </div>
-          <div>
-            {!post?.comments && (
-              <p className={classes.commentInfo}>There is no comment...</p>
-            )}
-            {post?.comments?.length > 0 && showComments ? (
-              <div>
-                <p className={classes.commentInfo} onClick={commentHandler}>
-                  Close comments...
-                </p>
-                <ul className={classes.comments}>
-                  {post?.comments.map((comment) => (
-                    <li key={comment.id}>
-                      <strong>@{comment?.nickname}:</strong> {comment?.message}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              post?.comments?.length > 0 && (
-                <p onClick={commentHandler} className={classes.commentInfo}>
-                  {`See other ${post?.comments.length} ${
-                    post?.comments?.length === 1 ? "comment..." : "comments..."
-                  }`}
-                </p>
-              )
-            )}
-          </div>
+          {auth ? (
+            <div>
+              {!post?.comments && (
+                <p className={classes.commentInfo}>There is no comment...</p>
+              )}
+              {post?.comments?.length > 0 && showComments ? (
+                <div>
+                  <p className={classes.commentInfo} onClick={commentHandler}>
+                    Close comments...
+                  </p>
+                  <ul className={classes.comments}>
+                    {post?.comments.map((comment) => (
+                      <li key={comment.id}>
+                        <strong>@{comment?.nickname}:</strong>{" "}
+                        {comment?.message}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                post?.comments?.length > 0 && (
+                  <p onClick={commentHandler} className={classes.commentInfo}>
+                    {`See other ${post?.comments.length} ${
+                      post?.comments?.length === 1
+                        ? "comment..."
+                        : "comments..."
+                    }`}
+                  </p>
+                )
+              )}
+            </div>
+          ) : (
+            <div className={classes.loginInfo}>
+              <ReportProblemIcon
+                className={classes.errorIcon}
+                fontSize="large"
+              />
+              <h4>You must login to see comments</h4>
+            </div>
+          )}
         </div>
       </div>
     </div>

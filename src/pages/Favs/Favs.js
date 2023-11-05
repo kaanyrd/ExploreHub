@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import classes from "./Favs.module.css";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import AuthContext from "../../context/Authentication";
+import { useNavigate } from "react-router-dom";
 
 function Favs() {
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth) {
+      navigate("/");
+    }
+  }, [navigate, auth]);
+
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>

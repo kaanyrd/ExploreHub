@@ -187,21 +187,21 @@ function EditPlace() {
               <div className={classes.imgs}>
                 {image === 1 && (
                   <img
-                    src={post?.mainPhoto}
+                    src={mainPhoto || post?.mainPhoto}
                     className={classes.imgSelf}
                     alt={post?.nickName}
                   />
                 )}
                 {image === 2 && (
                   <img
-                    src={post?.secondPhoto}
+                    src={secondPhoto || post?.secondPhoto}
                     className={classes.imgSelf}
                     alt={post?.nickName}
                   />
                 )}
                 {image === 3 && (
                   <img
-                    src={post?.thirdPhoto}
+                    src={thirdPhoto || post?.thirdPhoto}
                     className={classes.imgSelf}
                     alt={post?.nickName}
                   />
@@ -234,11 +234,11 @@ function EditPlace() {
                 </div>
               </div>
               <div className={classes.explanation}>
-                <p>
+                <p className={classes.texting}>
                   <strong>
                     {post?.firstName} {post?.lastName} says:{" "}
                   </strong>
-                  {post?.description}
+                  {description || post?.description}
                 </p>
               </div>
             </div>

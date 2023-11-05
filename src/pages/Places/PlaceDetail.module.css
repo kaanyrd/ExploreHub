@@ -154,6 +154,23 @@
 
 .explanation {
   color: #015792;
+  padding-top: 0.2rem;
+}
+
+.loginInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.2rem;
+  margin-top: 2rem;
+  height: 100%;
+}
+
+.errorIcon {
+  color: red;
+}
+.loginInfo > h4 {
+  color: #015792;
 }
 
 .places {
@@ -211,9 +228,9 @@
   justify-content: space-between;
   border-bottom: 3px solid #015792;
 }
-.likes > div:first-child {
+.likes > div > div:first-child {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   column-gap: 0.2rem;
 }
 .likesRight {
@@ -221,8 +238,9 @@
   align-items: center;
   column-gap: 0.2rem;
 }
+
 .likeBtn {
-  color: gray;
+  color: rgb(194, 194, 194);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
@@ -231,11 +249,11 @@
   cursor: pointer;
 }
 .commentIcon {
-  color: gray;
+  color: #00416c;
   cursor: pointer;
 }
 .bookmarkBtn {
-  color: gray;
+  color: #7ac9fe;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
@@ -243,7 +261,7 @@
   color: red;
 }
 .bookmarked {
-  color: rgb(236, 211, 73);
+  color: #015792;
 }
 
 .commentInfo {

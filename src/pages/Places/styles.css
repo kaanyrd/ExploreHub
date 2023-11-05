@@ -21,27 +21,18 @@
 }
 
 .swiper-slide:nth-child(1n) {
-  /* background-color: rgb(206, 17, 17); */
-  background-color: #003f69;
-  /* border-radius: 10px; */
-  border: 3px solid #003f69;
-  /* color: #003f69; */
+  border: 5px solid #003f69;
+  background: white;
 }
 
 .swiper-slide:nth-child(2n) {
-  /* background-color: rgb(0, 140, 255); */
-  background-color: #003f69;
-  /* border: 5px solid #949494; */
-  border: 3px solid #003f69;
-  /* border-radius: 10px; */
+  border: 5px solid #003f69;
+  background: white;
 }
 
 .swiper-slide:nth-child(3n) {
-  background-color: #003f69;
-  /* background-color: rgb(10, 184, 111); */
-  /* border: 5px solid #949494; */
-  border: 3px solid #003f69;
-  /* border-radius: 10px; */
+  background: white;
+  border: 5px solid #003f69;
 }
 
 /* .swiper {

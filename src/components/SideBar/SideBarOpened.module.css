@@ -81,10 +81,12 @@
 }
 
 .navLink {
-  color: #0054c1;
+  color: #015792;
   display: inline-block;
   width: fit-content;
   margin: 0 auto;
+  font-weight: bolder;
+  text-decoration: underline;
 }
 
 .linkControl:first-child {

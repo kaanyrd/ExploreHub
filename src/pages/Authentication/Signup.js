@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Signup.module.css";
 import logo from "../../assets/icons/logo2.png";
 import SmallInfo from "../../components/SmallInfo/SmallInfo";
 import ExistUser from "../../components/ExistUser/ExistUser";
+import AuthContext from "../../context/Authentication";
 
 function Signup() {
+  const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [resData, setResData] = useState(null);
   const [sended, setSended] = useState(false);
@@ -65,7 +67,6 @@ function Signup() {
     setPassword2(e.target.value);
   };
 
-  // CONFIRMED PASSWORD
   useEffect(() => {
     if (
       password === password2 &&
@@ -234,15 +235,15 @@ function Signup() {
 
   useEffect(() => {
     setTimeout(() => {
-      if (resData) {
-        setShowModal(false);
+      if (resData && !existUser) {
         setSended(false);
+        setShowModal(false);
         navigate("/login");
       } else {
         return;
       }
     }, 1500);
-  }, [resData, navigate]);
+  }, [resData, navigate, existUser]);
 
   let ExistUserLayout = () => {
     return <ExistUser setExistUser={setExistUser} existUser={existUser} />;
@@ -252,6 +253,12 @@ function Signup() {
     navigate("/login");
     setExistUser(null);
   };
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
 
   return (
     <div className={classes.main}>

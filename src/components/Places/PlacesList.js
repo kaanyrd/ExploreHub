@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./PlacesList.module.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
+import avatar from "../../assets/casualPhotos/profileImg2.png";
 
 function PlacesList({ data }) {
   const [activeTags, setActiveTags] = useState(null);
@@ -208,7 +209,7 @@ function PlacesList({ data }) {
                 <div className={classes.ppImgSide}>
                   <img
                     className={classes.ppImgSelf}
-                    src={item?.pp}
+                    src={item?.pp || avatar}
                     alt="icon"
                   />
                   <small>
