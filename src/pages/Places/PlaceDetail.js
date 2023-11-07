@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import classes from "./PlaceDetail.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -8,16 +9,25 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import avatar from "../../assets/casualPhotos/avatar5.jpeg";
 import AuthContext from "../../context/Authentication";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import SendIcon from "@mui/icons-material/Send";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteComment from "../../components/DeleteComment/DeleteComment";
 
 function PlaceDetail() {
   const params = useParams();
-  const { auth } = useContext(AuthContext);
+  const { auth, lastLogins } = useContext(AuthContext);
   const postId = params.placesId;
   const [post, setPost] = useState(null);
   const [image, setImage] = useState(1);
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [showComments, setShowComments] = useState(true);
+  const [showComment, setShowComment] = useState(true);
+  const [commentSelf, setCommentSelf] = useState("");
+  const [commentValid, setCommentValid] = useState(null);
+  const [allComments, setAllComments] = useState(post?.comments || []);
+  const [removeComment, setRemoveComment] = useState(null);
+  const [removing, setRemoving] = useState(null);
 
   const firstPhotoHandler = () => {
     setImage(1);
@@ -48,6 +58,16 @@ function PlaceDetail() {
           `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}.json`
         );
         const responseData = await response.json();
+        const messages = responseData?.comments;
+        let arrData = [];
+        for (let key in messages) {
+          arrData.push({
+            id: key,
+            ...messages[key],
+          });
+        }
+        let reverseData = arrData.reverse();
+        setAllComments(reverseData);
         setPost(responseData);
       } catch (error) {
         console.log(error);
@@ -84,6 +104,80 @@ function PlaceDetail() {
       return `${seconds}s ago`;
     }
   }
+
+  const onCommentHandler = (e) => {
+    setCommentSelf(e.target.value);
+  };
+
+  const showCommentHandler = () => {
+    setShowComment((prev) => !prev);
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (commentSelf.length === 0) {
+      setCommentValid(false);
+      return;
+    } else {
+      try {
+        setAllComments((prev) => [
+          {
+            id: Math.random(),
+            commenter: lastLogins?.nickName,
+            commenterPP: lastLogins?.pp,
+            comment: commentSelf,
+          },
+          ...prev,
+        ]);
+        const response = await fetch(
+          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/comments.json`,
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: Math.random(),
+              commenter: lastLogins?.nickName,
+              commenterPP: lastLogins?.pp,
+              comment: commentSelf,
+            }),
+          }
+        );
+        const resData = await response.json();
+        console.log(resData);
+        setCommentSelf("");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (commentSelf.length > 0) {
+      setCommentValid(true);
+    }
+  }, [commentSelf]);
+
+  let RemoveCommentContent = () => {
+    return (
+      <DeleteComment
+        setRemoving={setRemoving}
+        removeComment={removeComment}
+        setRemoveComment={setRemoveComment}
+      />
+    );
+  };
+
+  const onRemoveHandler = (data) => {
+    setRemoveComment(data);
+  };
+
+  useEffect(() => {
+    if (removing) {
+      window.location.reload();
+    }
+  }, [removing]);
 
   return (
     <div className={classes.main}>
@@ -186,7 +280,10 @@ function PlaceDetail() {
               </div>
               {auth && (
                 <div className={classes.likesRight}>
-                  <div className={classes.commentIcon}>
+                  <div
+                    onClick={showCommentHandler}
+                    className={classes.commentIcon}
+                  >
                     <InsertCommentIcon />
                   </div>
                   <div
@@ -209,48 +306,126 @@ function PlaceDetail() {
               </p>
             </div>
           </div>
-          {auth ? (
-            <div>
-              {!post?.comments && (
-                <p className={classes.commentInfo}>There is no comment...</p>
-              )}
-              {post?.comments?.length > 0 && showComments ? (
-                <div>
-                  <p className={classes.commentInfo} onClick={commentHandler}>
-                    Close comments...
-                  </p>
-                  <ul className={classes.comments}>
-                    {post?.comments.map((comment) => (
-                      <li key={comment.id}>
-                        <strong>@{comment?.nickname}:</strong>{" "}
-                        {comment?.message}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                post?.comments?.length > 0 && (
-                  <p onClick={commentHandler} className={classes.commentInfo}>
-                    {`See other ${post?.comments.length} ${
-                      post?.comments?.length === 1
-                        ? "comment..."
-                        : "comments..."
-                    }`}
-                  </p>
-                )
-              )}
-            </div>
-          ) : (
-            <div className={classes.loginInfo}>
-              <ReportProblemIcon
-                className={classes.errorIcon}
-                fontSize="large"
-              />
-              <h4>You must login to see comments</h4>
-            </div>
-          )}
+          <div>
+            {auth ? (
+              <div className={classes.dunno}>
+                {showComment && (
+                  <form
+                    onSubmit={onSubmitHandler}
+                    className={classes.commentSide}
+                  >
+                    <input
+                      value={commentSelf}
+                      onChange={onCommentHandler}
+                      maxLength="45"
+                      className={`${classes.commentInput} ${
+                        commentValid === false && classes.invalidComment
+                      }`}
+                      type="text"
+                      placeholder="Your comment"
+                    />
+                    <button className={classes.sendCommentBtn} type="submit">
+                      <SendIcon />
+                    </button>
+                  </form>
+                )}
+                {allComments?.length === 0 && (
+                  <div>
+                    <p className={classes.commentInfo}>
+                      There aren't any comment
+                    </p>
+                    <ul className={classes.noCommentUnlist}></ul>
+                  </div>
+                )}
+                {allComments?.length > 0 && (
+                  <div>
+                    {showComments && (
+                      <p
+                        onClick={commentHandler}
+                        className={classes.commentInfo}
+                      >
+                        Close Comments
+                      </p>
+                    )}
+                    {showComments ? (
+                      <ul className={classes.commentsList}>
+                        {allComments?.map((comment) => (
+                          <li className={classes.eachComment} key={comment?.id}>
+                            <div className={classes.commenterInfo}>
+                              <img
+                                src={comment.commenterPP || avatar}
+                                alt="pp"
+                                className={classes.commenterPhoto}
+                              />
+                              <strong>@{comment?.commenter}:</strong>
+                            </div>
+                            <p>{comment?.comment}</p>
+                            {comment?.commenter === lastLogins.nickName && (
+                              <DeleteForeverIcon
+                                onClick={() => onRemoveHandler(comment?.id)}
+                                className={classes.moreIcon}
+                              />
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div>
+                        <p
+                          onClick={commentHandler}
+                          className={classes.commentInfo}
+                        >
+                          See other ({allComments.length}){" "}
+                          {allComments.length === 1 ? "comment" : "comments"}
+                        </p>
+                        <div className={classes.unlist}></div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {showComment && (
+                  <form
+                    onSubmit={onSubmitHandler}
+                    className={classes.bigScreenComment}
+                  >
+                    <input
+                      value={commentSelf}
+                      onChange={onCommentHandler}
+                      maxLength="45"
+                      className={`${classes.commentInput} ${
+                        commentValid === false && classes.invalidComment
+                      }`}
+                      type="text"
+                      placeholder="Your comment"
+                    />
+                    <button className={classes.sendCommentBtn} type="submit">
+                      <SendIcon />
+                    </button>
+                  </form>
+                )}
+              </div>
+            ) : (
+              <div className={classes.loginInfo}>
+                <ReportProblemIcon
+                  className={classes.errorIcon}
+                  fontSize="large"
+                />
+                <h4>You must login to see comments</h4>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+      {removeComment &&
+        ReactDOM.createPortal(
+          <div className={classes.background}></div>,
+          document.getElementById("background")
+        )}
+      {removeComment &&
+        ReactDOM.createPortal(
+          <RemoveCommentContent />,
+          document.getElementById("deletecomment")
+        )}
     </div>
   );
 }
