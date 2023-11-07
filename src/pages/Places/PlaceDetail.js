@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import classes from "./PlaceDetail.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -11,7 +10,6 @@ import AuthContext from "../../context/Authentication";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import SendIcon from "@mui/icons-material/Send";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import DeleteComment from "../../components/DeleteComment/DeleteComment";
 
 function PlaceDetail() {
   const params = useParams();
@@ -26,8 +24,6 @@ function PlaceDetail() {
   const [commentSelf, setCommentSelf] = useState("");
   const [commentValid, setCommentValid] = useState(null);
   const [allComments, setAllComments] = useState(post?.comments || []);
-  const [removeComment, setRemoveComment] = useState(null);
-  const [removing, setRemoving] = useState(null);
 
   const firstPhotoHandler = () => {
     setImage(1);
@@ -62,7 +58,7 @@ function PlaceDetail() {
         let arrData = [];
         for (let key in messages) {
           arrData.push({
-            id: key,
+            key: key,
             ...messages[key],
           });
         }
@@ -159,25 +155,25 @@ function PlaceDetail() {
     }
   }, [commentSelf]);
 
-  let RemoveCommentContent = () => {
-    return (
-      <DeleteComment
-        setRemoving={setRemoving}
-        removeComment={removeComment}
-        setRemoveComment={setRemoveComment}
-      />
-    );
-  };
-
-  const onRemoveHandler = (data) => {
-    setRemoveComment(data);
-  };
-
-  useEffect(() => {
-    if (removing) {
-      window.location.reload();
+  const onRemoveHandler = async (data) => {
+    try {
+      setAllComments((prev) => prev.filter((item) => item.key !== data));
+      const removingData = await fetch(
+        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/comments/${data}.json`,
+        {
+          method: "delete",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: null,
+        }
+      );
+      const response = await removingData.json();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
-  }, [removing]);
+  };
 
   return (
     <div className={classes.main}>
@@ -282,7 +278,11 @@ function PlaceDetail() {
                 <div className={classes.likesRight}>
                   <div
                     onClick={showCommentHandler}
-                    className={classes.commentIcon}
+                    className={
+                      showComment
+                        ? classes.commentIcon
+                        : classes.commentInactive
+                    }
                   >
                     <InsertCommentIcon />
                   </div>
@@ -362,7 +362,7 @@ function PlaceDetail() {
                             <p>{comment?.comment}</p>
                             {comment?.commenter === lastLogins.nickName && (
                               <DeleteForeverIcon
-                                onClick={() => onRemoveHandler(comment?.id)}
+                                onClick={() => onRemoveHandler(comment?.key)}
                                 className={classes.moreIcon}
                               />
                             )}
@@ -416,16 +416,6 @@ function PlaceDetail() {
           </div>
         </div>
       </div>
-      {removeComment &&
-        ReactDOM.createPortal(
-          <div className={classes.background}></div>,
-          document.getElementById("background")
-        )}
-      {removeComment &&
-        ReactDOM.createPortal(
-          <RemoveCommentContent />,
-          document.getElementById("deletecomment")
-        )}
     </div>
   );
 }

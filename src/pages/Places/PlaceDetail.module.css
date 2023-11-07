@@ -378,6 +378,10 @@
   z-index: 2;
 }
 
+.commentInactive {
+  color: gray;
+}
+
 .eachComment {
   width: 100%;
   margin-bottom: 0.3rem;
