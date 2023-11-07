@@ -9,7 +9,6 @@ import avatar from "../../assets/casualPhotos/avatar5.jpeg";
 import AuthContext from "../../context/Authentication";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import SendIcon from "@mui/icons-material/Send";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 function PlaceDetail() {
   const params = useParams();
@@ -116,9 +115,10 @@ function PlaceDetail() {
       return;
     } else {
       try {
+        let commentKey = Math.random();
         setAllComments((prev) => [
           {
-            id: Math.random(),
+            id: commentKey,
             commenter: lastLogins?.nickName,
             commenterPP: lastLogins?.pp,
             comment: commentSelf,
@@ -154,26 +154,6 @@ function PlaceDetail() {
       setCommentValid(true);
     }
   }, [commentSelf]);
-
-  const onRemoveHandler = async (data) => {
-    try {
-      setAllComments((prev) => prev.filter((item) => item.key !== data));
-      const removingData = await fetch(
-        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/comments/${data}.json`,
-        {
-          method: "delete",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: null,
-        }
-      );
-      const response = await removingData.json();
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className={classes.main}>
@@ -360,12 +340,6 @@ function PlaceDetail() {
                               <strong>@{comment?.commenter}:</strong>
                             </div>
                             <p>{comment?.comment}</p>
-                            {comment?.commenter === lastLogins.nickName && (
-                              <DeleteForeverIcon
-                                onClick={() => onRemoveHandler(comment?.key)}
-                                className={classes.moreIcon}
-                              />
-                            )}
                           </li>
                         ))}
                       </ul>
