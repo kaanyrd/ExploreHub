@@ -1,4 +1,71 @@
 .main {
-  border: 3px solid black;
   min-height: calc(100vh - 4rem);
+  display: flex;
+  align-items: center;
+}
+.mainContent {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+.withLogin {
+  color: #015792;
+  text-align: center;
+}
+.withLogin > *:first-child {
+  margin-bottom: 2rem;
+}
+
+.withoutLogin {
+  color: #015792;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.withoutLogin > h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.signupLink {
+  text-align: center;
+}
+
+.signupLink > a {
+  display: inline-block;
+  background-color: #015792;
+  color: white;
+  padding: 0.4rem 0.7rem;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  column-gap: 0.2rem;
+  justify-content: center;
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto 2rem auto;
+}
+
+.signupLink > a:hover {
+  background-color: #004979;
+}
+.firstSentence {
+  padding-left: 3rem;
+}
+
+.developer {
+  text-align: center;
+  font-weight: bolder;
+  margin-top: 1rem;
+  display: block;
+}
+
+@media screen and (min-width: 978px) {
+  .mainContent {
+    padding: 0 2rem;
+  }
+  .firstSentence {
+    padding-left: 0;
+  }
 }

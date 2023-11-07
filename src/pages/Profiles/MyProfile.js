@@ -22,7 +22,7 @@ function MyProfile() {
       navigate("/");
     }
   }, [auth, navigate]);
-  const [posts, setPost] = useState(null);
+  const [posts, setPost] = useState([]);
   const [user, setUser] = useState(null);
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
@@ -74,7 +74,7 @@ function MyProfile() {
         let arrData = [];
         for (let key in resData) {
           arrData.push({
-            id: key,
+            key: key,
             ...resData[key],
           });
         }
@@ -134,7 +134,13 @@ function MyProfile() {
   }
 
   let DeletingContent = () => {
-    return <PostDelete removing={removing} setRemoving={setRemoving} />;
+    return (
+      <PostDelete
+        setPost={setPost}
+        removing={removing}
+        setRemoving={setRemoving}
+      />
+    );
   };
 
   const onDeleteHandler = (id) => {
@@ -326,7 +332,9 @@ function MyProfile() {
                         <EditIcon />
                       </Link>
                       <div className={classes.deleteIcon}>
-                        <DeleteIcon onClick={() => onDeleteHandler(data?.id)} />
+                        <DeleteIcon
+                          onClick={() => onDeleteHandler(data?.key)}
+                        />
                       </div>
                       <div
                         className={`${classes.bookmarkBtn} ${

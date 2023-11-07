@@ -4,13 +4,11 @@ import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function PostDelete(props) {
-  const reloadPage = () => {
-    window.location.reload();
-  };
   const postId = props.removing;
   const navigate = useNavigate();
 
   const yesHandler = async () => {
+    props.setPost((prev) => prev.filter((item) => item.key !== postId));
     try {
       const resposne = await fetch(
         `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}.json`,
@@ -23,11 +21,9 @@ function PostDelete(props) {
       const resData = await resposne.json();
       console.log(resData);
       navigate("/myprofile");
-      reloadPage();
     } catch (error) {
       console.log(error);
     }
-    console.log("silindi");
     props.setRemoving(null);
   };
 

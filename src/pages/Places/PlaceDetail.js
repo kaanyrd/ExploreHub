@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import classes from "./PlaceDetail.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -9,6 +10,8 @@ import avatar from "../../assets/casualPhotos/avatar5.jpeg";
 import AuthContext from "../../context/Authentication";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import SendIcon from "@mui/icons-material/Send";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveComment from "../../components/RemoveComment/RemoveComment";
 
 function PlaceDetail() {
   const params = useParams();
@@ -23,6 +26,8 @@ function PlaceDetail() {
   const [commentSelf, setCommentSelf] = useState("");
   const [commentValid, setCommentValid] = useState(null);
   const [allComments, setAllComments] = useState(post?.comments || []);
+  const [submitting, setSubmitting] = useState(false);
+  const [removeModal, setRemoveModal] = useState(null);
 
   const firstPhotoHandler = () => {
     setImage(1);
@@ -114,6 +119,7 @@ function PlaceDetail() {
       setCommentValid(false);
       return;
     } else {
+      setSubmitting(true);
       try {
         let commentKey = Math.random();
         setAllComments((prev) => [
@@ -145,6 +151,9 @@ function PlaceDetail() {
         setCommentSelf("");
       } catch (error) {
         console.log(error);
+      } finally {
+        setSubmitting(false);
+        window.location.reload();
       }
     }
   };
@@ -154,6 +163,25 @@ function PlaceDetail() {
       setCommentValid(true);
     }
   }, [commentSelf]);
+
+  const removeCommentHandler = (data) => {
+    setRemoveModal(data);
+  };
+
+  const cancelCommentHandler = () => {
+    setRemoveModal(null);
+  };
+
+  let RemoveCommentContent = () => {
+    return (
+      <RemoveComment
+        postId={postId}
+        setAllComments={setAllComments}
+        removeModal={removeModal}
+        setRemoveModal={setRemoveModal}
+      />
+    );
+  };
 
   return (
     <div className={classes.main}>
@@ -305,7 +333,11 @@ function PlaceDetail() {
                       placeholder="Your comment"
                     />
                     <button className={classes.sendCommentBtn} type="submit">
-                      <SendIcon />
+                      {submitting ? (
+                        <div className={classes.loading}></div>
+                      ) : (
+                        <SendIcon />
+                      )}
                     </button>
                   </form>
                 )}
@@ -340,6 +372,11 @@ function PlaceDetail() {
                               <strong>@{comment?.commenter}:</strong>
                             </div>
                             <p>{comment?.comment}</p>
+                            <DeleteIcon
+                              onClick={() => removeCommentHandler(comment?.key)}
+                              fontSize="small"
+                              className={classes.deleteIcon}
+                            />
                           </li>
                         ))}
                       </ul>
@@ -373,7 +410,11 @@ function PlaceDetail() {
                       placeholder="Your comment"
                     />
                     <button className={classes.sendCommentBtn} type="submit">
-                      <SendIcon />
+                      {submitting ? (
+                        <div className={classes.loading}></div>
+                      ) : (
+                        <SendIcon />
+                      )}
                     </button>
                   </form>
                 )}
@@ -390,6 +431,19 @@ function PlaceDetail() {
           </div>
         </div>
       </div>
+      {removeModal &&
+        ReactDOM.createPortal(
+          <div
+            onClick={cancelCommentHandler}
+            className={classes.background}
+          ></div>,
+          document.getElementById("background")
+        )}
+      {removeModal &&
+        ReactDOM.createPortal(
+          <RemoveCommentContent />,
+          document.getElementById("removecomment")
+        )}
     </div>
   );
 }

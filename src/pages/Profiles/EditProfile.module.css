@@ -21,6 +21,10 @@
   object-fit: cover;
   /* object-position: top; */
 }
+.orText {
+  text-align: center;
+  color: #015792;
+}
 
 .pp {
   position: absolute;
@@ -33,6 +37,16 @@
   transform: translate(-50%, 50%);
   border: 6px solid white;
   background: white;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
 }
 
 .ppOther {
@@ -139,12 +153,13 @@
   background-color: #42b72a;
   color: white;
   border-radius: 5px;
-  padding: 0.5rem 1rem;
   display: inline-block;
   transition: all 0.3s ease-in-out;
   text-align: center;
   border: none;
   font-weight: bolder;
+  width: 80px;
+  height: 30px;
   /* cursor: pointer; */
 }
 .saveButton > button:first-child:hover {
@@ -155,15 +170,38 @@
   background: red;
   color: white;
   cursor: pointer;
-  padding: 0.5rem 1rem;
   transition: all 0.3s ease-in-out;
   font-weight: bolder;
   border: none;
   border-radius: 5px;
+  width: 80px;
+  height: 30px;
 }
 
 .saveButton > button:last-child:hover {
   background-color: rgb(213, 0, 0);
+}
+
+.removeAccountBtn {
+  text-align: center;
+  background: white;
+  padding-bottom: 1rem;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.removeAccountBtn > button {
+  background-color: #015792;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.4rem;
+  border-radius: 5px;
+  margin: 0 auto;
+  cursor: pointer;
+  width: 150px;
+  height: 40px;
+  border: none;
 }
 
 .iconSide {

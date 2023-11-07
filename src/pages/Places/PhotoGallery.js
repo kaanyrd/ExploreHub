@@ -8,6 +8,9 @@ function PhotoGallery() {
   const navigate = useNavigate();
   const [images, setImages] = useState(null);
 
+  // FIXME
+  // "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json?orderBy=\"$key\"&limitToLast=5"
+
   useEffect(() => {
     const gettingPhotos = async () => {
       try {
@@ -32,18 +35,19 @@ function PhotoGallery() {
     gettingPhotos();
   }, [images]);
 
-  console.log(images);
-
   useEffect(() => {
     if (!auth) {
       navigate("/");
     }
   }, [auth, navigate]);
 
+  console.log(images);
+
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
         <h3 className={classes.title}>Photo Gallery</h3>
+        {images?.length === 0 && <h4 className={classes.title}>No Image...</h4>}
         <div>
           {images?.map((post) => (
             <div className={classes.photos}>

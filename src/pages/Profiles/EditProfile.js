@@ -6,12 +6,14 @@ import AuthContext from "../../context/Authentication";
 import bannerPhoto from "../../assets/casualPhotos/nobanner.png";
 import profilePhoto from "../../assets/casualPhotos/profileImg2.png";
 import EditProfileInfo from "../../components/EditProfileInfo/EditProfileInfo";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import RemoveAccount from "../../components/RemoveAccount/RemoveAccount";
 
 function EditProfile() {
   const [submitting, setSubmitting] = useState(false);
   const [ppSide, setPpSide] = useState(null);
   const [bannerSide, setBannerSide] = useState(null);
-
+  const [removeAccount, setRemoveAccount] = useState(null);
   const { auth } = useContext(AuthContext);
   const [user, setUser] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -66,7 +68,7 @@ function EditProfile() {
 
       for (let key in responseData) {
         arrData.push({
-          id: key,
+          key: key,
           ...responseData[key],
         });
       }
@@ -237,6 +239,19 @@ function EditProfile() {
     return <EditProfileInfo userInfo={userInfo} setUserInfo={setUserInfo} />;
   };
 
+  let RemoveAccountContent = () => {
+    return (
+      <RemoveAccount
+        setRemoveAccount={setRemoveAccount}
+        removeAccount={removeAccount}
+      />
+    );
+  };
+
+  let cancelRemoveHandler = () => {
+    setRemoveAccount(null);
+  };
+
   useEffect(() => {
     if (userInfo) {
       setTimeout(() => {
@@ -252,163 +267,188 @@ function EditProfile() {
     }
   }, [navigate, auth]);
 
-  console.log(name, surname, nick);
+  const onRemovingHandler = (data) => {
+    setRemoveAccount(data);
+  };
 
   return (
     <div className={classes.main}>
-      <form onSubmit={onSubmitHandler} className={classes.mainContent}>
-        <div className={classes.photoSide}>
-          <img
-            src={bannerSide || user?.banner || bannerPhoto}
-            className={classes.bannerPhoto}
-            alt="banner"
-          />
-          <img
-            src={ppSide || user?.pp || profilePhoto}
-            className={`${classes.pp} ${
-              user?.gender === "male" && classes.ppMale
-            } ${user?.gender === "female" && classes.ppFemale} ${
-              user?.gender === "other" && classes.ppOther
-            }`}
-            alt="banner"
-          />
-        </div>
-        <div className={classes.infoSide}>
-          <div className={classes.topInfo}>
-            <div>
+      <div className={classes.mainContent}>
+        <form onSubmit={onSubmitHandler}>
+          <div className={classes.photoSide}>
+            <img
+              src={bannerSide || user?.banner || bannerPhoto}
+              className={classes.bannerPhoto}
+              alt="banner"
+            />
+            <img
+              src={ppSide || user?.pp || profilePhoto}
+              className={`${classes.pp} ${
+                user?.gender === "male" && classes.ppMale
+              } ${user?.gender === "female" && classes.ppFemale} ${
+                user?.gender === "other" && classes.ppOther
+              }`}
+              alt="banner"
+            />
+          </div>
+          <div className={classes.infoSide}>
+            <div className={classes.topInfo}>
               <div>
-                <label>Firstname</label>
-                <input
-                  value={name}
-                  onChange={nameChangeHandler}
-                  className={`${classes.input} ${
-                    nameValid === false && classes.invalidInput
-                  }`}
-                  placeholder={user?.firstName || "Your name"}
-                />
-              </div>
-              <div>
-                <label>Lastname</label>
-                <input
-                  onChange={surnameChangeHandler}
-                  value={surname}
-                  className={`${classes.input} ${
-                    surnameValid === false && classes.invalidInput
-                  }`}
-                  placeholder={user?.lastName || "Your surname"}
-                />
-              </div>
-              <div>
-                <label>Nickname</label>
-                <input
-                  onChange={nickChangeHandler}
-                  value={nick}
-                  className={`${classes.input} ${
-                    nickValid === false && classes.invalidInput
-                  }`}
-                  placeholder={user?.nickName || "Your nick"}
-                />
-              </div>
-              <div>
-                <label>Profil Photo</label>
-                <input
-                  onChange={pPhotoChangeHandler}
-                  value={pPhoto}
-                  placeholder="As URL"
-                  className={`${classes.input} ${
-                    pPhotoValid === false && classes.invalidInput
-                  }`}
-                  type="text"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Banner Photo as URL</label>
-                <input
-                  onChange={bannerChangeHandler}
-                  value={bannerPP}
-                  placeholder="As URL"
-                  className={`${classes.input} ${
-                    bannerPPValid === false && classes.invalidInput
-                  }`}
-                  type="text"
-                />
-              </div>
-              <div>
-                <label className={classes.iconSide}>Town is</label>
-                <input
-                  onChange={townChangeHandler}
-                  className={`${classes.input} ${
-                    townValid === false && classes.invalidInput
-                  }`}
-                  value={town}
-                  placeholder={user?.town || "Your town"}
-                />
-              </div>
-              <div>
-                <label className={classes.iconSide}>Living in</label>
-                <input
-                  onChange={livingChangeHandler}
-                  className={`${classes.input} ${
-                    livingValid === false && classes.invalidInput
-                  }`}
-                  value={living}
-                  placeholder={user?.living || "Any city..."}
-                />
-              </div>
-
-              <div className={classes.genderSide}>
                 <div>
-                  <label className={classes.iconSide}>Birth </label>
+                  <label>Firstname</label>
                   <input
-                    onChange={birthChangeHandler}
+                    value={name}
+                    onChange={nameChangeHandler}
                     className={`${classes.input} ${
-                      birthDateValid === false && classes.invalidInput
+                      nameValid === false && classes.invalidInput
                     }`}
-                    type="date"
-                    value={birthDate}
+                    placeholder={user?.firstName || "Your name"}
                   />
                 </div>
                 <div>
-                  <label>Gender</label>
-                  <select
-                    onChange={genderChangeHandler}
-                    value={genders}
-                    className={`${classes.selectSide} ${
-                      gendersValid === false && classes.invalidInput
+                  <label>Lastname</label>
+                  <input
+                    onChange={surnameChangeHandler}
+                    value={surname}
+                    className={`${classes.input} ${
+                      surnameValid === false && classes.invalidInput
                     }`}
-                  >
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                    <option value="other">Other</option>
-                  </select>
+                    placeholder={user?.lastName || "Your surname"}
+                  />
+                </div>
+                <div>
+                  <label>Nickname</label>
+                  <input
+                    onChange={nickChangeHandler}
+                    value={nick}
+                    className={`${classes.input} ${
+                      nickValid === false && classes.invalidInput
+                    }`}
+                    placeholder={user?.nickName || "Your nick"}
+                  />
+                </div>
+                <div>
+                  <label>Profil Photo</label>
+                  <input
+                    onChange={pPhotoChangeHandler}
+                    value={pPhoto}
+                    placeholder="As URL"
+                    className={`${classes.input} ${
+                      pPhotoValid === false && classes.invalidInput
+                    }`}
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div>
+                <div>
+                  <label>Banner Photo as URL</label>
+                  <input
+                    onChange={bannerChangeHandler}
+                    value={bannerPP}
+                    placeholder="As URL"
+                    className={`${classes.input} ${
+                      bannerPPValid === false && classes.invalidInput
+                    }`}
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <label className={classes.iconSide}>Town is</label>
+                  <input
+                    onChange={townChangeHandler}
+                    className={`${classes.input} ${
+                      townValid === false && classes.invalidInput
+                    }`}
+                    value={town}
+                    placeholder={user?.town || "Your town"}
+                  />
+                </div>
+                <div>
+                  <label className={classes.iconSide}>Living in</label>
+                  <input
+                    onChange={livingChangeHandler}
+                    className={`${classes.input} ${
+                      livingValid === false && classes.invalidInput
+                    }`}
+                    value={living}
+                    placeholder={user?.living || "Any city..."}
+                  />
+                </div>
+
+                <div className={classes.genderSide}>
+                  <div>
+                    <label className={classes.iconSide}>Birth </label>
+                    <input
+                      onChange={birthChangeHandler}
+                      className={`${classes.input} ${
+                        birthDateValid === false && classes.invalidInput
+                      }`}
+                      type="date"
+                      value={birthDate}
+                    />
+                  </div>
+                  <div>
+                    <label>Gender</label>
+                    <select
+                      onChange={genderChangeHandler}
+                      value={genders}
+                      className={`${classes.selectSide} ${
+                        gendersValid === false && classes.invalidInput
+                      }`}
+                    >
+                      <option value="female">Female</option>
+                      <option value="male">Male</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
+            <div className={classes.saveButton}>
+              <button
+                className={
+                  submitting ? classes.submittingActive : classes.nonSubmitting
+                }
+                disabled={submitting}
+                type="submit"
+              >
+                {submitting ? "Submitting" : "Save"}
+              </button>
+              <button
+                className={
+                  submitting ? classes.submittingActive : classes.nonSubmitting
+                }
+                disabled={submitting}
+                onClick={cancelHandler}
+              >
+                Cancel
+              </button>
+            </div>
+            <h4 className={classes.orText}>or</h4>
           </div>
-          <div className={classes.saveButton}>
-            <button
-              className={
-                submitting ? classes.submittingActive : classes.nonSubmitting
-              }
-              disabled={submitting}
-              type="submit"
-            >
-              {submitting ? "Submitting" : "Save"}
-            </button>
-            <button
-              className={
-                submitting ? classes.submittingActive : classes.nonSubmitting
-              }
-              disabled={submitting}
-              onClick={cancelHandler}
-            >
-              Cancel
-            </button>
-          </div>
+        </form>
+        <div className={classes.removeAccountBtn}>
+          <button onClick={() => onRemovingHandler(user?.key)}>
+            <PersonRemoveIcon />
+            Remove Account
+          </button>
         </div>
-      </form>
+      </div>
+
+      {removeAccount &&
+        ReactDOM.createPortal(
+          <div
+            onClick={cancelRemoveHandler}
+            className={classes.background}
+          ></div>,
+          document.getElementById("background")
+        )}
+      {removeAccount &&
+        ReactDOM.createPortal(
+          <RemoveAccountContent />,
+          document.getElementById("removeaccount")
+        )}
       {userInfo &&
         ReactDOM.createPortal(
           <InfoContent />,

@@ -1,0 +1,52 @@
+.main {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  max-width: 650px;
+  background-color: white;
+  z-index: 3;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.title {
+  color: #015792;
+  text-align: center;
+}
+
+.removeIcon {
+  color: white;
+  margin-top: 0.1rem;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.5rem;
+  margin: 1rem auto 0.5rem auto;
+}
+
+.buttons > button {
+  width: 85px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bolder;
+}
+.buttons > button:first-child {
+  background-color: red;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.3rem;
+}
+
+.buttons > button:last-child {
+  background-color: #015792;
+  color: white;
+}
