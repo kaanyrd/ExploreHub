@@ -3,11 +3,44 @@ import classes from "./PlacesList.module.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/casualPhotos/profileImg2.png";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 function PlacesList({ data }) {
+  const POSTS_PER_PAGE = 6;
   const [activeTags, setActiveTags] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [index, setIndex] = useState(1);
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+
+  const visiblePosts = filteredData?.slice(startIndex, endIndex);
+
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    scrollToTop();
+  };
+
+  const nextPage = () => {
+    if (startIndex + POSTS_PER_PAGE < filteredData?.length) {
+      setCurrentPage(currentPage + 1);
+      scrollToTop();
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      scrollToTop();
+    }
+  };
 
   useEffect(() => {
     setFilteredData(data);
@@ -15,11 +48,14 @@ function PlacesList({ data }) {
 
   const onTagChangeHandler = (e) => {
     setActiveTags(e);
-    setFilteredData(data.filter((post) => post.place === e));
+    const filtered = data.filter((post) => post.place === e);
+    setFilteredData(filtered);
+    setCurrentPage(1);
   };
   const onAllTagHandler = () => {
     setActiveTags(null);
     setFilteredData(data);
+    setCurrentPage(1);
   };
 
   function formatTimeAgo(dateData) {
@@ -66,112 +102,110 @@ function PlacesList({ data }) {
 
   return (
     <div>
-      {
-        <div className={classes.lastVisits}>
-          {data?.length > 0 ? (
-            <div>
-              <h4>Active Tags: </h4>
-              {data[0] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === null && classes.activeTag
-                  }`}
-                  onClick={onAllTagHandler}
-                >
-                  # All
-                </p>
-              )}
-              {data[0] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === data[0]?.place && classes.activeTag
-                  }`}
-                  onClick={() => onTagChangeHandler(data[0]?.place)}
-                >
-                  {" "}
-                  #{data[0]?.place}{" "}
-                </p>
-              )}
-              {data[1] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === data[1]?.place && classes.activeTag
-                  }`}
-                  onClick={() => onTagChangeHandler(data[1]?.place)}
-                >
-                  {" "}
-                  #{data[1]?.place}{" "}
-                </p>
-              )}
-              {data[2] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === data[2]?.place && classes.activeTag
-                  }`}
-                  onClick={() => onTagChangeHandler(data[2]?.place)}
-                >
-                  {" "}
-                  #{data[2]?.place}{" "}
-                </p>
-              )}
-              {data[3] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === data[3]?.place && classes.activeTag
-                  }`}
-                  onClick={() => onTagChangeHandler(data[3]?.place)}
-                >
-                  {" "}
-                  #{data[3]?.place}{" "}
-                </p>
-              )}
-              {data[4] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === data[4]?.place && classes.activeTag
-                  }`}
-                  onClick={() => onTagChangeHandler(data[4]?.place)}
-                >
-                  {" "}
-                  #{data[4]?.place}{" "}
-                </p>
-              )}
-              {data[5] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === data[5]?.place && classes.activeTag
-                  }`}
-                  onClick={() => onTagChangeHandler(data[5]?.place)}
-                >
-                  {" "}
-                  #{data[5]?.place}{" "}
-                </p>
-              )}
-              {data[6] && (
-                <p
-                  className={`${classes.tagButton} ${
-                    activeTags === data[6]?.place && classes.activeTag
-                  }`}
-                  onClick={() => onTagChangeHandler(data[6]?.place)}
-                >
-                  {" "}
-                  #{data[6]?.place}{" "}
-                </p>
-              )}
-            </div>
-          ) : (
-            <div className={classes.info}>
-              <h4>Active Tags: </h4>
-              <h4>-</h4>
-            </div>
-          )}
-        </div>
-      }
-      {data?.length === 0 && (
+      <div className={classes.lastVisits}>
+        {data?.length > 0 ? (
+          <div>
+            <h4>Active Tags: </h4>
+            {data[0] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === null && classes.activeTag
+                }`}
+                onClick={onAllTagHandler}
+              >
+                # All
+              </p>
+            )}
+            {data[0] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === data[0]?.place && classes.activeTag
+                }`}
+                onClick={() => onTagChangeHandler(data[0]?.place)}
+              >
+                {" "}
+                #{data[0]?.place}{" "}
+              </p>
+            )}
+            {data[1] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === data[1]?.place && classes.activeTag
+                }`}
+                onClick={() => onTagChangeHandler(data[1]?.place)}
+              >
+                {" "}
+                #{data[1]?.place}{" "}
+              </p>
+            )}
+            {data[2] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === data[2]?.place && classes.activeTag
+                }`}
+                onClick={() => onTagChangeHandler(data[2]?.place)}
+              >
+                {" "}
+                #{data[2]?.place}{" "}
+              </p>
+            )}
+            {data[3] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === data[3]?.place && classes.activeTag
+                }`}
+                onClick={() => onTagChangeHandler(data[3]?.place)}
+              >
+                {" "}
+                #{data[3]?.place}{" "}
+              </p>
+            )}
+            {data[4] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === data[4]?.place && classes.activeTag
+                }`}
+                onClick={() => onTagChangeHandler(data[4]?.place)}
+              >
+                {" "}
+                #{data[4]?.place}{" "}
+              </p>
+            )}
+            {data[5] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === data[5]?.place && classes.activeTag
+                }`}
+                onClick={() => onTagChangeHandler(data[5]?.place)}
+              >
+                {" "}
+                #{data[5]?.place}{" "}
+              </p>
+            )}
+            {data[6] && (
+              <p
+                className={`${classes.tagButton} ${
+                  activeTags === data[6]?.place && classes.activeTag
+                }`}
+                onClick={() => onTagChangeHandler(data[6]?.place)}
+              >
+                {" "}
+                #{data[6]?.place}{" "}
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className={classes.info}>
+            <h4>Active Tags: </h4>
+            <h4>-</h4>
+          </div>
+        )}
+      </div>
+      {filteredData?.length === 0 && (
         <h3 className={classes.infoText}>No post yet...</h3>
       )}
       <div className={classes.list}>
-        {filteredData?.map((item) => (
+        {visiblePosts?.map((item) => (
           <Link key={item?.id} to={item?.id}>
             <div className={classes.item}>
               <div className={classes.cardTopInfo}>
@@ -226,7 +260,7 @@ function PlacesList({ data }) {
               </div>
               <div className={classes.description}>
                 <strong>
-                  {item.firstName} {item.lastName} says...
+                  {item?.firstName} {item?.lastName} says...
                 </strong>
                 <p>{item?.description}</p>
               </div>
@@ -234,6 +268,36 @@ function PlacesList({ data }) {
           </Link>
         ))}
       </div>
+      {visiblePosts?.length > 0 && (
+        <div className={classes.pagination}>
+          {
+            <div className={classes.pageNumbers}>
+              <button className={classes.prevBtn} onClick={() => prevPage()}>
+                <ArrowBackIosIcon fontSize="small" />
+              </button>
+              {filteredData?.length > 0 &&
+                Array(Math.ceil(filteredData?.length / POSTS_PER_PAGE))
+                  .fill(0)
+                  .map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToPage(index + 1)}
+                      className={
+                        currentPage === index + 1
+                          ? classes.activePage
+                          : classes.inactivePage
+                      }
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+              <button className={classes.nextBtn} onClick={() => nextPage()}>
+                <ArrowForwardIosIcon fontSize="small" />
+              </button>
+            </div>
+          }
+        </div>
+      )}
     </div>
   );
 }

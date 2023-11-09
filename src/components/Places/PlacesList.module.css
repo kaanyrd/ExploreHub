@@ -121,6 +121,49 @@
 .nickName {
   color: white;
 }
+.pageNumbers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.4rem;
+  row-gap: 0.4rem;
+  margin-top: 2rem;
+}
+
+.pageNumbers > * {
+}
+.prevBtn,
+.nextBtn {
+  width: 70px;
+  border: none;
+  background: #015792;
+  color: white;
+  border-radius: 5px;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.activePage {
+  background-color: #015792;
+  color: white;
+  border-radius: 5px;
+  width: 25px;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.inactivePage {
+  background-color: #529bcb;
+  color: white;
+  width: 25px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
 
 .lastVisits > div {
   padding: 0.5rem;

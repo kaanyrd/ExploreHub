@@ -14,6 +14,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveComment from "../../components/RemoveComment/RemoveComment";
 
 function PlaceDetail() {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth();
+  let year = date.getFullYear();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+
   const params = useParams();
   const { auth, lastLogins } = useContext(AuthContext);
   const postId = params.placesId;
@@ -122,15 +130,39 @@ function PlaceDetail() {
       setSubmitting(true);
       try {
         let commentKey = Math.random();
+        const newComment = {
+          id: commentKey,
+          commenter: lastLogins?.nickName,
+          commenterPP: lastLogins?.pp,
+          comment: commentSelf,
+          date: {
+            day: day,
+            month: month,
+            year: year,
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds,
+          },
+        };
+
         setAllComments((prev) => [
           {
             id: commentKey,
             commenter: lastLogins?.nickName,
             commenterPP: lastLogins?.pp,
             comment: commentSelf,
+            date: {
+              day: day,
+              month: month,
+              year: year,
+              hours: hours,
+              minutes: minutes,
+              seconds: seconds,
+            },
           },
           ...prev,
         ]);
+
         const response = await fetch(
           `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/comments.json`,
           {
@@ -138,12 +170,7 @@ function PlaceDetail() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              id: Math.random(),
-              commenter: lastLogins?.nickName,
-              commenterPP: lastLogins?.pp,
-              comment: commentSelf,
-            }),
+            body: JSON.stringify(newComment),
           }
         );
         const resData = await response.json();
@@ -157,6 +184,38 @@ function PlaceDetail() {
       }
     }
   };
+
+  function formatCommentTime(commentDate) {
+    if (!commentDate) return "";
+
+    const now = new Date();
+    const commentTime = new Date(
+      commentDate?.year,
+      commentDate?.month,
+      commentDate?.day,
+      commentDate?.hours,
+      commentDate?.minutes,
+      commentDate?.seconds
+    );
+
+    const timeDifference = now - commentTime;
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days}d ago`;
+    } else if (hours > 0) {
+      return `${hours}h ago`;
+    } else if (minutes > 1) {
+      return `${minutes}m ago`;
+    } else if (minutes === 1) {
+      return `1m ago`;
+    } else {
+      return `${seconds}s ago`;
+    }
+  }
 
   useEffect(() => {
     if (commentSelf.length > 0) {
@@ -369,14 +428,21 @@ function PlaceDetail() {
                                 alt="pp"
                                 className={classes.commenterPhoto}
                               />
-                              <strong>@{comment?.commenter}:</strong>
+                              <strong>
+                                @{comment?.commenter} (
+                                {formatCommentTime(comment?.date)}):
+                              </strong>
                             </div>
                             <p>{comment?.comment}</p>
-                            <DeleteIcon
-                              onClick={() => removeCommentHandler(comment?.key)}
-                              fontSize="small"
-                              className={classes.deleteIcon}
-                            />
+                            {lastLogins.nickName === comment.commenter && (
+                              <DeleteIcon
+                                onClick={() =>
+                                  removeCommentHandler(comment?.key)
+                                }
+                                fontSize="small"
+                                className={classes.deleteIcon}
+                              />
+                            )}
                           </li>
                         ))}
                       </ul>

@@ -6,7 +6,6 @@ import LoginIcon from "@mui/icons-material/Login";
 
 function Home() {
   const { auth, lastLogins } = useContext(AuthContext);
-  console.log(lastLogins);
 
   return (
     <div className={classes.main}>

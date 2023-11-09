@@ -33,7 +33,7 @@
   margin-bottom: 3rem;
   border-radius: 10px;
   padding: 0.5rem;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 5px 15px rgba(1, 87, 146, 0.8);
 }
 .photoSide {
   /* border: 3px solid green; */
@@ -355,6 +355,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .commentsList {
@@ -405,9 +406,10 @@
   width: 100%;
   margin-bottom: 0.3rem;
   background-color: #d9ebf9;
-  padding: 0.2rem;
+  padding: 0.5rem;
   color: #015792;
   position: relative;
+  border-radius: 5px;
 }
 .moreIcon {
   position: absolute;

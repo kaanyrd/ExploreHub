@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import classes from "./EditPlace.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import EditPostInfo from "../../components/EditPost/EditPostInfo";
+import avatar from "../../assets/casualPhotos/profileImg2.png";
 
 function EditPlace() {
   const params = useParams();
@@ -169,7 +170,7 @@ function EditPlace() {
                 <div className={classes.ppSide}>
                   <img
                     className={classes.ppSelf}
-                    src={post?.pp}
+                    src={post?.pp || avatar}
                     alt={post?.nickName}
                   />
                 </div>

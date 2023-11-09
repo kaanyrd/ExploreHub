@@ -26,8 +26,9 @@ function MyProfile() {
   const [user, setUser] = useState(null);
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
-  const [showComments, setShowComments] = useState(true);
   const [removing, setRemoving] = useState(null);
+  // const [showComments, setShowComments] = useState(true);
+  // const [comments, setComments] = useState(null);
 
   const likeHandler = () => {
     setLiked((prev) => !prev);
@@ -37,9 +38,9 @@ function MyProfile() {
     setBookmarked((prev) => !prev);
   };
 
-  const commentHandler = () => {
-    setShowComments((prev) => !prev);
-  };
+  // const commentHandler = () => {
+  //   setShowComments((prev) => !prev);
+  // };
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -90,7 +91,6 @@ function MyProfile() {
 
   const [imageStates, setImageStates] = useState([]);
 
-  // POST CHANGE PHOTO
   useEffect(() => {
     if (posts) {
       const initialImageStates = Array(posts.length).fill(1);
@@ -326,7 +326,7 @@ function MyProfile() {
                     </div>
                     <div className={classes.likesRight}>
                       <Link
-                        to={`${data?.id}/editPlace`}
+                        to={`${data?.key}/editPlace`}
                         className={classes.editIcon}
                       >
                         <EditIcon />
@@ -355,13 +355,14 @@ function MyProfile() {
                     </p>
                   </div>
                 </div>
-                <div>
-                  {!data?.comments && (
+                <p className={classes.noPostText}>Comments are gonna add...</p>
+                {/* <div>
+                  {comments.length === 0 && (
                     <p className={classes.commentInfo}>
                       There is no comment...
                     </p>
                   )}
-                  {data?.comments?.length > 0 && showComments ? (
+                  {comments.length > 0 && showComments ? (
                     <div>
                       <p
                         className={classes.commentInfo}
@@ -370,29 +371,34 @@ function MyProfile() {
                         Close comments...
                       </p>
                       <ul className={classes.comments}>
-                        {data?.comments.map((comment) => (
-                          <li key={comment?.id}>
-                            <strong>@{comment?.nickname}:</strong>{" "}
-                            {comment?.message}
+                        {comments?.map((comment) => (
+                          <li className={classes.eachComment} key={comment?.id}>
+                            <div className={classes.commentSelf}>
+                              <img
+                                className={classes.commentPP}
+                                src={comment?.commenterPP}
+                                alt="pp"
+                              />
+                              <strong>@{comment?.commenter}:</strong>
+                            </div>
+                            <p>{comment?.comment}</p>
                           </li>
                         ))}
                       </ul>
                     </div>
                   ) : (
-                    data?.comments?.length > 0 && (
+                    comments?.length > 0 && (
                       <p
                         onClick={commentHandler}
                         className={classes.commentInfo}
                       >
-                        {`See other ${data?.comments?.length} ${
-                          data?.comments?.length === 1
-                            ? "comment..."
-                            : "comments..."
+                        {`See other (${comments?.length}) ${
+                          comments?.length === 1 ? "comment..." : "comments..."
                         }`}
                       </p>
                     )
                   )}
-                </div>
+                </div> */}
               </div>
             ))}
           </div>

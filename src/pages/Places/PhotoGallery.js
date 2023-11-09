@@ -8,8 +8,11 @@ function PhotoGallery() {
   const navigate = useNavigate();
   const [images, setImages] = useState(null);
 
-  // FIXME
-  // "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json?orderBy=\"$key\"&limitToLast=5"
+  useEffect(() => {
+    if (!auth) {
+      navigate("/");
+    }
+  }, [auth, navigate]);
 
   useEffect(() => {
     const gettingPhotos = async () => {
@@ -26,13 +29,16 @@ function PhotoGallery() {
             ...resData[key],
           });
         }
-        const data = arrData.reverse().slice(0, 3);
+        const data = arrData.reverse();
         setImages(data);
       } catch (error) {
         console.log(error);
       }
     };
-    gettingPhotos();
+
+    if (!images) {
+      gettingPhotos();
+    }
   }, [images]);
 
   useEffect(() => {
@@ -40,8 +46,6 @@ function PhotoGallery() {
       navigate("/");
     }
   }, [auth, navigate]);
-
-  console.log(images);
 
   return (
     <div className={classes.main}>
