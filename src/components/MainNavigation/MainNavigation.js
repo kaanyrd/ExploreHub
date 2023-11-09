@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import icon from "../../assets/icons/logo2.png";
 import classes from "./MainNavigation.module.css";
@@ -15,11 +15,27 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import AuthContext from "../../context/Authentication";
+import SearchingContext from "../../context/Searching.js";
 
 function MainNavigation() {
-  const [user, setNewUser] = useState(null);
+  const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
+  const { setSearching } = useContext(SearchingContext);
+  const [input, setInput] = useState("");
+
+  const onInputChangeHandler = (e) => {
+    setInput(e.target.value);
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    setSearching(input.toLowerCase());
+    setInput("");
+    navigate("/places");
+  };
+
   const dispatch = useDispatch();
+  const [user, setNewUser] = useState(null);
   const profileBar = useSelector((state) => state.profileSide.toggle);
   const navigationBar = useSelector((state) => state.navigationSlice.toggle);
 
@@ -69,7 +85,6 @@ function MainNavigation() {
 
   return (
     <div className={classes.navbar}>
-      {/* FIXME LOADER BORDER */}
       {navigationBar && (
         <div className={classes.inputSide}>
           <ArrowBackIosIcon
@@ -77,8 +92,13 @@ function MainNavigation() {
             fontSize="large"
             className={classes.backTo}
           />
-          <form className={classes.formSide}>
-            <input type="text" placeholder="Search any post..." />
+          <form onSubmit={onSubmitHandler} className={classes.formSide}>
+            <input
+              value={input}
+              onChange={onInputChangeHandler}
+              type="text"
+              placeholder="Search any post or user..."
+            />
             <button className={classes.formSubmitButton} type="submit">
               <SearchIcon />
             </button>
@@ -95,7 +115,7 @@ function MainNavigation() {
               <div onClick={openSideHandler} className={classes.menuIcon}>
                 <MenuIcon />
               </div>
-              <Link to="/" end>
+              <Link to="/" end="true">
                 <img src={icon} className={classes.logoSelf} alt="icon" />
               </Link>
             </div>
@@ -107,8 +127,13 @@ function MainNavigation() {
             />
           </div>
           <div>
-            <form className={classes.bigScreenForm}>
-              <input type="text" placeholder="Search any post..." />
+            <form onSubmit={onSubmitHandler} className={classes.bigScreenForm}>
+              <input
+                value={input}
+                onChange={onInputChangeHandler}
+                type="text"
+                placeholder="Search any post or user..."
+              />
               <button type="submit">
                 <SearchIcon />
               </button>

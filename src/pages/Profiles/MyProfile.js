@@ -13,10 +13,11 @@ import AuthContext from "../../context/Authentication";
 import avatar from "../../assets/casualPhotos/profileImg2.png";
 import banner from "../../assets/casualPhotos/nobanner.png";
 import PostDelete from "../../components/PostDelete/PostDelete";
+import BookmarksContext from "../../context/Bookmarks";
 
 function MyProfile() {
   const navigate = useNavigate();
-  const { auth } = useContext(AuthContext);
+  const { auth, lastLogins } = useContext(AuthContext);
   useEffect(() => {
     if (!auth) {
       navigate("/");
@@ -25,17 +26,13 @@ function MyProfile() {
   const [posts, setPost] = useState([]);
   const [user, setUser] = useState(null);
   const [liked, setLiked] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
+  // const [bookmarked, setBookmarked] = useState(false);
   const [removing, setRemoving] = useState(null);
   // const [showComments, setShowComments] = useState(true);
   // const [comments, setComments] = useState(null);
 
   const likeHandler = () => {
     setLiked((prev) => !prev);
-  };
-
-  const bookmarkHandler = () => {
-    setBookmarked((prev) => !prev);
   };
 
   // const commentHandler = () => {
@@ -151,6 +148,26 @@ function MyProfile() {
     setRemoving(null);
   };
 
+  const { bookmarks, setBookmarks } = useContext(BookmarksContext);
+
+  const bookmarksHandler = (data) => {
+    const control = bookmarks.find(
+      (bookmark) =>
+        bookmark.post === data && bookmark.user === lastLogins.nickName
+    );
+
+    if (control) {
+      setBookmarks((prev) => prev.filter((item) => item !== control));
+      // setBookmarked(true);
+    } else {
+      setBookmarks((prev) => [
+        { user: lastLogins.nickName, post: data },
+        ...prev,
+      ]);
+      // setBookmarked(false);
+    }
+  };
+
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
@@ -235,7 +252,7 @@ function MyProfile() {
         ) : (
           <div className={classes.list}>
             {posts?.map((data, index) => (
-              <div key={data?.id} className={classes.card}>
+              <div key={index} className={classes.card}>
                 <div className={classes.contentLeft}>
                   <div className={classes.cardTop}>
                     <div className={classes.ppSide}>
@@ -338,9 +355,15 @@ function MyProfile() {
                       </div>
                       <div
                         className={`${classes.bookmarkBtn} ${
-                          bookmarked && classes.bookmarked
+                          bookmarks.some(
+                            (bookmark) =>
+                              bookmark.post === data?.key &&
+                              bookmark.user === lastLogins.nickName
+                          )
+                            ? classes.bookmarked
+                            : undefined
                         }`}
-                        onClick={bookmarkHandler}
+                        onClick={() => bookmarksHandler(data?.key)}
                       >
                         <BookmarkIcon />
                       </div>

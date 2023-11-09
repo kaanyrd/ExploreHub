@@ -21,6 +21,21 @@
   background: #015792;
   height: 200px;
 }
+
+.photoSide:hover .zoomIcon {
+  opacity: 1;
+}
+
+.zoomIcon {
+  color: white;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease-in-out;
+}
+
 .photo {
   transition: all 0.3s ease-in-out;
   width: 100%;

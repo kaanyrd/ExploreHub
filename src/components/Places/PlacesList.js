@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./PlacesList.module.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/casualPhotos/profileImg2.png";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import SearchingContext from "../../context/Searching";
 
 function PlacesList({ data }) {
+  const { searching, setSearching } = useContext(SearchingContext);
+
+  console.log(searching);
+
   const POSTS_PER_PAGE = 6;
   const [activeTags, setActiveTags] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
@@ -16,12 +21,84 @@ function PlacesList({ data }) {
     window.scrollTo(0, 0);
   };
 
+  const removeSearchingHandler = () => {
+    setSearching("");
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
+
+  // const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  // const endIndex = startIndex + POSTS_PER_PAGE;
+
+  // const filteredPosts =
+  //   searching !== ""
+  //     ? filteredData?.filter(
+  //         (item) =>
+  //           item?.firstName?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.lastName?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.nickName?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.description
+  //             ?.toLowerCase()
+  //             .includes(searching.toLowerCase()) ||
+  //           item?.place?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.country?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.city?.toLowerCase().includes(searching.toLowerCase())
+  //       )
+  //     : filteredData;
+
+  // const visiblePosts = filteredPosts?.slice(startIndex, endIndex);
+
+  // ...
 
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
 
-  const visiblePosts = filteredData?.slice(startIndex, endIndex);
+  // ...
+  useEffect(() => {
+    setFilteredData(data);
+    setCurrentPage(1); // Sayfa numarasını sıfırla
+  }, [data, searching]);
+
+  // const filteredPosts =
+  //   searching !== ""
+  //     ? data?.filter(
+  //         (item) =>
+  //           item?.firstName?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.lastName?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.nickName?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.description
+  //             ?.toLowerCase()
+  //             .includes(searching.toLowerCase()) ||
+  //           item?.place?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.country?.toLowerCase().includes(searching.toLowerCase()) ||
+  //           item?.city?.toLowerCase().includes(searching.toLowerCase())
+  //       )
+  //     : data;
+
+  // const visiblePosts = filteredPosts?.slice(startIndex, endIndex);
+
+  const filteredPosts =
+    searching !== ""
+      ? filteredData?.filter(
+          (item) =>
+            item?.firstName?.toLowerCase().includes(searching.toLowerCase()) ||
+            item?.lastName?.toLowerCase().includes(searching.toLowerCase()) ||
+            item?.nickName?.toLowerCase().includes(searching.toLowerCase()) ||
+            item?.description
+              ?.toLowerCase()
+              .includes(searching.toLowerCase()) ||
+            item?.place?.toLowerCase().includes(searching.toLowerCase()) ||
+            item?.country?.toLowerCase().includes(searching.toLowerCase()) ||
+            item?.city?.toLowerCase().includes(searching.toLowerCase())
+        )
+      : activeTags !== null
+      ? filteredData?.filter((item) => item.place === activeTags)
+      : filteredData;
+
+  const totalPosts = filteredPosts?.length || 0;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+
+  const visiblePosts = filteredPosts?.slice(startIndex, endIndex);
 
   const goToPage = (page) => {
     setCurrentPage(page);
@@ -204,6 +281,17 @@ function PlacesList({ data }) {
       {filteredData?.length === 0 && (
         <h3 className={classes.infoText}>No post yet...</h3>
       )}
+      {searching && (
+        <p className={classes.searching}>
+          Searhing for: <strong>"{searching}"</strong>
+          <button
+            className={classes.searcingCancelBtn}
+            onClick={removeSearchingHandler}
+          >
+            X
+          </button>
+        </p>
+      )}
       <div className={classes.list}>
         {visiblePosts?.map((item) => (
           <Link key={item?.id} to={item?.id}>
@@ -271,26 +359,49 @@ function PlacesList({ data }) {
       {visiblePosts?.length > 0 && (
         <div className={classes.pagination}>
           {
+            // <div className={classes.pageNumbers}>
+            //   <button className={classes.prevBtn} onClick={() => prevPage()}>
+            //     <ArrowBackIosIcon fontSize="small" />
+            //   </button>
+            //   {filteredData?.length > 0 &&
+            //     Array(Math.ceil(filteredData?.length / POSTS_PER_PAGE))
+            //       .fill(0)
+            //       .map((_, index) => (
+            //         <button
+            //           key={index}
+            //           onClick={() => goToPage(index + 1)}
+            //           className={
+            //             currentPage === index + 1
+            //               ? classes.activePage
+            //               : classes.inactivePage
+            //           }
+            //         >
+            //           {index + 1}
+            //         </button>
+            //       ))}
+            //   <button className={classes.nextBtn} onClick={() => nextPage()}>
+            //     <ArrowForwardIosIcon fontSize="small" />
+            //   </button>
+            // </div>
             <div className={classes.pageNumbers}>
               <button className={classes.prevBtn} onClick={() => prevPage()}>
                 <ArrowBackIosIcon fontSize="small" />
               </button>
-              {filteredData?.length > 0 &&
-                Array(Math.ceil(filteredData?.length / POSTS_PER_PAGE))
-                  .fill(0)
-                  .map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToPage(index + 1)}
-                      className={
-                        currentPage === index + 1
-                          ? classes.activePage
-                          : classes.inactivePage
-                      }
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
+              {Array(totalPages)
+                .fill(0)
+                .map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToPage(index + 1)}
+                    className={
+                      currentPage === index + 1
+                        ? classes.activePage
+                        : classes.inactivePage
+                    }
+                  >
+                    {index + 1}
+                  </button>
+                ))}
               <button className={classes.nextBtn} onClick={() => nextPage()}>
                 <ArrowForwardIosIcon fontSize="small" />
               </button>

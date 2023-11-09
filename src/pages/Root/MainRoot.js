@@ -35,7 +35,6 @@ function MainRoot() {
         </div>
         <Footer />
       </div>
-      {/* NOT LAYOUT */}
       {auth && (
         <Link to="/addplace" className={classes.addIcon}>
           <AddIcon />

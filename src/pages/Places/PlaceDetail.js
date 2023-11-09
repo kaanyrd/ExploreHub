@@ -12,6 +12,7 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveComment from "../../components/RemoveComment/RemoveComment";
+import BookmarksContext from "../../context/Bookmarks";
 
 function PlaceDetail() {
   let date = new Date();
@@ -24,6 +25,8 @@ function PlaceDetail() {
 
   const params = useParams();
   const { auth, lastLogins } = useContext(AuthContext);
+  const { bookmarks, setBookmarks } = useContext(BookmarksContext);
+
   const postId = params.placesId;
   const [post, setPost] = useState(null);
   const [image, setImage] = useState(1);
@@ -49,10 +52,6 @@ function PlaceDetail() {
 
   const likeHandler = () => {
     setLiked((prev) => !prev);
-  };
-
-  const bookmarkHandler = () => {
-    setBookmarked((prev) => !prev);
   };
 
   const commentHandler = () => {
@@ -242,6 +241,41 @@ function PlaceDetail() {
     );
   };
 
+  const bookmarksHandler = () => {
+    const bookmarkedPost = params.placesId;
+
+    const control = bookmarks.find(
+      (bookmark) =>
+        bookmark.post === bookmarkedPost &&
+        bookmark.user === lastLogins.nickName
+    );
+
+    if (control) {
+      setBookmarks((prev) => prev.filter((item) => item !== control));
+      setBookmarked(true);
+    } else {
+      setBookmarks((prev) => [
+        { user: lastLogins.nickName, post: bookmarkedPost },
+        ...prev,
+      ]);
+      setBookmarked(false);
+    }
+  };
+
+  useEffect(() => {
+    const bookmarkedPost = params.placesId;
+    const control = bookmarks.find(
+      (bookmark) =>
+        bookmark.post === bookmarkedPost &&
+        bookmark.user === lastLogins.nickName
+    );
+    if (control) {
+      setBookmarked(true);
+    } else {
+      setBookmarked(false);
+    }
+  }, [bookmarks, lastLogins.nickName, params.placesId]);
+
   return (
     <div className={classes.main}>
       <Link className={classes.backButton} to=".." relative="path">
@@ -357,7 +391,7 @@ function PlaceDetail() {
                     className={`${classes.bookmarkBtn} ${
                       bookmarked && classes.bookmarked
                     }`}
-                    onClick={bookmarkHandler}
+                    onClick={() => bookmarksHandler()}
                   >
                     <BookmarkIcon />
                   </div>

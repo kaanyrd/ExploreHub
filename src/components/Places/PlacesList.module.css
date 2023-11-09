@@ -66,6 +66,28 @@
   color: white;
   padding: 0 0.2rem;
 }
+
+.searching {
+  margin-bottom: 2rem;
+  width: fit-content;
+  background: #015792;
+  color: white;
+  padding: 0.5rem 1rem 0.5rem 1.2rem;
+  border-radius: 5px;
+}
+
+.searcingCancelBtn {
+  border: none;
+  margin-left: 0.5rem;
+  padding: 0.2rem;
+  background-color: #015792;
+  color: white;
+  font-weight: bolder;
+  cursor: pointer;
+  border: 3px solid white;
+  border-radius: 5px;
+}
+
 .cardTopInfo {
   display: flex;
   align-items: center;

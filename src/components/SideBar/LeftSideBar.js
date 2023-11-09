@@ -14,8 +14,6 @@ function LeftSideBar() {
   const date = new Date();
   const year = date.getFullYear();
 
-  // FIXME AS TOKEN
-
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>

@@ -65,9 +65,9 @@
   border-radius: 5px;
 }
 .bigScreenForm > input:focus {
-  outline: none;
-  border: 2px solid #015792;
+  outline: 1px solid #1877f2;
 }
+
 .bigScreenForm > button {
   border: none;
   height: 42px;
@@ -102,9 +102,7 @@
   /* border: 2px solid #015792; */
 }
 .formSide > input:focus {
-  outline: none;
-  /* border: 3px solid #015792; */
-  border: 2px solid #015792;
+  outline: 1px solid #1877f2;
 }
 
 .formSubmitButton {
