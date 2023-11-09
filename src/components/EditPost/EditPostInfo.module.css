@@ -1,7 +1,6 @@
 .main {
   position: fixed;
   top: 15%;
-  /* width: 80vw; */
   z-index: 4;
   background: white;
   color: black;
@@ -19,6 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  -moz-column-gap: 0.3rem;
   column-gap: 0.3rem;
 }
 

@@ -11,10 +11,6 @@
   border-radius: 10px;
 }
 
-.mainContent {
-  /* border: 3px solid red; */
-}
-
 .text {
   color: #015792;
   text-align: center;
@@ -25,6 +21,7 @@
 .buttons {
   display: flex;
   align-items: center;
+  -moz-column-gap: 1rem;
   column-gap: 1rem;
   justify-content: center;
   padding: 1rem 0 0.2rem 0;
@@ -34,7 +31,6 @@
   cursor: pointer;
   border-radius: 5px;
   width: 70px;
-  /* padding: 0.5rem 0; */
   height: 40px;
   border: none;
   font-weight: bolder;
@@ -67,6 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  -moz-column-gap: 0.1rem;
   column-gap: 0.1rem;
 }
 
@@ -74,5 +71,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  -moz-column-gap: 0.2rem;
   column-gap: 0.2rem;
 }

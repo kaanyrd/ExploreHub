@@ -23,13 +23,9 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  -moz-column-gap: 0.2rem;
   column-gap: 0.2rem;
   color: #015792;
-  /* border: 3px solid red; */
-}
-
-.errorText > * {
-  /* border: 3px solid black; */
 }
 
 .errorIcon {
@@ -58,6 +54,7 @@
 
 @media screen and (min-width: 800px) {
   .errorText {
+    -moz-column-gap: 0.5rem;
     column-gap: 0.5rem;
   }
   .mainContent {

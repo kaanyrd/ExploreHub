@@ -1,7 +1,6 @@
 .main {
   position: fixed;
   top: 15%;
-  /* width: 80vw; */
   z-index: 4;
   background: white;
   color: black;
@@ -15,7 +14,6 @@
 }
 
 .infos {
-  /* border: 3px solid black; */
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
@@ -29,7 +27,6 @@
 }
 
 .confirmed {
-  /* background-color: #015792; */
   background: green;
   color: white;
   border-radius: 50%;
@@ -38,12 +35,4 @@
   background-color: red;
   color: white;
   border-radius: 50%;
-}
-
-.main {
-  /* border: 5px solid #015792; */
-}
-
-.mainContent > * {
-  /* border: 3px solid red; */
 }

@@ -3,11 +3,8 @@
   background: #015792;
   color: white;
 }
-.main > * {
-  /* border: 3px solid white; */
-}
+
 .mainContent {
-  /* border: 3px solid white; */
   width: 90vw;
   max-width: 1170px;
   margin: 0 auto;
@@ -19,7 +16,6 @@
 }
 
 .logoSelf {
-  /* border: 3px solid black; */
   width: 200px;
   border-radius: 5px;
   margin: 0 auto;
@@ -45,10 +41,6 @@
   margin-top: 0.5rem;
 }
 
-.footerRightSide {
-  /* border: 3px solid black; */
-}
-
 .links {
   display: flex;
   flex-direction: column;
@@ -56,15 +48,14 @@
 }
 
 .socials {
-  /* border: 3px solid black; */
   display: flex;
   align-items: center;
   justify-content: center;
+  -moz-column-gap: 0.7rem;
   column-gap: 0.7rem;
 }
 
 .socials > * {
-  /* border: 3px solid red; */
   display: inline-block;
 }
 

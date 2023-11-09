@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  -moz-column-gap: 0.2rem;
   column-gap: 0.2rem;
   color: #015792;
   text-align: center;
@@ -39,6 +40,7 @@
   align-items: center;
   justify-content: center;
   margin: 0.5rem auto;
+  -moz-column-gap: 0.3rem;
   column-gap: 0.3rem;
 }
 

@@ -1,25 +1,20 @@
 .main {
-  /* border: 3px solid black; */
   min-height: calc(100vh - 4rem);
   padding: 0 0 2rem 0;
 }
 .mainContent {
-  /* border: 3px solid red; */
-  /* margin-bottom: 2rem; */
   border-radius: 10px;
   animation-name: card;
   animation-duration: 1.5s;
   animation-iteration-count: infinite;
 }
 .photoSide {
-  /* border: 3px solid green; */
   height: 200px;
   position: relative;
 }
 .bannerPhoto {
   height: 100%;
   object-fit: cover;
-  /* object-position: top; */
 }
 .orText {
   text-align: center;
@@ -56,7 +51,6 @@
 }
 
 .ppMale {
-  /* border-bottom-color: rgb(0, 0, 175); */
   border-bottom-color: #015792;
   border-left-color: #015792;
   border-right-color: #015792;
@@ -73,8 +67,6 @@
   background: white;
   border-radius: 5px;
 }
-.infoSide > * {
-}
 
 .ppSide {
   width: 42px;
@@ -88,19 +80,13 @@
   object-fit: cover;
 }
 
-.topInfo {
-  /* border: 3px solid black; */
-}
-
 .topInfo > * > * {
-  /* border: 3px solid red; */
   text-align: center;
   display: flex;
   flex-direction: column;
 }
 
 .topInfo > * > * > label {
-  /* border: 3px solid green; */
   color: #015792;
   font-weight: bolder;
 }
@@ -109,7 +95,6 @@
   padding: 0 0.3rem;
   border-radius: 5px;
   border: 1px solid #8eb2e1;
-  /* border: 1px solid #c2c3c4; */
   width: 100%;
   margin-bottom: 1rem;
   font-size: 1rem;
@@ -126,7 +111,6 @@
   padding: 0 0.3rem;
   border-radius: 5px;
   border: 1px solid #8eb2e1;
-  /* border: 1px solid #c2c3c4; */
   width: 100%;
   margin-bottom: 1rem;
   font-size: 1rem;
@@ -137,8 +121,6 @@
 .selectSide:focus {
   outline: 1px solid #1877f2;
 }
-
-/* SAVE BUTTON FIXME */
 
 .saveButton {
   text-align: center;
@@ -160,7 +142,6 @@
   font-weight: bolder;
   width: 80px;
   height: 30px;
-  /* cursor: pointer; */
 }
 .saveButton > button:first-child:hover {
   background: #389c24;
@@ -240,16 +221,11 @@
     height: 275px;
   }
   .topInfo {
-    /* border: 3px solid black; */
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center; */
     display: flex;
     align-items: center;
     column-gap: 7rem;
   }
   .topInfo > * {
-    /* border: 3px solid red; */
     width: 100%;
   }
   .genderSide {

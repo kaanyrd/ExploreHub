@@ -64,8 +64,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide}>
                 <a target="blank" href={images[0]?.secondPhoto}>
@@ -74,8 +74,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide} d>
                 <a target="blank" href={images[0]?.thirdPhoto}>
@@ -84,8 +84,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
             </div>
           )}
@@ -98,8 +98,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide}>
                 <a target="blank" href={images[1]?.secondPhoto}>
@@ -108,8 +108,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide} d>
                 <a target="blank" href={images[1]?.thirdPhoto}>
@@ -118,8 +118,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
             </div>
           )}
@@ -132,8 +132,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide}>
                 <a target="blank" href={images[2]?.secondPhoto}>
@@ -142,8 +142,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide} d>
                 <a target="blank" href={images[2]?.thirdPhoto}>
@@ -152,8 +152,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
             </div>
           )}
@@ -166,8 +166,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide}>
                 <a target="blank" href={images[3]?.secondPhoto}>
@@ -176,8 +176,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
               <div className={classes.photoSide} d>
                 <a target="blank" href={images[3]?.thirdPhoto}>
@@ -186,8 +186,8 @@ function PhotoGallery() {
                     className={classes.photo}
                     alt="img"
                   />
+                  <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
                 </a>
-                <ZoomInIcon className={classes.zoomIcon} fontSize="large" />
               </div>
             </div>
           )}

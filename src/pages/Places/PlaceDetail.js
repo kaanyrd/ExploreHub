@@ -29,8 +29,8 @@ function PlaceDetail() {
 
   const postId = params.placesId;
   const [post, setPost] = useState(null);
+
   const [image, setImage] = useState(1);
-  const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [showComments, setShowComments] = useState(true);
   const [showComment, setShowComment] = useState(true);
@@ -39,6 +39,7 @@ function PlaceDetail() {
   const [allComments, setAllComments] = useState(post?.comments || []);
   const [submitting, setSubmitting] = useState(false);
   const [removeModal, setRemoveModal] = useState(null);
+  const [likes, setLikes] = useState([]);
 
   const firstPhotoHandler = () => {
     setImage(1);
@@ -48,10 +49,6 @@ function PlaceDetail() {
   };
   const thirdPhotoHandler = () => {
     setImage(3);
-  };
-
-  const likeHandler = () => {
-    setLiked((prev) => !prev);
   };
 
   const commentHandler = () => {
@@ -66,6 +63,9 @@ function PlaceDetail() {
         );
         const responseData = await response.json();
         const messages = responseData?.comments;
+        const likes = responseData?.likes;
+
+        let likeData = [];
         let arrData = [];
         for (let key in messages) {
           arrData.push({
@@ -73,7 +73,14 @@ function PlaceDetail() {
             ...messages[key],
           });
         }
+        for (let key in likes) {
+          likeData.push({
+            key: key,
+            ...likes[key],
+          });
+        }
         let reverseData = arrData.reverse();
+        setLikes(likeData);
         setAllComments(reverseData);
         setPost(responseData);
       } catch (error) {
@@ -276,6 +283,59 @@ function PlaceDetail() {
     }
   }, [bookmarks, lastLogins.nickName, params.placesId]);
 
+  const onLikeHandler = async () => {
+    const control = likes.find((item) => item?.user === lastLogins?.nickName);
+
+    if (control) {
+      try {
+        const comment = control?.key;
+        const response = await fetch(
+          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/likes/${comment}.json`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(null),
+          }
+        );
+
+        const resData = await response.json();
+        console.log(resData);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLikes((prev) =>
+          prev.filter((item) => item?.user !== lastLogins?.nickName)
+        );
+      }
+    } else {
+      try {
+        const user = lastLogins.nickName;
+        const response = await fetch(
+          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/likes.json`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user: user,
+            }),
+          }
+        );
+
+        const resData = await response.json();
+        console.log(resData);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLikes((prev) => [...prev, { user: lastLogins?.nickName }]);
+        window.location.reload();
+      }
+    }
+  };
+
   return (
     <div className={classes.main}>
       <Link className={classes.backButton} to=".." relative="path">
@@ -358,7 +418,7 @@ function PlaceDetail() {
               <div>
                 {!auth ? (
                   <div>
-                    <span onClick={likeHandler} className={classes.likeBtn}>
+                    <span className={classes.likeBtn}>
                       <FavoriteIcon />
                     </span>
                     <p>?</p>
@@ -366,12 +426,18 @@ function PlaceDetail() {
                 ) : (
                   <div>
                     <span
-                      onClick={likeHandler}
-                      className={`${classes.likeBtn} ${liked && classes.liked}`}
+                      onClick={onLikeHandler}
+                      className={`${classes.likeBtn} ${
+                        likes.find(
+                          (item) => item?.user === lastLogins?.nickName
+                        )
+                          ? classes.liked
+                          : undefined
+                      }`}
                     >
                       <FavoriteIcon />
                     </span>
-                    <p>{auth ? post?.likes : "?"}</p>
+                    <p>{auth ? likes.length : "?"}</p>
                   </div>
                 )}
               </div>

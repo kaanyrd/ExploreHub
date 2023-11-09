@@ -3,14 +3,11 @@ import classes from "./PlacesList.module.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/casualPhotos/profileImg2.png";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchingContext from "../../context/Searching";
+import { useCallback } from "react";
 
 function PlacesList({ data }) {
   const { searching, setSearching } = useContext(SearchingContext);
-
-  console.log(searching);
 
   const POSTS_PER_PAGE = 6;
   const [activeTags, setActiveTags] = useState(null);
@@ -26,56 +23,13 @@ function PlacesList({ data }) {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  // const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  // const endIndex = startIndex + POSTS_PER_PAGE;
-
-  // const filteredPosts =
-  //   searching !== ""
-  //     ? filteredData?.filter(
-  //         (item) =>
-  //           item?.firstName?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.lastName?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.nickName?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.description
-  //             ?.toLowerCase()
-  //             .includes(searching.toLowerCase()) ||
-  //           item?.place?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.country?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.city?.toLowerCase().includes(searching.toLowerCase())
-  //       )
-  //     : filteredData;
-
-  // const visiblePosts = filteredPosts?.slice(startIndex, endIndex);
-
-  // ...
-
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
 
-  // ...
   useEffect(() => {
     setFilteredData(data);
-    setCurrentPage(1); // Sayfa numarasını sıfırla
+    setCurrentPage(1);
   }, [data, searching]);
-
-  // const filteredPosts =
-  //   searching !== ""
-  //     ? data?.filter(
-  //         (item) =>
-  //           item?.firstName?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.lastName?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.nickName?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.description
-  //             ?.toLowerCase()
-  //             .includes(searching.toLowerCase()) ||
-  //           item?.place?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.country?.toLowerCase().includes(searching.toLowerCase()) ||
-  //           item?.city?.toLowerCase().includes(searching.toLowerCase())
-  //       )
-  //     : data;
-
-  // const visiblePosts = filteredPosts?.slice(startIndex, endIndex);
 
   const filteredPosts =
     searching !== ""
@@ -105,20 +59,6 @@ function PlacesList({ data }) {
     scrollToTop();
   };
 
-  const nextPage = () => {
-    if (startIndex + POSTS_PER_PAGE < filteredData?.length) {
-      setCurrentPage(currentPage + 1);
-      scrollToTop();
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      scrollToTop();
-    }
-  };
-
   useEffect(() => {
     setFilteredData(data);
   }, [data]);
@@ -129,11 +69,18 @@ function PlacesList({ data }) {
     setFilteredData(filtered);
     setCurrentPage(1);
   };
-  const onAllTagHandler = () => {
+
+  const onAllTagHandler = useCallback(() => {
     setActiveTags(null);
     setFilteredData(data);
     setCurrentPage(1);
-  };
+  }, [data, setActiveTags, setFilteredData, setCurrentPage]);
+
+  useEffect(() => {
+    if (searching) {
+      onAllTagHandler();
+    }
+  }, [searching, onAllTagHandler]);
 
   function formatTimeAgo(dateData) {
     const now = new Date();
@@ -359,34 +306,7 @@ function PlacesList({ data }) {
       {visiblePosts?.length > 0 && (
         <div className={classes.pagination}>
           {
-            // <div className={classes.pageNumbers}>
-            //   <button className={classes.prevBtn} onClick={() => prevPage()}>
-            //     <ArrowBackIosIcon fontSize="small" />
-            //   </button>
-            //   {filteredData?.length > 0 &&
-            //     Array(Math.ceil(filteredData?.length / POSTS_PER_PAGE))
-            //       .fill(0)
-            //       .map((_, index) => (
-            //         <button
-            //           key={index}
-            //           onClick={() => goToPage(index + 1)}
-            //           className={
-            //             currentPage === index + 1
-            //               ? classes.activePage
-            //               : classes.inactivePage
-            //           }
-            //         >
-            //           {index + 1}
-            //         </button>
-            //       ))}
-            //   <button className={classes.nextBtn} onClick={() => nextPage()}>
-            //     <ArrowForwardIosIcon fontSize="small" />
-            //   </button>
-            // </div>
             <div className={classes.pageNumbers}>
-              <button className={classes.prevBtn} onClick={() => prevPage()}>
-                <ArrowBackIosIcon fontSize="small" />
-              </button>
               {Array(totalPages)
                 .fill(0)
                 .map((_, index) => (
@@ -402,9 +322,6 @@ function PlacesList({ data }) {
                     {index + 1}
                   </button>
                 ))}
-              <button className={classes.nextBtn} onClick={() => nextPage()}>
-                <ArrowForwardIosIcon fontSize="small" />
-              </button>
             </div>
           }
         </div>

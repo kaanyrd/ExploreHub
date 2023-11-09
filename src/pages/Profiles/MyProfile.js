@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import classes from "./MyProfile.module.css";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -17,27 +16,15 @@ import BookmarksContext from "../../context/Bookmarks";
 
 function MyProfile() {
   const navigate = useNavigate();
+  const [posts, setPost] = useState([]);
   const { auth, lastLogins } = useContext(AuthContext);
   useEffect(() => {
     if (!auth) {
       navigate("/");
     }
   }, [auth, navigate]);
-  const [posts, setPost] = useState([]);
   const [user, setUser] = useState(null);
-  const [liked, setLiked] = useState(false);
-  // const [bookmarked, setBookmarked] = useState(false);
   const [removing, setRemoving] = useState(null);
-  // const [showComments, setShowComments] = useState(true);
-  // const [comments, setComments] = useState(null);
-
-  const likeHandler = () => {
-    setLiked((prev) => !prev);
-  };
-
-  // const commentHandler = () => {
-  //   setShowComments((prev) => !prev);
-  // };
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -78,6 +65,7 @@ function MyProfile() {
         }
         const userPosts = arrData.filter((post) => post.user === auth);
         const reverseData = userPosts.reverse();
+
         setPost(reverseData);
       } catch (error) {
         console.log(error);
@@ -158,13 +146,11 @@ function MyProfile() {
 
     if (control) {
       setBookmarks((prev) => prev.filter((item) => item !== control));
-      // setBookmarked(true);
     } else {
       setBookmarks((prev) => [
         { user: lastLogins.nickName, post: data },
         ...prev,
       ]);
-      // setBookmarked(false);
     }
   };
 
@@ -331,15 +317,9 @@ function MyProfile() {
                   </div>
                   <div className={classes.likes}>
                     <div>
-                      <span
-                        onClick={likeHandler}
-                        className={`${classes.likeBtn} ${
-                          liked && classes.liked
-                        }`}
-                      >
-                        <FavoriteIcon />
+                      <span className={`${classes.likeBtn}`}>
+                        {/* <FavoriteIcon /> */}
                       </span>
-                      <p>{data?.likes}</p>
                     </div>
                     <div className={classes.likesRight}>
                       <Link
@@ -378,7 +358,7 @@ function MyProfile() {
                     </p>
                   </div>
                 </div>
-                <p className={classes.noPostText}>Comments are gonna add...</p>
+                {/* <p className={classes.noPostText}>Comments are gonna add...</p> */}
                 {/* <div>
                   {comments.length === 0 && (
                     <p className={classes.commentInfo}>

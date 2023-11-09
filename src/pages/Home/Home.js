@@ -13,10 +13,10 @@ function Home() {
         {auth && (
           <div className={classes.withLogin}>
             <div>
-              <h3>Welcome {lastLogins?.firstName}!</h3>
-              <p>(@{lastLogins?.nickName})</p>
+              <h2>Welcome {lastLogins?.firstName}!</h2>
+              <h3>(@{lastLogins?.nickName})</h3>
             </div>
-            <h4>Wish you are having a nice day 😎</h4>
+            <h3>Wish you are having a nice day 😎</h3>
           </div>
         )}
         {!auth && (
