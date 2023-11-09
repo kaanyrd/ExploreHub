@@ -207,3 +207,9 @@
 .lastVisits > div > p:hover {
   transform: scale(1.05);
 }
+
+.postingInfo {
+  color: #015792;
+  font-weight: bolder;
+  text-decoration: underline;
+}

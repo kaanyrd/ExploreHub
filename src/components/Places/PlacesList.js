@@ -302,6 +302,9 @@ function PlacesList({ data }) {
             </div>
           </Link>
         ))}
+        {visiblePosts.length === 0 && (
+          <p className={classes.postingInfo}>No searching result!</p>
+        )}
       </div>
       {visiblePosts?.length > 0 && (
         <div className={classes.pagination}>
