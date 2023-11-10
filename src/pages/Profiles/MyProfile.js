@@ -318,7 +318,7 @@ function MyProfile() {
                   <div className={classes.likes}>
                     <div>
                       <span className={`${classes.likeBtn}`}>
-                        {/* <FavoriteIcon /> */}
+                        {/* <FavoriteIcon /> */}❤ Likes gonna add
                       </span>
                     </div>
                     <div className={classes.likesRight}>
@@ -358,7 +358,7 @@ function MyProfile() {
                     </p>
                   </div>
                 </div>
-                {/* <p className={classes.noPostText}>Comments are gonna add...</p> */}
+                <p className={classes.noPostText}>Comments are gonna add...</p>
                 {/* <div>
                   {comments.length === 0 && (
                     <p className={classes.commentInfo}>
