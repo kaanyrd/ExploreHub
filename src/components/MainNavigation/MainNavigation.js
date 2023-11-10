@@ -12,7 +12,7 @@ import ProfileInfo from "./ProfileInfo.js";
 import SearchIcon from "@mui/icons-material/Search";
 import { NavigationAction } from "../../store/navigation-slice";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+// import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import AuthContext from "../../context/Authentication";
 import SearchingContext from "../../context/Searching.js";
@@ -102,9 +102,9 @@ function MainNavigation() {
             <button className={classes.formSubmitButton} type="submit">
               <SearchIcon />
             </button>
-            <button className={classes.voiceButton}>
+            {/* <button className={classes.voiceButton}>
               <KeyboardVoiceIcon />
-            </button>
+            </button> */}
           </form>
         </div>
       )}
@@ -137,9 +137,9 @@ function MainNavigation() {
               <button type="submit">
                 <SearchIcon />
               </button>
-              <button>
+              {/* <button>
                 <KeyboardVoiceIcon />
-              </button>
+              </button> */}
             </form>
           </div>
           {!auth && (
