@@ -152,7 +152,7 @@ function EditPlace() {
       setTimeout(() => {
         setResInfo(null);
         navigate("..");
-      }, 1500);
+      }, 1000);
     }
   }, [navigate, resInfo]);
 

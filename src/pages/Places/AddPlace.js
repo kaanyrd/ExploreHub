@@ -236,7 +236,7 @@ function AddPlace() {
         navigate("/places");
         setSubmitting(false);
       }
-    }, 1200);
+    }, 1000);
   }, [navigate, responseInfo]);
 
   useEffect(() => {

@@ -242,7 +242,7 @@ function Signup() {
       } else {
         return;
       }
-    }, 1500);
+    }, 1000);
   }, [resData, navigate, existUser]);
 
   let ExistUserLayout = () => {
