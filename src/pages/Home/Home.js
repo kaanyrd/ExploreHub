@@ -6,6 +6,7 @@ import LoginIcon from "@mui/icons-material/Login";
 
 function Home() {
   const { auth, lastLogins } = useContext(AuthContext);
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   let userId = lastLogins?.id;

@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import MainNavigation from "../../components/MainNavigation/MainNavigation";
 import { useNavigate } from "react-router-dom";
 import classes from "./Error.module.css";
 import ErrorIcon from "@mui/icons-material/Error";
 import HomeIcon from "@mui/icons-material/Home";
+import AuthContext from "../../context/Authentication";
 
 function Error() {
+  const { setLastLogins, setAuth } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const goHomeHandler = () => {
+    setAuth(null);
+    setLastLogins([]);
     navigate("/");
   };
 
