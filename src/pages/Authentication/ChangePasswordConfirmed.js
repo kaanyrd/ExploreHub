@@ -109,7 +109,7 @@ function ChangePasswordConfirmed() {
 
   useEffect(() => {
     if (user === null) {
-      navigate("/");
+      navigate("/login");
     }
   }, [auth, navigate, user]);
 
