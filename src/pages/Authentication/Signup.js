@@ -13,7 +13,6 @@ function Signup() {
   const [resData, setResData] = useState(null);
   const [sended, setSended] = useState(false);
 
-  // FIXME FOR INPUTS
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +22,6 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  // FIXME EXIST ACCOUNT, SMALL DIV INFORMATION
   const [formValid, setFormValid] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [nameValid, setNameValid] = useState(null);
@@ -176,6 +174,7 @@ function Signup() {
     }
     if (!formValid && confirmPassword) {
       const data = {
+        id: Math.random(),
         token: Math.random(),
         firstName: firstName.trim(),
         lastName: lastName.trim(),
@@ -189,47 +188,35 @@ function Signup() {
         banner: "",
       };
       try {
-        const control = await fetch(
-          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
-        );
+        setSended(true);
+        const control = await fetch("https://retoolapi.dev/Brjzmm/users");
 
         const controlResponse = await control.json();
 
-        let dataArr = [];
-
-        for (let key in controlResponse) {
-          dataArr.push({
-            id: key,
-            ...controlResponse[key],
-          });
-        }
         const userControl =
-          dataArr.find((user) => user.email === email) &&
-          dataArr.find((user) => user.firstName === firstName) &&
-          dataArr.find((user) => user.lastName === lastName) &&
-          dataArr.find((user) => user.nickName === nickName);
+          controlResponse.find((user) => user.email === email) &&
+          controlResponse.find((user) => user.firstName === firstName) &&
+          controlResponse.find((user) => user.lastName === lastName) &&
+          controlResponse.find((user) => user.nickName === nickName);
 
         if (userControl) {
           setExistUser(userControl);
           return;
         } else {
-          setSended(true);
-          const response = await fetch(
-            "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json",
-            {
-              method: "post",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            }
-          );
+          const response = await fetch("https://retoolapi.dev/Brjzmm/users", {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
           setResData(response);
         }
       } catch (error) {
         setResData(error);
+      } finally {
+        setShowModal(true);
       }
-      setShowModal(true);
     }
   };
 
@@ -242,7 +229,7 @@ function Signup() {
       } else {
         return;
       }
-    }, 1000);
+    }, 500);
   }, [resData, navigate, existUser]);
 
   let ExistUserLayout = () => {

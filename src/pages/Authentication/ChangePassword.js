@@ -29,18 +29,9 @@ function ChangePassword() {
     }
     if (emailValid) {
       setSubmitting(true);
-      const response = await fetch(
-        "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
-      );
+      const response = await fetch("https://retoolapi.dev/Brjzmm/users");
       const responseData = await response.json();
-      let arrData = [];
-      for (let key in responseData) {
-        arrData.push({
-          id: key,
-          ...responseData[key],
-        });
-      }
-      const user = arrData.find((data) => data.email === email);
+      const user = responseData.find((data) => data.email === email);
       setSubmitting(false);
       if (user === undefined) {
         setUserInfo(true);
@@ -63,13 +54,16 @@ function ChangePassword() {
   let UserInfoContent = () => {
     return <ChangePasswordInfo setUserInfo={setUserInfo} />;
   };
-  console.log(auth);
 
   useEffect(() => {
     if (auth) {
       navigate("/");
     }
   }, [auth, navigate]);
+
+  const onCancelHandler = () => {
+    setUserInfo(null);
+  };
 
   return (
     <div className={classes.main}>
@@ -83,7 +77,7 @@ function ChangePassword() {
             </div>
           </div>
           <p className={classes.infoText}>
-            Please enter your email adress or nickname to continue...
+            Please enter your email adress to continue...
           </p>
         </div>
         <div className={classes.formSide}>
@@ -100,8 +94,14 @@ function ChangePassword() {
                 type="email"
               />
             </div>
-            <div className={classes.submitBtn}>
-              <button>{submitting ? "Loading..." : "Continue"}</button>
+            <div
+              className={`${classes.submitBtn} ${
+                submitting && classes.submittingBtn
+              }`}
+            >
+              <button disabled={submitting}>
+                {submitting ? "Loading..." : "Continue"}
+              </button>
             </div>
           </form>
           <div className={classes.otherLink}>
@@ -117,7 +117,7 @@ function ChangePassword() {
       </div>
       {userInfo &&
         ReactDOM.createPortal(
-          <div className={classes.background}></div>,
+          <div onClick={onCancelHandler} className={classes.background}></div>,
           document.getElementById("confirmpassword")
         )}
       {userInfo &&

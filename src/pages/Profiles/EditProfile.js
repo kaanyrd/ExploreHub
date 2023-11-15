@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import classes from "./EditProfile.module.css";
 import AuthContext from "../../context/Authentication";
 import bannerPhoto from "../../assets/casualPhotos/nobanner.png";
@@ -10,6 +10,8 @@ import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import RemoveAccount from "../../components/RemoveAccount/RemoveAccount";
 
 function EditProfile() {
+  const params = useParams();
+  const userPath = params.profileId;
   const [submitting, setSubmitting] = useState(false);
   const [ppSide, setPpSide] = useState(null);
   const [bannerSide, setBannerSide] = useState(null);
@@ -61,22 +63,13 @@ function EditProfile() {
   useEffect(() => {
     const asyncFunc = async () => {
       const response = await fetch(
-        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json`
+        `https://retoolapi.dev/Brjzmm/users/${userPath}`
       );
-      const responseData = await response.json();
-      let arrData = [];
-
-      for (let key in responseData) {
-        arrData.push({
-          key: key,
-          ...responseData[key],
-        });
-      }
-      const user = arrData.find((user) => user.token.toString() === auth);
-      setUser(user);
+      const resData = await response.json();
+      setUser(resData);
     };
     asyncFunc();
-  }, [auth]);
+  }, [auth, userPath]);
 
   const [name, setName] = useState("");
   const [nameValid, setNameValid] = useState(null);
@@ -133,44 +126,24 @@ function EditProfile() {
     } else {
       setSubmitting(true);
       const submitFunc = async () => {
-        const response = await fetch(
-          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
-        );
-        const resData = await response.json();
-        let dataArr = [];
-        for (let key in resData) {
-          dataArr.push({
-            id: key.toString(),
-            ...resData[key],
-          });
-        }
-        const userSelf = dataArr.find((user) => user.token.toString() === auth);
-        const userID = userSelf.id;
-
         const dataPatching = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users/${userID}.json`,
+          `https://retoolapi.dev/Brjzmm/users/${userPath}`,
           {
             headers: { "Content-Type": "application/json" },
             method: "PATCH",
             body: JSON.stringify({
-              id: userID,
               firstName: name,
               lastName: surname,
               nickName: nick,
-              password: userSelf.password,
-              password2: userSelf.password2,
               pp: pPhoto,
               banner: bannerPP,
               birth: birthDate,
-              token: auth,
               gender: genders,
-              email: userSelf.email,
               town: town,
               living: living,
             }),
           }
         );
-        // const res = await dataPatching.json();
         setUserInfo(dataPatching);
       };
       submitFunc();
@@ -257,7 +230,7 @@ function EditProfile() {
       setTimeout(() => {
         setSubmitting(false);
         navigate("/myprofile");
-      }, 1000);
+      }, 500);
     }
   }, [userInfo, navigate]);
 
@@ -292,6 +265,8 @@ function EditProfile() {
             />
           </div>
           <div className={classes.infoSide}>
+            <h3 className={classes.editHeader}>Edit Your Profile</h3>
+            <div className={classes.divider}></div>
             <div className={classes.topInfo}>
               <div>
                 <div>
@@ -429,7 +404,7 @@ function EditProfile() {
           </div>
         </form>
         <div className={classes.removeAccountBtn}>
-          <button onClick={() => onRemovingHandler(user?.key)}>
+          <button onClick={() => onRemovingHandler(user?.id)}>
             <PersonRemoveIcon />
             Remove Account
           </button>

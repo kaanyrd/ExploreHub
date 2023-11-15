@@ -213,6 +213,7 @@
 .activeBtn {
   color: #015792;
   background-color: white;
+  border: 1px solid #015792;
 }
 
 .likes {

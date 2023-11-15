@@ -27,10 +27,9 @@ function Favs() {
       for (let i = 0; i < bookmark.length; i++) {
         const postId = bookmark[i].post;
         const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${bookmark[i].post}.json`
+          `https://retoolapi.dev/d2cIkX/posts/${bookmark[i].post}`
         );
         const resData = await response.json();
-        console.log(resData);
         setPosts((prev) => [...prev, { resData, postId }]);
       }
     };
@@ -86,6 +85,8 @@ function Favs() {
     }, 3000);
     return () => clearTimeout(timer);
   }, [index]);
+
+  console.log(posts);
 
   return (
     <div className={classes.main}>

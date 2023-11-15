@@ -30,7 +30,7 @@
 .pp {
   width: 50px;
   height: 50px;
-  margin: 0 auto;
+  margin: 0 auto 0.2rem auto;
   -o-object-fit: cover;
   object-fit: cover;
   -o-object-position: top;
@@ -40,10 +40,23 @@
 
 .name {
   text-transform: capitalize;
+  margin-bottom: 0.3rem;
 }
 .nickname {
   color: gray;
   text-transform: lowercase;
+}
+
+.loadingSpinner {
+  border: 5px dashed #015792;
+  width: 30%;
+  height: 30%;
+  margin: 0 auto 1.2rem auto;
+  border-radius: 50%;
+  animation-name: spinner;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 .logoutButton {
@@ -67,4 +80,13 @@
 .profilePhoto {
   border: 3px solid #015792;
   border-radius: 50%;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

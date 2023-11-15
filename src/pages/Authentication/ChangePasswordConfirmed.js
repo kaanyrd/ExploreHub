@@ -46,27 +46,15 @@ function ChangePasswordConfirmed() {
     if (formVal) {
       setSubmitting(true);
       const response = await fetch(
-        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users/${user.id}.json`,
+        `https://retoolapi.dev/Brjzmm/users/${user.id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            nickName: user.nickName,
-            banner: user.banner,
-            gender: user.gender,
-            id: user.id,
-            token: user.token,
-            living: user.living,
             password: password,
             password2: password2,
-            pp: user.pp,
-            town: user.town,
-            birth: user.birth,
-            email: user.email,
           }),
         }
       );
@@ -191,11 +179,17 @@ function ChangePasswordConfirmed() {
               <button
                 disabled={submitting}
                 type="submit"
-                className={classes.resetBtn}
+                className={`${classes.resetBtn} ${
+                  submitting && classes.submittingButton
+                }`}
               >
                 {submitting ? "Loading..." : "Submit"}
               </button>
-              <button onClick={goHomeHandler} className={classes.cancelBtn}>
+              <button
+                disabled={submitting}
+                onClick={goHomeHandler}
+                className={classes.cancelBtn}
+              >
                 Cancel
               </button>
             </div>

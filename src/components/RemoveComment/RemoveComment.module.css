@@ -57,3 +57,24 @@
 .buttons > button:last-child:hover {
   background-color: rgb(204, 0, 0);
 }
+
+.spinner {
+  border: 2px dashed white;
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  border-radius: 50%;
+  animation-name: spinner;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

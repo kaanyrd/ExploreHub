@@ -43,18 +43,10 @@ function Login() {
       try {
         setSubmitting(true);
         const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json`
+          `https://retoolapi.dev/Brjzmm/users`
         );
         const data = await response.json();
-        let dataArray = [];
-        for (let key in data) {
-          dataArray.push({
-            id: key.toString(),
-            ...data[key],
-          });
-        }
-
-        const emailMatched = dataArray.find((user) => user.email === email);
+        const emailMatched = data.find((user) => user.email === email);
         setSubmitting(false);
         if (!emailMatched) {
           setLogin("User Not Exist");
@@ -72,6 +64,8 @@ function Login() {
             pp: emailMatched.pp,
             email: emailMatched.email,
             password: emailMatched.password,
+            id: emailMatched.id,
+            token: emailMatched.token,
           });
           navigate("/");
           return;
@@ -140,7 +134,7 @@ function Login() {
               </div>
               <p></p>
             </div>
-            <p className={classes.loginInfos}>
+            <div className={classes.loginInfos}>
               {lastLogins?.length !== 0 ? (
                 <h3>Last Login</h3>
               ) : (
@@ -148,7 +142,7 @@ function Login() {
                   There aren't any old login
                 </h3>
               )}
-            </p>
+            </div>
             {lastLogins?.length !== 0 && (
               <div className={classes.oneProfile}>
                 <div className={classes.cardInside}>

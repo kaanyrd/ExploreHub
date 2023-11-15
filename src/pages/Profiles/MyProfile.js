@@ -18,6 +18,8 @@ function MyProfile() {
   const navigate = useNavigate();
   const [posts, setPost] = useState([]);
   const { auth, lastLogins } = useContext(AuthContext);
+  let userSelfID = lastLogins?.id;
+
   useEffect(() => {
     if (!auth) {
       navigate("/");
@@ -30,49 +32,31 @@ function MyProfile() {
     const asyncFunc = async () => {
       try {
         const response = await fetch(
-          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
+          `https://retoolapi.dev/Brjzmm/users/${userSelfID}`
         );
-        const responseData = await response.json();
-        let arrData = [];
-        for (let key in responseData) {
-          arrData.push({
-            id: key,
-            ...responseData[key],
-          });
-        }
-        const user = arrData.find((user) => user.token.toString() === auth);
-        setUser(user);
+        const resData = await response.json();
+        setUser(resData);
       } catch (error) {
         console.log(error);
       }
     };
     asyncFunc();
-  }, [auth]);
+  }, [auth, userSelfID]);
 
   useEffect(() => {
     const gettingPost = async () => {
       try {
-        const response = await fetch(
-          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json"
-        );
+        const response = await fetch("https://retoolapi.dev/d2cIkX/posts");
         const resData = await response.json();
-        let arrData = [];
-        for (let key in resData) {
-          arrData.push({
-            key: key,
-            ...resData[key],
-          });
-        }
-        const userPosts = arrData.filter((post) => post.user === auth);
+        const userPosts = resData.filter((post) => post.user === userSelfID);
         const reverseData = userPosts.reverse();
-
         setPost(reverseData);
       } catch (error) {
         console.log(error);
       }
     };
     gettingPost();
-  }, [auth]);
+  }, [userSelfID]);
 
   const [imageStates, setImageStates] = useState([]);
 
@@ -158,7 +142,7 @@ function MyProfile() {
     <div className={classes.main}>
       <div className={classes.mainContent}>
         <div className={classes.photoSide}>
-          <Link to={auth.toString()} className={classes.editProfile}>
+          <Link to={user?.id?.toString()} className={classes.editProfile}>
             Edit Profile <EditIcon />
           </Link>
           {user?.banner ? (
@@ -329,9 +313,7 @@ function MyProfile() {
                         <EditIcon />
                       </Link>
                       <div className={classes.deleteIcon}>
-                        <DeleteIcon
-                          onClick={() => onDeleteHandler(data?.key)}
-                        />
+                        <DeleteIcon onClick={() => onDeleteHandler(data?.id)} />
                       </div>
                       <div
                         className={`${classes.bookmarkBtn} ${

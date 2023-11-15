@@ -20,7 +20,10 @@ function AddPlace() {
   const navigate = useNavigate();
   const nowDate = new Date();
 
-  const { auth } = useContext(AuthContext);
+  const { auth, lastLogins } = useContext(AuthContext);
+
+  let userId = lastLogins?.id;
+
   const [country, setCountry] = useState("");
   const [countryValid, setCountryValid] = useState(null);
   const [city, setCity] = useState("");
@@ -95,41 +98,40 @@ function AddPlace() {
     } else {
       try {
         setSubmitting(true);
-        const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json`,
-          {
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
+        let idGenerate = Math.random().toString();
+        const response = await fetch(`https://retoolapi.dev/d2cIkX/posts`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: idGenerate,
+            user: userId,
+            city: city,
+            country: country,
+            place: place,
+            date: {
+              day: nowDate.getDate(),
+              month: nowDate.getMonth(),
+              year: nowDate.getFullYear(),
+              hour: nowDate.getHours(),
+              minutes: nowDate.getMinutes(),
+              seconds: nowDate.getSeconds(),
             },
-            body: JSON.stringify({
-              user: auth,
-              city: city,
-              country: country,
-              place: place,
-              date: {
-                day: nowDate.getDate(),
-                month: nowDate.getMonth(),
-                year: nowDate.getFullYear(),
-                hour: nowDate.getHours(),
-                minutes: nowDate.getMinutes(),
-                seconds: nowDate.getSeconds(),
-              },
-              description: description,
-              likes: 0,
-              commments: [],
-              mainPhoto: mainPhoto,
-              secondPhoto: secondPhoto,
-              thirdPhoto: thirdPhoto,
-              firstName: users.firstName,
-              lastName: users.lastName,
-              nickName: users.nickName,
-              pp: users.pp,
-              email: users.email,
-            }),
-          }
-        );
+            description: description,
+            mainPhoto: mainPhoto,
+            secondPhoto: secondPhoto,
+            thirdPhoto: thirdPhoto,
+            firstName: users.firstName,
+            lastName: users.lastName,
+            nickName: users.nickName,
+            pp: users.pp,
+            email: users.email,
+          }),
+        });
+        const resData = await response.json();
         setResponseInfo(response);
+        console.log(resData);
         // navigate("/places");
       } catch (error) {
         console.log(error);
@@ -140,22 +142,13 @@ function AddPlace() {
   useEffect(() => {
     const usersData = async () => {
       const response = await fetch(
-        "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json"
+        `https://retoolapi.dev/Brjzmm/users/${userId}`
       );
       const resData = await response.json();
-      let arrData = [];
-
-      for (let key in resData) {
-        arrData.push({
-          id: key,
-          ...resData[key],
-        });
-      }
-      const postedBy = arrData.find((data) => data.token.toString() === auth);
-      setUsers(postedBy);
+      setUsers(resData);
     };
     usersData();
-  }, [auth]);
+  }, [userId]);
 
   useEffect(() => {
     if (country.length > 0) {
@@ -236,7 +229,7 @@ function AddPlace() {
         navigate("/places");
         setSubmitting(false);
       }
-    }, 1000);
+    }, 500);
   }, [navigate, responseInfo]);
 
   useEffect(() => {

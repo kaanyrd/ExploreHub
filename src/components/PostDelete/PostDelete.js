@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./PostDelete.module.css";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function PostDelete(props) {
+  console.log(props);
   const postId = props.removing;
+  const [removing, setRemoving] = useState(false);
   const navigate = useNavigate();
 
   const yesHandler = async () => {
-    props.setPost((prev) => prev.filter((item) => item.key !== postId));
+    setRemoving(true);
     try {
       const resposne = await fetch(
-        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}.json`,
+        `https://retoolapi.dev/d2cIkX/posts/${postId}`,
         {
-          method: "delete",
+          method: "DELETE",
           headers: { "Content-Type": "application/json" },
           body: null,
         }
@@ -23,8 +25,11 @@ function PostDelete(props) {
       navigate("/myprofile");
     } catch (error) {
       console.log(error);
+    } finally {
+      props.setPost((prev) => prev.filter((item) => item?.id !== postId));
+      setRemoving(false);
+      props.setRemoving(null);
     }
-    props.setRemoving(null);
   };
 
   const noHandler = () => {
@@ -39,8 +44,10 @@ function PostDelete(props) {
         </div>
         <div className={classes.buttons}>
           <button className={classes.yesBtn} onClick={yesHandler}>
-            <DeleteIcon fontSize="small" className={classes.deleteIcon} />
-            Yes
+            {!removing && (
+              <DeleteIcon fontSize="small" className={classes.deleteIcon} />
+            )}
+            {removing ? <div className={classes.spinner}></div> : "Yes"}
           </button>
           <button className={classes.noBtn} onClick={noHandler}>
             No

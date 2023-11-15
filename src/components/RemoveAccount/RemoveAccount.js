@@ -13,7 +13,7 @@ function RemoveAccount(props) {
   const onRemoveHandler = async () => {
     try {
       const response = await fetch(
-        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users/${userID}.json`,
+        `https://api-generator.retool.com/gzCqMn/data/${userID}`,
         {
           method: "DELETE",
           headers: {

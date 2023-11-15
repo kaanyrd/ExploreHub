@@ -1,0 +1,86 @@
+.main {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 90vw;
+  max-width: 600px;
+  height: 80vh;
+  max-height: 250px;
+  /* max-height: 600px; */
+  background: white;
+  border-radius: 10px;
+  border: none;
+  padding: 0.5rem;
+  border: none;
+}
+.main > * {
+  border-radius: 10px;
+  padding: 0.5rem 0;
+  /* overflow-y: auto;
+  height: 100%; */
+  /* border: 3px solid red; */
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.main > * > * {
+  /* border: 3px solid black; */
+}
+
+.title {
+  text-align: center;
+  color: #015792;
+  padding-bottom: 0.2rem;
+}
+
+.likeList {
+  /* border: 3px solid black; */
+  display: flex;
+  flex-direction: column;
+  /* padding: 0 0.5rem; */
+  overflow-y: auto;
+  border: 1px solid #0091ff;
+  border-radius: 5px;
+}
+
+.noLikeText {
+  text-align: center;
+  color: #015792;
+  font-weight: normal;
+  padding-top: 1rem;
+  text-decoration: underline;
+}
+
+.eachLike {
+  /* border: 3px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 0.5rem;
+  color: #015792;
+  font-weight: bolder;
+  background: #ddf1fe;
+  padding: 0.2rem;
+  /* border-radius: 5px; */
+}
+
+.closeIcon {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  z-index: 3;
+  cursor: pointer;
+  background-color: red;
+  border-radius: 5px;
+  color: white;
+}
+
+.pp {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}

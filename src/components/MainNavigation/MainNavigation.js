@@ -62,19 +62,9 @@ function MainNavigation() {
   useEffect(() => {
     const asyncFunc = async () => {
       try {
-        const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/users.json`
-        );
-
+        const response = await fetch(`https://retoolapi.dev/Brjzmm/users`);
         const resData = await response.json();
-        let dataArr = [];
-        for (let key in resData) {
-          dataArr.push({
-            id: key.toString(),
-            ...resData[key],
-          });
-        }
-        let userSelf = dataArr.find((user) => user.token.toString() === auth);
+        const userSelf = resData.find((user) => user.token.toString() === auth);
         setNewUser(userSelf);
       } catch (error) {
         console.log(error);
@@ -115,7 +105,7 @@ function MainNavigation() {
               <div onClick={openSideHandler} className={classes.menuIcon}>
                 <MenuIcon />
               </div>
-              <Link to="/" end="true">
+              <Link to="/places" end="true">
                 <img src={icon} className={classes.logoSelf} alt="icon" />
               </Link>
             </div>

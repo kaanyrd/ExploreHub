@@ -7,7 +7,7 @@ function EditProfileInfo(props) {
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
-        {props.userInfo.status === 404 && (
+        {props.userInfo.status !== 200 && (
           <div>
             <ErrorIcon fontSize="large" className={classes.errorIcon} /> Profile
             Couldn't Edit

@@ -3,14 +3,44 @@
   min-height: calc(100vh - 4rem);
   margin: 0 auto;
 }
+.mainLess {
+  display: grid;
+  align-items: center;
+}
+
 .main > * {
   width: 90vw;
   max-width: 1370px;
   margin: 0 auto;
 }
 
+.loadingContent {
+  display: flex;
+  justify-content: center;
+}
+
+.loading {
+  border: 5px dashed #015792;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  animation-name: bigLoading;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
 @media screen and (min-width: 978px) {
   .main > * {
     width: 95%;
+  }
+}
+
+@keyframes bigLoading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -1,10 +1,5 @@
-1-Home
-2-Bookmarks
-3-Photo Gallery (random photos?)
-4-Adding Comment
-5-Likes
-6-Searching
-7-Audio
-8-Pagination
-9-Edit Profile Can Be More Useful
-
+1. PlaceDetail.js
+2. MyProfile.js
+3. Profile Url ile fotoğraf değiştirme. Hover olunca url tıklama gelsin (Fotoğrafı değiştir.)
+4. PlaceDetail.js liking and comment
+5. get trim

@@ -8,7 +8,6 @@ function PhotoGallery() {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [images, setImages] = useState(null);
-  console.log(images);
 
   useEffect(() => {
     if (!auth) {
@@ -19,19 +18,10 @@ function PhotoGallery() {
   useEffect(() => {
     const gettingPhotos = async () => {
       try {
-        const response = await fetch(
-          "https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json"
-        );
+        const response = await fetch("https://retoolapi.dev/d2cIkX/posts");
         const resData = await response.json();
-
-        let arrData = [];
-        for (let key in resData) {
-          arrData.push({
-            id: key,
-            ...resData[key],
-          });
-        }
-        const data = arrData.reverse();
+        const last4Posts = resData.slice(-4).reverse();
+        const data = last4Posts;
         setImages(data);
       } catch (error) {
         console.log(error);

@@ -4,32 +4,34 @@ import classes from "./Places.module.css";
 
 function Places() {
   const [posts, setPosts] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
-      const postResponse = await fetch(
-        `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts.json`
-      );
-
-      const resPostsData = await postResponse.json();
-
-      let arrPostsData = [];
-
-      for (let key in resPostsData) {
-        arrPostsData.push({
-          id: key,
-          ...resPostsData[key],
-        });
+      setLoading(true);
+      try {
+        const postResponse = await fetch(`https://retoolapi.dev/d2cIkX/posts`);
+        const resPostsData = await postResponse.json();
+        const reverseData = resPostsData.reverse();
+        setPosts(reverseData);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-      const reverseData = arrPostsData.reverse();
-      setPosts(reverseData);
     };
     getData();
   }, []);
 
   return (
-    <div className={classes.main}>
-      <PlacesList data={posts} />
+    <div className={`${classes.main} ${loading && classes.mainLess}`}>
+      {loading ? (
+        <div className={classes.loadingContent}>
+          <div className={classes.loading}></div>
+        </div>
+      ) : (
+        <PlacesList data={posts} />
+      )}
     </div>
   );
 }

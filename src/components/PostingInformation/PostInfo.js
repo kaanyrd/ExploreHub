@@ -4,18 +4,16 @@ import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
 
 function PostInfo(props) {
-  console.log(props);
-
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
-        {props?.responseInfo?.status === 200 && (
+        {props?.responseInfo?.status === 201 && (
           <div className={classes.confirmedSide}>
             <DoneIcon fontSize="medium" className={classes.confirmed} />{" "}
             <span>Posted</span>
           </div>
         )}
-        {props?.responseInfo?.status !== 200 && (
+        {props?.responseInfo?.status !== 201 && (
           <div>
             <div className={classes.infos}>
               <ClearIcon fontSize="medium" className={classes.failed} />{" "}

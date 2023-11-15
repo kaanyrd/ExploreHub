@@ -13,6 +13,7 @@ import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveComment from "../../components/RemoveComment/RemoveComment";
 import BookmarksContext from "../../context/Bookmarks";
+import LikesModaling from "../../components/LikesModaling/LikesModaling";
 
 function PlaceDetail() {
   let date = new Date();
@@ -24,6 +25,7 @@ function PlaceDetail() {
   let seconds = date.getSeconds();
 
   const params = useParams();
+  const [loading, setLoading] = useState(false);
   const { auth, lastLogins } = useContext(AuthContext);
   const { bookmarks, setBookmarks } = useContext(BookmarksContext);
 
@@ -36,9 +38,10 @@ function PlaceDetail() {
   const [showComment, setShowComment] = useState(true);
   const [commentSelf, setCommentSelf] = useState("");
   const [commentValid, setCommentValid] = useState(null);
-  const [allComments, setAllComments] = useState(post?.comments || []);
+  const [allComments, setAllComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [removeModal, setRemoveModal] = useState(null);
+  const [likeModal, setLikeModal] = useState(null);
   const [likes, setLikes] = useState([]);
 
   const firstPhotoHandler = () => {
@@ -55,36 +58,36 @@ function PlaceDetail() {
     setShowComments((prev) => !prev);
   };
 
+  // GETTING DATA
+
   useEffect(() => {
+    setLoading(true);
     const gettingData = async () => {
       try {
         const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}.json`
+          `https://retoolapi.dev/d2cIkX/posts/${postId}`
         );
-        const responseData = await response.json();
-        const messages = responseData?.comments;
-        const likes = responseData?.likes;
+        const comResponse = await fetch(
+          `https://retoolapi.dev/bOqEUT/comments`
+        );
+        const likeResponse = await fetch(`https://retoolapi.dev/QGgnh3/likes`);
 
-        let likeData = [];
-        let arrData = [];
-        for (let key in messages) {
-          arrData.push({
-            key: key,
-            ...messages[key],
-          });
-        }
-        for (let key in likes) {
-          likeData.push({
-            key: key,
-            ...likes[key],
-          });
-        }
-        let reverseData = arrData.reverse();
-        setLikes(likeData);
-        setAllComments(reverseData);
+        const responseData = await response.json();
+        const comResData = await comResponse.json();
+        const likeResData = await likeResponse.json();
+
+        let postControl = comResData.filter(
+          (comment) => comment?.postID === postId
+        );
+        let likeControl = likeResData.filter((like) => like.postID === postId);
+
+        setLikes(likeControl);
+        setAllComments(postControl.reverse());
         setPost(responseData);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     gettingData();
@@ -127,6 +130,7 @@ function PlaceDetail() {
     setShowComment((prev) => !prev);
   };
 
+  // COMMENT
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (commentSelf.length === 0) {
@@ -139,6 +143,7 @@ function PlaceDetail() {
         const newComment = {
           id: commentKey,
           commenter: lastLogins?.nickName,
+          commenterID: lastLogins?.id,
           commenterPP: lastLogins?.pp,
           comment: commentSelf,
           date: {
@@ -149,12 +154,14 @@ function PlaceDetail() {
             minutes: minutes,
             seconds: seconds,
           },
+          postID: postId,
         };
 
         setAllComments((prev) => [
           {
             id: commentKey,
             commenter: lastLogins?.nickName,
+            commenterID: lastLogins?.id,
             commenterPP: lastLogins?.pp,
             comment: commentSelf,
             date: {
@@ -165,28 +172,25 @@ function PlaceDetail() {
               minutes: minutes,
               seconds: seconds,
             },
+            postID: postId,
           },
           ...prev,
         ]);
 
-        const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/comments.json`,
-          {
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newComment),
-          }
-        );
-        const resData = await response.json();
-        console.log(resData);
+        const response = await fetch(`https://retoolapi.dev/bOqEUT/comments`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newComment),
+        });
+        console.log(response);
+        // const resData = await response.json();
         setCommentSelf("");
       } catch (error) {
         console.log(error);
       } finally {
         setSubmitting(false);
-        window.location.reload();
       }
     }
   };
@@ -283,333 +287,395 @@ function PlaceDetail() {
     }
   }, [bookmarks, lastLogins.nickName, params.placesId]);
 
-  const onLikeHandler = async () => {
-    const control = likes.find((item) => item?.user === lastLogins?.nickName);
+  // LIKING
+  const onLikeHandler = async (ID) => {
+    let likeID = Math.random();
+    const control = likes.find((item) => item?.likerID === lastLogins?.id);
+    console.log(control);
 
     if (control) {
+      let lik = control?.id?.toString();
+
       try {
-        const comment = control?.key;
+        setLikes((prev) =>
+          prev.filter((item) => item?.likerID !== lastLogins.id)
+        );
         const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/likes/${comment}.json`,
+          `https://retoolapi.dev/QGgnh3/likes/${lik}`,
           {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(null),
+            body: null,
           }
         );
-
         const resData = await response.json();
         console.log(resData);
       } catch (error) {
         console.log(error);
       } finally {
-        setLikes((prev) =>
-          prev.filter((item) => item?.user !== lastLogins?.nickName)
-        );
       }
     } else {
       try {
-        const user = lastLogins.nickName;
-        const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postId}/likes.json`,
+        setLikes((prev) => [
+          ...prev,
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              user: user,
-            }),
-          }
-        );
-
+            id: likeID,
+            likerID: lastLogins?.id,
+            likerPP: lastLogins?.pp,
+            likerNickName: lastLogins?.nickName,
+            postID: ID,
+          },
+        ]);
+        const response = await fetch(`https://retoolapi.dev/QGgnh3/likes`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: likeID,
+            likerID: lastLogins?.id,
+            likerPP: lastLogins?.pp,
+            likerNickName: lastLogins?.nickName,
+            postID: ID,
+          }),
+        });
         const resData = await response.json();
         console.log(resData);
       } catch (error) {
         console.log(error);
       } finally {
-        setLikes((prev) => [...prev, { user: lastLogins?.nickName }]);
-        window.location.reload();
       }
     }
   };
 
+  let LikeModalContent = () => {
+    return <LikesModaling likes={likes} setLikeModal={setLikeModal} />;
+  };
+
+  const likeModalHandler = () => {
+    setLikeModal(true);
+  };
+
+  const cancelLikeModalHandler = () => {
+    setLikeModal(false);
+  };
+
+  console.log(likes);
+
   return (
     <div className={classes.main}>
-      <Link className={classes.backButton} to=".." relative="path">
-        <ArrowBackIcon fontSize="large" className={classes.backLink} />
-      </Link>
-      <div className={classes.mainContent}></div>
-      <div className={classes.list}>
-        <div key={post?.id} className={classes.card}>
-          <div className={classes.contentLeft}>
-            <div className={classes.cardTop}>
-              <div className={classes.ppSide}>
-                <img
-                  className={classes.ppSelf}
-                  src={post?.pp || avatar}
-                  alt={post?.nickName}
-                />
-              </div>
-
-              <div>
-                <div className={classes.info}>
-                  <strong>@{post?.nickName}</strong>{" "}
-                  <span className={classes.dot}>•</span>{" "}
-                  {formatTimeAgo(post?.date)}{" "}
-                  <span className={classes.dot}>•</span> at {post?.place} (
-                  {post?.city}, {post?.country})
-                  <div className={classes.country}></div>
-                </div>
-              </div>
-            </div>
-            <div className={classes.imgs}>
-              {image === 1 && (
-                <img
-                  src={post?.mainPhoto}
-                  className={classes.imgSelf}
-                  alt={post?.nickName}
-                />
-              )}
-              {image === 2 && (
-                <img
-                  src={post?.secondPhoto}
-                  className={classes.imgSelf}
-                  alt={post?.nickName}
-                />
-              )}
-              {image === 3 && (
-                <img
-                  src={post?.thirdPhoto}
-                  className={classes.imgSelf}
-                  alt={post?.nickName}
-                />
-              )}
-              <div className={classes.buttonSide}>
-                <button
-                  className={`${classes.buttonSelf} ${
-                    image === 1 ? classes.activeBtn : undefined
-                  }`}
-                  onClick={firstPhotoHandler}
-                >
-                  1
-                </button>
-                <button
-                  className={`${classes.buttonSelf} ${
-                    image === 2 ? classes.activeBtn : undefined
-                  }`}
-                  onClick={secondPhotoHandler}
-                >
-                  2
-                </button>
-                <button
-                  className={`${classes.buttonSelf} ${
-                    image === 3 ? classes.activeBtn : undefined
-                  }`}
-                  onClick={thirdPhotoHandler}
-                >
-                  3
-                </button>
-              </div>
-            </div>
-            <div className={classes.likes}>
-              <div>
-                {!auth ? (
-                  <div>
-                    <span className={classes.likeBtn}>
-                      <FavoriteIcon />
-                    </span>
-                    <p>?</p>
-                  </div>
-                ) : (
-                  <div>
-                    <span
-                      onClick={onLikeHandler}
-                      className={`${classes.likeBtn} ${
-                        likes.find(
-                          (item) => item?.user === lastLogins?.nickName
-                        )
-                          ? classes.liked
-                          : undefined
-                      }`}
-                    >
-                      <FavoriteIcon />
-                    </span>
-                    <p>{auth ? likes.length : "?"}</p>
-                  </div>
-                )}
-              </div>
-              {auth && (
-                <div className={classes.likesRight}>
-                  <div
-                    onClick={showCommentHandler}
-                    className={
-                      showComment
-                        ? classes.commentIcon
-                        : classes.commentInactive
-                    }
-                  >
-                    <InsertCommentIcon />
-                  </div>
-                  <div
-                    className={`${classes.bookmarkBtn} ${
-                      bookmarked && classes.bookmarked
-                    }`}
-                    onClick={() => bookmarksHandler()}
-                  >
-                    <BookmarkIcon />
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className={classes.explanation}>
-              <p>
-                <strong>
-                  {post?.firstName} {post?.lastName} says:{" "}
-                </strong>
-                {post?.description}
-              </p>
-            </div>
-          </div>
-          <div>
-            {auth ? (
-              <div className={classes.dunno}>
-                {showComment && (
-                  <form
-                    onSubmit={onSubmitHandler}
-                    className={classes.commentSide}
-                  >
-                    <input
-                      value={commentSelf}
-                      onChange={onCommentHandler}
-                      maxLength="45"
-                      className={`${classes.commentInput} ${
-                        commentValid === false && classes.invalidComment
-                      }`}
-                      type="text"
-                      placeholder="Your comment"
+      {loading ? (
+        <div className={classes.bigLoading}></div>
+      ) : (
+        <div className={classes.mainSecond}>
+          <Link className={classes.backButton} to=".." relative="path">
+            <ArrowBackIcon fontSize="large" className={classes.backLink} />
+          </Link>
+          <div className={classes.mainContent}></div>
+          <div className={classes.list}>
+            <div key={post?.id} className={classes.card}>
+              <div className={classes.contentLeft}>
+                <div className={classes.cardTop}>
+                  <div className={classes.ppSide}>
+                    <img
+                      className={classes.ppSelf}
+                      src={post?.pp || avatar}
+                      alt={post?.nickName}
                     />
-                    <button className={classes.sendCommentBtn} type="submit">
-                      {submitting ? (
-                        <div className={classes.loading}></div>
-                      ) : (
-                        <SendIcon />
-                      )}
-                    </button>
-                  </form>
-                )}
-                {allComments?.length === 0 && (
-                  <div>
-                    <p className={classes.commentInfo}>
-                      There aren't any comment
-                    </p>
-                    <ul className={classes.noCommentUnlist}></ul>
                   </div>
-                )}
-                {allComments?.length > 0 && (
+
                   <div>
-                    {showComments && (
-                      <p
-                        onClick={commentHandler}
-                        className={classes.commentInfo}
-                      >
-                        Close Comments
-                      </p>
-                    )}
-                    {showComments ? (
-                      <ul className={classes.commentsList}>
-                        {allComments?.map((comment) => (
-                          <li className={classes.eachComment} key={comment?.id}>
-                            <div className={classes.commenterInfo}>
-                              <img
-                                src={comment.commenterPP || avatar}
-                                alt="pp"
-                                className={classes.commenterPhoto}
-                              />
-                              <strong>
-                                @{comment?.commenter} (
-                                {formatCommentTime(comment?.date)}):
-                              </strong>
-                            </div>
-                            <p>{comment?.comment}</p>
-                            {lastLogins.nickName === comment.commenter && (
-                              <DeleteIcon
-                                onClick={() =>
-                                  removeCommentHandler(comment?.key)
-                                }
-                                fontSize="small"
-                                className={classes.deleteIcon}
-                              />
-                            )}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className={classes.info}>
+                      <strong>@{post?.nickName}</strong>{" "}
+                      <span className={classes.dot}>•</span>{" "}
+                      {formatTimeAgo(post?.date)}{" "}
+                      <span className={classes.dot}>•</span> at {post?.place} (
+                      {post?.city}, {post?.country})
+                      <div className={classes.country}></div>
+                    </div>
+                  </div>
+                </div>
+                <div className={classes.imgs}>
+                  {image === 1 && (
+                    <img
+                      onDoubleClick={() => onLikeHandler(post?.id)}
+                      src={post?.mainPhoto}
+                      className={classes.imgSelf}
+                      alt={post?.nickName}
+                    />
+                  )}
+                  {image === 2 && (
+                    <img
+                      onDoubleClick={() => onLikeHandler(post?.id)}
+                      src={post?.secondPhoto}
+                      className={classes.imgSelf}
+                      alt={post?.nickName}
+                    />
+                  )}
+                  {image === 3 && (
+                    <img
+                      onDoubleClick={() => onLikeHandler(post?.id)}
+                      src={post?.thirdPhoto}
+                      className={classes.imgSelf}
+                      alt={post?.nickName}
+                    />
+                  )}
+                  <div className={classes.buttonSide}>
+                    <button
+                      className={`${classes.buttonSelf} ${
+                        image === 1 ? classes.activeBtn : undefined
+                      }`}
+                      onClick={firstPhotoHandler}
+                    >
+                      1
+                    </button>
+                    <button
+                      className={`${classes.buttonSelf} ${
+                        image === 2 ? classes.activeBtn : undefined
+                      }`}
+                      onClick={secondPhotoHandler}
+                    >
+                      2
+                    </button>
+                    <button
+                      className={`${classes.buttonSelf} ${
+                        image === 3 ? classes.activeBtn : undefined
+                      }`}
+                      onClick={thirdPhotoHandler}
+                    >
+                      3
+                    </button>
+                  </div>
+                </div>
+                <div className={classes.likes}>
+                  <div>
+                    {!auth ? (
+                      <div>
+                        <span className={classes.likeBtn}>
+                          <FavoriteIcon />
+                        </span>
+                        <p>?</p>
+                      </div>
                     ) : (
                       <div>
-                        <p
-                          onClick={commentHandler}
-                          className={classes.commentInfo}
+                        <span
+                          onClick={() => onLikeHandler(post?.id)}
+                          className={`${classes.likeBtn} 
+                      ${
+                        likes?.find((item) => item?.likerID === lastLogins?.id)
+                          ? classes.liked
+                          : undefined
+                      }
+                      `}
                         >
-                          See other ({allComments.length}){" "}
-                          {allComments.length === 1 ? "comment" : "comments"}
+                          <FavoriteIcon />
+                        </span>
+                        <p
+                          onClick={likeModalHandler}
+                          className={classes.likeLength}
+                        >
+                          {auth ? likes.length : "?"} (See all likes)
                         </p>
-                        <div className={classes.unlist}></div>
                       </div>
                     )}
                   </div>
-                )}
-                {showComment && (
-                  <form
-                    onSubmit={onSubmitHandler}
-                    className={classes.bigScreenComment}
-                  >
-                    <input
-                      value={commentSelf}
-                      onChange={onCommentHandler}
-                      maxLength="45"
-                      className={`${classes.commentInput} ${
-                        commentValid === false && classes.invalidComment
-                      }`}
-                      type="text"
-                      placeholder="Your comment"
+                  {auth && (
+                    <div className={classes.likesRight}>
+                      <div
+                        onClick={showCommentHandler}
+                        className={
+                          showComment
+                            ? classes.commentIcon
+                            : classes.commentInactive
+                        }
+                      >
+                        <InsertCommentIcon />
+                      </div>
+                      <div
+                        className={`${classes.bookmarkBtn} ${
+                          bookmarked && classes.bookmarked
+                        }`}
+                        onClick={() => bookmarksHandler()}
+                      >
+                        <BookmarkIcon />
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className={classes.explanation}>
+                  <p>
+                    <strong>
+                      {post?.firstName} {post?.lastName} says:{" "}
+                    </strong>
+                    {post?.description}
+                  </p>
+                </div>
+              </div>
+              <div>
+                {auth ? (
+                  <div className={classes.dunno}>
+                    {showComment && (
+                      <form
+                        onSubmit={onSubmitHandler}
+                        className={classes.commentSide}
+                      >
+                        <input
+                          value={commentSelf}
+                          onChange={onCommentHandler}
+                          maxLength="65"
+                          className={`${classes.commentInput} ${
+                            commentValid === false && classes.invalidComment
+                          }`}
+                          type="text"
+                          placeholder="Your comment"
+                        />
+                        <button
+                          className={classes.sendCommentBtn}
+                          type="submit"
+                        >
+                          {submitting ? (
+                            <div className={classes.loading}></div>
+                          ) : (
+                            <SendIcon />
+                          )}
+                        </button>
+                      </form>
+                    )}
+                    {allComments?.length === 0 && (
+                      <div>
+                        <p className={classes.commentInfo}>
+                          There aren't any comment
+                        </p>
+                        <ul className={classes.noCommentUnlist}></ul>
+                      </div>
+                    )}
+                    {allComments?.length > 0 && (
+                      <div>
+                        {showComments && (
+                          <p
+                            onClick={commentHandler}
+                            className={classes.commentInfo}
+                          >
+                            Close Comments
+                          </p>
+                        )}
+                        {showComments ? (
+                          <ul className={classes.commentsList}>
+                            {allComments?.map((comment) => (
+                              <li
+                                className={classes.eachComment}
+                                key={comment?.id}
+                              >
+                                <div className={classes.commenterInfo}>
+                                  <img
+                                    src={comment.commenterPP || avatar}
+                                    alt="pp"
+                                    className={classes.commenterPhoto}
+                                  />
+                                  <strong>
+                                    @{comment?.commenter} (
+                                    {formatCommentTime(comment?.date)}):
+                                  </strong>
+                                </div>
+                                <p>{comment?.comment}</p>
+                                {lastLogins.id === comment.commenterID && (
+                                  <DeleteIcon
+                                    onClick={() =>
+                                      removeCommentHandler(comment?.id)
+                                    }
+                                    fontSize="small"
+                                    className={classes.deleteIcon}
+                                  />
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div>
+                            <p
+                              onClick={commentHandler}
+                              className={classes.commentInfo}
+                            >
+                              See other ({allComments.length}){" "}
+                              {allComments.length === 1
+                                ? "comment"
+                                : "comments"}
+                            </p>
+                            <div className={classes.unlist}></div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {showComment && (
+                      <form
+                        onSubmit={onSubmitHandler}
+                        className={classes.bigScreenComment}
+                      >
+                        <input
+                          value={commentSelf}
+                          onChange={onCommentHandler}
+                          maxLength="65"
+                          className={`${classes.commentInput} ${
+                            commentValid === false && classes.invalidComment
+                          }`}
+                          type="text"
+                          placeholder="Your comment"
+                        />
+                        <button
+                          className={classes.sendCommentBtn}
+                          type="submit"
+                        >
+                          {submitting ? (
+                            <div className={classes.loading}></div>
+                          ) : (
+                            <SendIcon />
+                          )}
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                ) : (
+                  <div className={classes.loginInfo}>
+                    <ReportProblemIcon
+                      className={classes.errorIcon}
+                      fontSize="large"
                     />
-                    <button className={classes.sendCommentBtn} type="submit">
-                      {submitting ? (
-                        <div className={classes.loading}></div>
-                      ) : (
-                        <SendIcon />
-                      )}
-                    </button>
-                  </form>
+                    <h4>You must login to see comments</h4>
+                  </div>
                 )}
               </div>
-            ) : (
-              <div className={classes.loginInfo}>
-                <ReportProblemIcon
-                  className={classes.errorIcon}
-                  fontSize="large"
-                />
-                <h4>You must login to see comments</h4>
-              </div>
-            )}
+            </div>
           </div>
+          {likeModal &&
+            ReactDOM.createPortal(
+              <div
+                onClick={cancelLikeModalHandler}
+                className={classes.background}
+              ></div>,
+              document.getElementById("background")
+            )}
+          {likeModal &&
+            ReactDOM.createPortal(
+              <LikeModalContent />,
+              document.getElementById("likemodal")
+            )}
+          {removeModal &&
+            ReactDOM.createPortal(
+              <div
+                onClick={cancelCommentHandler}
+                className={classes.background}
+              ></div>,
+              document.getElementById("background")
+            )}
+          {removeModal &&
+            ReactDOM.createPortal(
+              <RemoveCommentContent />,
+              document.getElementById("removecomment")
+            )}
         </div>
-      </div>
-      {removeModal &&
-        ReactDOM.createPortal(
-          <div
-            onClick={cancelCommentHandler}
-            className={classes.background}
-          ></div>,
-          document.getElementById("background")
-        )}
-      {removeModal &&
-        ReactDOM.createPortal(
-          <RemoveCommentContent />,
-          document.getElementById("removecomment")
-        )}
+      )}
     </div>
   );
 }

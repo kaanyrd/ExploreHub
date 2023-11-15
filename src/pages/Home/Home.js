@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./Home.module.css";
 import AuthContext from "../../context/Authentication";
 import { Link } from "react-router-dom";
@@ -6,19 +6,68 @@ import LoginIcon from "@mui/icons-material/Login";
 
 function Home() {
   const { auth, lastLogins } = useContext(AuthContext);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  let userId = lastLogins?.id;
+
+  useEffect(() => {
+    setLoading(true);
+    const asyncFunc = async () => {
+      try {
+        const response = await fetch(
+          `https://retoolapi.dev/Brjzmm/users/${userId}`
+        );
+        const resData = await response.json();
+        setUser(resData);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    asyncFunc();
+  }, [userId]);
+
+  // useEffect(() => {
+  //   const gettingData = async () => {
+  //     const response = await fetch(`https://retoolapi.dev/d2cIkX/posts`);
+  //     const resData = await response.json();
+  //     console.log(resData);
+  //   };
+  //   gettingData();
+  // });
+  // useEffect(() => {
+  //   const gettingData = async () => {
+  //     const response = await fetch(
+  //       `https://retoolapi.dev/d2cIkX/posts/0.9192942467883338`,
+  //       {
+  //         method: "DELETE",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: null,
+  //       }
+  //     );
+  //     const resData = await response.json();
+  //     console.log(resData);
+  //   };
+  //   gettingData();
+  // });
 
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
-        {auth && (
+        {auth && !loading && (
           <div className={classes.withLogin}>
             <div>
-              <h2>Welcome {lastLogins?.firstName}!</h2>
-              <h3>(@{lastLogins?.nickName})</h3>
+              <h2>Welcome {user?.firstName.toUpperCase()}!</h2>
+              <h3>(@{user?.nickName.toLowerCase()})</h3>
             </div>
             <h3>Wish you are having a nice day 😎</h3>
           </div>
         )}
+        {auth && loading && <div className={classes.loadingSpinner}></div>}
+
         {!auth && (
           <div className={classes.withoutLogin}>
             <h2>Welcome to Explore Hub</h2>

@@ -13,7 +13,7 @@ function PasswordConfirmed(props) {
             <p>Password Changed!</p>
           </div>
         )}
-        {props?.userInfo?.status === 404 && (
+        {props?.userInfo?.status !== 200 && (
           <div className={classes.text}>
             <ErrorIcon className={classes.errorIcon} />
             <p>Something Went Wrong</p>

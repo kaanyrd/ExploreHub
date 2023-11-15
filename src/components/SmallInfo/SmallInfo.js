@@ -7,21 +7,20 @@ function SmallInfo(props) {
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
-        {props?.res?.status === 200 && (
+        {props?.res?.status === 201 && (
           <div className={classes.confirmedSide}>
             <DoneIcon className={classes.confirmed} />{" "}
             <span>Signup Succsessfull</span>
           </div>
         )}
-        {props?.res?.status !== 200 && (
+        {props?.res?.status !== 201 && (
           <div>
-            <div className={classes.infos}>
-              <ClearIcon className={classes.failed} />{" "}
-              <span>Signup Failed</span>
-            </div>
-
             <div>
-              <h4>{props?.res?.message}</h4>
+              <div className={classes.infos}>
+                <ClearIcon className={classes.failed} />{" "}
+                <span>Signup Failed</span>
+              </div>
+              <h4>Try Later!</h4>
             </div>
           </div>
         )}

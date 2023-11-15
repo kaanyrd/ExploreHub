@@ -241,7 +241,7 @@ function PlacesList({ data }) {
       )}
       <div className={classes.list}>
         {visiblePosts?.map((item) => (
-          <Link key={item?.id} to={item?.id}>
+          <Link key={item?.id} to={item?.id.toString()}>
             <div className={classes.item}>
               <div className={classes.cardTopInfo}>
                 <div>
