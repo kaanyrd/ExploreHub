@@ -60,6 +60,28 @@
   z-index: 2;
 }
 
+.loadingContent {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding-bottom: 6rem;
+}
+
+.loading {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 5px dashed #015792;
+  -webkit-animation-name: loading;
+  animation-name: loading;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
 @media screen and (min-width: 568px) {
   .photos {
     grid-template-columns: 1fr 1fr 1fr;
@@ -75,5 +97,23 @@
     height: 200px;
     -o-object-fit: cover;
     object-fit: cover;
+  }
+}
+
+@-webkit-keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

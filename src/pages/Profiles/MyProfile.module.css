@@ -213,7 +213,7 @@
 .activeBtn {
   color: #015792;
   background-color: white;
-  border: 1px solid #015792;
+  border: 2px solid #015792;
 }
 
 .likes {
@@ -248,7 +248,21 @@
   color: rgb(179, 179, 179);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-self: flex-start;
+  -moz-column-gap: 0.2rem;
+  column-gap: 0.2rem;
+  color: #015792;
 }
+
+.likeList {
+  color: #015792;
+  font-weight: bolder;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .editIcon {
   color: #015792;
   cursor: pointer;
@@ -273,7 +287,7 @@
 .commentInfo {
   color: gray;
   cursor: pointer;
-  margin: 0.5rem auto;
+  margin: 0.7rem auto;
 }
 
 .comments {
@@ -285,6 +299,7 @@
   max-height: 200px;
   overflow-y: scroll;
   color: rgb(1, 87, 146);
+  border-radius: 2px;
 }
 
 .otherInfos {
@@ -312,9 +327,20 @@
 }
 
 .commentPP {
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.imgSide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  -moz-column-gap: 0.2rem;
+  column-gap: 0.2rem;
+  font-weight: bolder;
 }
 
 .commentSelf {
@@ -328,8 +354,34 @@
 .eachComment {
   background: #d8edfd;
   margin-bottom: 0.5rem;
-  padding: 0.2rem;
+  padding: 0.2rem 0.4rem;
   border-radius: 5px;
+}
+
+.eachComment:last-child {
+  margin-bottom: 0rem;
+}
+
+.loadingContent {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.bigLoading {
+  width: 60px;
+  height: 60px;
+  border: 5px dashed #015792;
+  border-radius: 50%;
+  -webkit-animation-name: bigLoading;
+  animation-name: bigLoading;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  margin-bottom: 5rem;
 }
 
 @media screen and (min-width: 578px) {
@@ -387,14 +439,33 @@
   }
   .comments {
     max-height: none;
-    height: 417px;
+    height: 410px;
     border-bottom: 3px solid #015792;
     padding: 0.5rem;
+    border-radius: 0;
   }
 }
 
 @media screen and (min-width: 1370px) {
   .main {
     width: 100%;
+  }
+}
+
+@-webkit-keyframes bigLoading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bigLoading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

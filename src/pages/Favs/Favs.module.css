@@ -6,6 +6,27 @@
   padding: 2rem 2rem;
 }
 
+.loadingContent {
+  min-height: calc(100vh - 230px);
+  display: grid;
+  place-items: center;
+}
+
+.loading {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 5px dashed #1d6696;
+  -webkit-animation-name: loading;
+  animation-name: loading;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
 .title {
   display: flex;
   align-items: center;
@@ -141,4 +162,22 @@
   overflow: hidden;
   align-self: flex-start;
   color: #1d6696;
+}
+
+@-webkit-keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -234,6 +234,7 @@
 .imgs {
   height: 350px;
   position: relative;
+  border: 1px solid #015792;
 }
 .imgSelf {
   height: 100%;
@@ -266,10 +267,15 @@
 .activeBtn {
   color: #015792;
   background-color: white;
+  border: 1px solid #015792;
+}
+
+.submitting {
+  opacity: 0.5;
 }
 
 .otherInfos {
-display: flex;
+  display: flex;
   flex-wrap: wrap;
   row-gap: 0.5rem;
   padding-top: 2rem;

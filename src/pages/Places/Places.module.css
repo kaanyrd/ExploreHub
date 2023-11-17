@@ -21,18 +21,31 @@
 
 .loading {
   border: 5px dashed #015792;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
+  -webkit-animation-name: bigLoading;
   animation-name: bigLoading;
+  -webkit-animation-duration: 2s;
   animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
 }
 
 @media screen and (min-width: 978px) {
   .main > * {
     width: 95%;
+  }
+}
+
+@-webkit-keyframes bigLoading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 

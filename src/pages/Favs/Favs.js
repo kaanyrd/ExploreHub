@@ -14,6 +14,7 @@ function Favs() {
   const { bookmarks } = useContext(BookmarksContext);
   const [posts, setPosts] = useState([]);
   const [index, setIndex] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const filteredData = bookmarks.filter(
@@ -24,13 +25,20 @@ function Favs() {
 
   useEffect(() => {
     const gettingData = async () => {
-      for (let i = 0; i < bookmark.length; i++) {
-        const postId = bookmark[i].post;
-        const response = await fetch(
-          `https://retoolapi.dev/d2cIkX/posts/${bookmark[i].post}`
-        );
-        const resData = await response.json();
-        setPosts((prev) => [...prev, { resData, postId }]);
+      setLoading(true);
+      try {
+        for (let i = 0; i < bookmark.length; i++) {
+          const postId = bookmark[i].post;
+          const response = await fetch(
+            `https://retoolapi.dev/d2cIkX/posts/${bookmark[i].post}`
+          );
+          const resData = await response.json();
+          setPosts((prev) => [...prev, { resData, postId }]);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     if (bookmark.length > 0 && posts.length === 0) {
@@ -95,73 +103,82 @@ function Favs() {
           <BookmarksIcon fontSize="large" />
           <h3>Your Bookmarks...</h3>
         </div>
-        {bookmark?.length === 0 && <p>No Bookmark Yet...</p>}
-        {bookmark?.length > 0 && (
-          <ul className={classes.list}>
-            {posts?.map((post) => (
-              <Link to={`/places/${post?.postId}`} key={post?.postId}>
-                <div className={classes.item}>
-                  <div className={classes.cardTopInfo}>
-                    <div>
-                      <div>
-                        <p className={classes.location}>
-                          <LocationOnIcon />
-                          {post?.resData?.city}, {post?.resData?.country}
-                        </p>
+        {loading ? (
+          <div className={classes.loadingContent}>
+            <div className={classes.loading}></div>
+          </div>
+        ) : (
+          <div>
+            {bookmark?.length === 0 && <p>No Bookmark Yet...</p>}
+            {bookmark?.length > 0 && (
+              <ul className={classes.list}>
+                {posts?.map((post) => (
+                  <Link to={`/places/${post?.postId}`} key={post?.postId}>
+                    <div className={classes.item}>
+                      <div className={classes.cardTopInfo}>
+                        <div>
+                          <div>
+                            <p className={classes.location}>
+                              <LocationOnIcon />
+                              {post?.resData?.city}, {post?.resData?.country}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={classes.imgs}>
+                        {index === 1 && (
+                          <img
+                            className={classes.imgsSelf}
+                            src={post?.resData?.mainPhoto}
+                            alt="img"
+                          />
+                        )}
+                        {index === 2 && (
+                          <img
+                            src={post?.resData?.secondPhoto}
+                            className={classes.imgsSelf}
+                            alt="img"
+                          />
+                        )}
+                        {index === 3 && (
+                          <img
+                            src={post?.resData?.thirdPhoto}
+                            alt="img"
+                            className={classes.imgsSelf}
+                          />
+                        )}
+                        <div className={classes.ppImgSide}>
+                          <img
+                            className={classes.ppImgSelf}
+                            src={post?.resData?.pp || avatar}
+                            alt="icon"
+                          />
+                          <small>
+                            <strong className={classes.nickName}>
+                              @{post?.resData?.nickName} at{" "}
+                              {post?.resData?.place}
+                            </strong>
+                            <span className={classes.dot}>•</span>{" "}
+                            <small className={classes.durat}>
+                              {formatTimeAgo(post?.resData?.date)}
+                            </small>
+                          </small>
+                        </div>
+                        <div className={classes.imgInfo}></div>
+                      </div>
+                      <div className={classes.description}>
+                        <strong>
+                          {post?.resData?.firstName} {post?.resData?.lastName}{" "}
+                          says...
+                        </strong>
+                        <p>{post?.resData?.description}</p>
                       </div>
                     </div>
-                  </div>
-                  <div className={classes.imgs}>
-                    {index === 1 && (
-                      <img
-                        className={classes.imgsSelf}
-                        src={post?.resData?.mainPhoto}
-                        alt="img"
-                      />
-                    )}
-                    {index === 2 && (
-                      <img
-                        src={post?.resData?.secondPhoto}
-                        className={classes.imgsSelf}
-                        alt="img"
-                      />
-                    )}
-                    {index === 3 && (
-                      <img
-                        src={post?.resData?.thirdPhoto}
-                        alt="img"
-                        className={classes.imgsSelf}
-                      />
-                    )}
-                    <div className={classes.ppImgSide}>
-                      <img
-                        className={classes.ppImgSelf}
-                        src={post?.resData?.pp || avatar}
-                        alt="icon"
-                      />
-                      <small>
-                        <strong className={classes.nickName}>
-                          @{post?.resData?.nickName} at {post?.resData?.place}
-                        </strong>
-                        <span className={classes.dot}>•</span>{" "}
-                        <small className={classes.durat}>
-                          {formatTimeAgo(post?.resData?.date)}
-                        </small>
-                      </small>
-                    </div>
-                    <div className={classes.imgInfo}></div>
-                  </div>
-                  <div className={classes.description}>
-                    <strong>
-                      {post?.resData?.firstName} {post?.resData?.lastName}{" "}
-                      says...
-                    </strong>
-                    <p>{post?.resData?.description}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </ul>
+                  </Link>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
       </div>
     </div>

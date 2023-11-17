@@ -26,8 +26,8 @@ function Home() {
         setLoading(false);
       }
     };
-    asyncFunc();
-  }, [userId]);
+    auth && asyncFunc();
+  }, [userId, auth]);
 
   // useEffect(() => {
   //   const gettingData = async () => {

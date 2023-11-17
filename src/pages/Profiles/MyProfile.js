@@ -13,10 +13,16 @@ import avatar from "../../assets/casualPhotos/profileImg2.png";
 import banner from "../../assets/casualPhotos/nobanner.png";
 import PostDelete from "../../components/PostDelete/PostDelete";
 import BookmarksContext from "../../context/Bookmarks";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LikesModaling from "../../components/LikesModaling/LikesModaling";
 
 function MyProfile() {
   const navigate = useNavigate();
   const [posts, setPost] = useState([]);
+  const [showComments, setShowComments] = useState(true);
+  const [loading, setLoading] = useState(false);
+  console.log(posts);
+
   const { auth, lastLogins } = useContext(AuthContext);
   let userSelfID = lastLogins?.id;
 
@@ -26,9 +32,14 @@ function MyProfile() {
     }
   }, [auth, navigate]);
   const [user, setUser] = useState(null);
+  const [comments, setComments] = useState(null);
   const [removing, setRemoving] = useState(null);
+  const [likes, setLikes] = useState(null);
+  const [likeModal, setLikeModal] = useState(null);
+  const [modalingLikes, setModalingLikes] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     const asyncFunc = async () => {
       try {
         const response = await fetch(
@@ -38,10 +49,12 @@ function MyProfile() {
         setUser(resData);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     asyncFunc();
-  }, [auth, userSelfID]);
+  }, [auth, userSelfID, setLoading]);
 
   useEffect(() => {
     const gettingPost = async () => {
@@ -57,6 +70,26 @@ function MyProfile() {
     };
     gettingPost();
   }, [userSelfID]);
+
+  useEffect(() => {
+    const gettingComments = async () => {
+      const response = await fetch(`https://retoolapi.dev/bOqEUT/comments`);
+      const resData = await response.json();
+      setComments(resData);
+    };
+
+    gettingComments();
+  }, []);
+
+  useEffect(() => {
+    const gettingLikes = async () => {
+      const response = await fetch(`https://retoolapi.dev/QGgnh3/likes`);
+      const resData = await response.json();
+      setLikes(resData);
+      setModalingLikes(resData);
+    };
+    gettingLikes();
+  }, []);
 
   const [imageStates, setImageStates] = useState([]);
 
@@ -138,257 +171,328 @@ function MyProfile() {
     }
   };
 
+  const commentHandler = () => {
+    setShowComments((prev) => !prev);
+  };
+
+  let LikeModalContent = () => {
+    return <LikesModaling likes={modalingLikes} setLikeModal={setLikeModal} />;
+  };
+
+  console.log(likes);
+
+  const likeModalHandler = (id) => {
+    setModalingLikes(likes);
+    setModalingLikes((prev) =>
+      prev.filter((like) => like.postID.toString() === id)
+    );
+    setLikeModal(true);
+  };
+
+  const cancelLikeModalHandler = () => {
+    setLikeModal(false);
+  };
+
+  console.log(likes);
+
   return (
     <div className={classes.main}>
-      <div className={classes.mainContent}>
-        <div className={classes.photoSide}>
-          <Link to={user?.id?.toString()} className={classes.editProfile}>
-            Edit Profile <EditIcon />
-          </Link>
-          {user?.banner ? (
-            <img
-              src={user?.banner}
-              className={classes.bannerPhoto}
-              alt="banner"
-            />
-          ) : (
-            <img
-              src={banner}
-              alt="banner"
-              className={`${classes.bannerPhoto} ${
-                !user?.banner && classes.bannerPhotoDefault
-              }`}
-            />
-          )}
-          {user?.pp ? (
-            <img
-              src={user?.pp}
-              className={`${classes.pp} ${
-                user?.gender === "male" && classes.ppMale
-              } ${user?.gender === "female" && classes.ppFemale} ${
-                user?.gender === "other" && classes.ppOther
-              }`}
-              alt="pp"
-            />
-          ) : (
-            <img
-              src={avatar}
-              className={`${classes.pp} ${
-                user?.gender === "male" && classes.ppMale
-              } ${user?.gender === "female" && classes.ppFemale} ${
-                user?.gender === "other" && classes.ppOther
-              }`}
-              alt="pp"
-            />
-          )}
+      {loading ? (
+        <div className={classes.loadingContent}>
+          <div className={classes.bigLoading}></div>
         </div>
-        <div className={classes.infoSide}>
-          <div className={classes.topInfo}>
-            <h3 className={classes.name}>
-              {user?.firstName} {user?.lastName}
-            </h3>
-            <p className={classes.nickName}>@{user?.nickName}</p>
+      ) : (
+        <div className={classes.mainContent}>
+          <div className={classes.photoSide}>
+            <Link to={user?.id?.toString()} className={classes.editProfile}>
+              Edit Profile <EditIcon />
+            </Link>
+            {user?.banner ? (
+              <img
+                src={user?.banner}
+                className={classes.bannerPhoto}
+                alt="banner"
+              />
+            ) : (
+              <img
+                src={banner}
+                alt="banner"
+                className={`${classes.bannerPhoto} ${
+                  !user?.banner && classes.bannerPhotoDefault
+                }`}
+              />
+            )}
+            {user?.pp ? (
+              <img
+                src={user?.pp}
+                className={`${classes.pp} ${
+                  user?.gender === "male" && classes.ppMale
+                } ${user?.gender === "female" && classes.ppFemale} ${
+                  user?.gender === "other" && classes.ppOther
+                }`}
+                alt="pp"
+              />
+            ) : (
+              <img
+                src={avatar}
+                className={`${classes.pp} ${
+                  user?.gender === "male" && classes.ppMale
+                } ${user?.gender === "female" && classes.ppFemale} ${
+                  user?.gender === "other" && classes.ppOther
+                }`}
+                alt="pp"
+              />
+            )}
           </div>
-          <div className={classes.otherInfos}>
-            <p>
-              <GiteIcon />
-              Town is{" "}
-              {user?.town ? (
-                <strong className={classes.townSide}>{user?.town}</strong>
-              ) : (
-                <strong>-</strong>
-              )}
-            </p>
-            <p>
-              <CalendarMonthIcon />
-              Birth<strong> {user?.birth}</strong>
-            </p>
-            <p>
-              <LocationCityIcon />
-              Living in{" "}
-              {user?.living ? (
-                <strong className={classes.townSide}>{user?.living}</strong>
-              ) : (
-                <strong>-</strong>
-              )}
-            </p>
+          <div className={classes.infoSide}>
+            <div className={classes.topInfo}>
+              <h3 className={classes.name}>
+                {user?.firstName} {user?.lastName}
+              </h3>
+              <p className={classes.nickName}>@{user?.nickName}</p>
+            </div>
+            <div className={classes.otherInfos}>
+              <p>
+                <GiteIcon />
+                Town is{" "}
+                {user?.town ? (
+                  <strong className={classes.townSide}>{user?.town}</strong>
+                ) : (
+                  <strong>-</strong>
+                )}
+              </p>
+              <p>
+                <CalendarMonthIcon />
+                Birth<strong> {user?.birth}</strong>
+              </p>
+              <p>
+                <LocationCityIcon />
+                Living in{" "}
+                {user?.living ? (
+                  <strong className={classes.townSide}>{user?.living}</strong>
+                ) : (
+                  <strong>-</strong>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className={classes.lastVisits}></div>
-        {posts?.length === 0 ? (
-          <div>
-            <h3 className={classes.noPostText}>No post yet...</h3>
-          </div>
-        ) : (
-          <div className={classes.list}>
-            {posts?.map((data, index) => (
-              <div key={index} className={classes.card}>
-                <div className={classes.contentLeft}>
-                  <div className={classes.cardTop}>
-                    <div className={classes.ppSide}>
-                      <img
-                        className={classes.ppSelf}
-                        src={data?.pp || avatar}
-                        alt={data?.nickName}
-                      />
-                    </div>
+          <div className={classes.lastVisits}></div>
+          {posts?.length === 0 ? (
+            <div>
+              <h3 className={classes.noPostText}>No post yet...</h3>
+            </div>
+          ) : (
+            <div className={classes.list}>
+              {posts?.map((data, index) => (
+                <div key={index} className={classes.card}>
+                  <div className={classes.contentLeft}>
+                    <div className={classes.cardTop}>
+                      <div className={classes.ppSide}>
+                        <img
+                          className={classes.ppSelf}
+                          src={data?.pp || avatar}
+                          alt={data?.nickName}
+                        />
+                      </div>
 
-                    <div>
-                      <div className={classes.info}>
-                        <strong>@{data?.nickName} </strong> {data?.duration}{" "}
-                        <span className={classes.dot}>•</span>{" "}
-                        {formatTimeAgo(data?.date)}{" "}
-                        <span className={classes.dot}>•</span> at {data?.place}{" "}
-                        ({data?.city}, {data?.country})
-                        <div className={classes.country}></div>
+                      <div>
+                        <div className={classes.info}>
+                          <strong>@{data?.nickName} </strong> {data?.duration}{" "}
+                          <span className={classes.dot}>•</span>{" "}
+                          {formatTimeAgo(data?.date)}{" "}
+                          <span className={classes.dot}>•</span> at{" "}
+                          {data?.place} ({data?.city}, {data?.country})
+                          <div className={classes.country}></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={classes.imgs}>
-                    {imageStates[index] === 1 && (
-                      <img
-                        src={data?.mainPhoto}
-                        className={classes.imgSelf}
-                        alt={data?.nickName}
-                      />
-                    )}
-                    {imageStates[index] === 2 && (
-                      <img
-                        src={data?.secondPhoto}
-                        alt={data?.nickName}
-                        className={classes.imgSelf}
-                      />
-                    )}
-                    {imageStates[index] === 3 && (
-                      <img
-                        src={data?.thirdPhoto}
-                        alt={data?.nickName}
-                        className={classes.imgSelf}
-                      />
-                    )}
-                    <div className={classes.buttonSide}>
-                      <button
-                        className={`${classes.buttonSelf} ${
-                          imageStates[index] === 1
-                            ? classes.activeBtn
-                            : undefined
-                        }`}
-                        onClick={() => updateImageState(index, 1)}
-                      >
-                        1
-                      </button>
-                      <button
-                        className={`${classes.buttonSelf} ${
-                          imageStates[index] === 2
-                            ? classes.activeBtn
-                            : undefined
-                        }`}
-                        onClick={() => updateImageState(index, 2)}
-                      >
-                        2
-                      </button>
-                      <button
-                        className={`${classes.buttonSelf} ${
-                          imageStates[index] === 3
-                            ? classes.activeBtn
-                            : undefined
-                        }`}
-                        onClick={() => updateImageState(index, 3)}
-                      >
-                        3
-                      </button>
-                    </div>
-                  </div>
-                  <div className={classes.likes}>
-                    <div>
-                      <span className={`${classes.likeBtn}`}>
-                        {/* <FavoriteIcon /> */}❤ Likes gonna add
-                      </span>
-                    </div>
-                    <div className={classes.likesRight}>
-                      <Link
-                        to={`${data?.key}/editPlace`}
-                        className={classes.editIcon}
-                      >
-                        <EditIcon />
-                      </Link>
-                      <div className={classes.deleteIcon}>
-                        <DeleteIcon onClick={() => onDeleteHandler(data?.id)} />
-                      </div>
-                      <div
-                        className={`${classes.bookmarkBtn} ${
-                          bookmarks.some(
-                            (bookmark) =>
-                              bookmark.post === data?.key &&
-                              bookmark.user === lastLogins.nickName
-                          )
-                            ? classes.bookmarked
-                            : undefined
-                        }`}
-                        onClick={() => bookmarksHandler(data?.key)}
-                      >
-                        <BookmarkIcon />
+                    <div className={classes.imgs}>
+                      {imageStates[index] === 1 && (
+                        <img
+                          src={data?.mainPhoto}
+                          className={classes.imgSelf}
+                          alt={data?.nickName}
+                        />
+                      )}
+                      {imageStates[index] === 2 && (
+                        <img
+                          src={data?.secondPhoto}
+                          alt={data?.nickName}
+                          className={classes.imgSelf}
+                        />
+                      )}
+                      {imageStates[index] === 3 && (
+                        <img
+                          src={data?.thirdPhoto}
+                          alt={data?.nickName}
+                          className={classes.imgSelf}
+                        />
+                      )}
+                      <div className={classes.buttonSide}>
+                        <button
+                          className={`${classes.buttonSelf} ${
+                            imageStates[index] === 1
+                              ? classes.activeBtn
+                              : undefined
+                          }`}
+                          onClick={() => updateImageState(index, 1)}
+                        >
+                          1
+                        </button>
+                        <button
+                          className={`${classes.buttonSelf} ${
+                            imageStates[index] === 2
+                              ? classes.activeBtn
+                              : undefined
+                          }`}
+                          onClick={() => updateImageState(index, 2)}
+                        >
+                          2
+                        </button>
+                        <button
+                          className={`${classes.buttonSelf} ${
+                            imageStates[index] === 3
+                              ? classes.activeBtn
+                              : undefined
+                          }`}
+                          onClick={() => updateImageState(index, 3)}
+                        >
+                          3
+                        </button>
                       </div>
                     </div>
+                    <div className={classes.likes}>
+                      <div>
+                        <span className={`${classes.likeBtn}`}>
+                          <FavoriteIcon />{" "}
+                          {
+                            likes?.filter((like) => like.postID === data?.id)
+                              .length
+                          }{" "}
+                        </span>
+                        <p
+                          onClick={() => likeModalHandler(data?.id)}
+                          className={classes.likeList}
+                        >
+                          (See all likes)
+                        </p>
+                      </div>
+                      <div className={classes.likesRight}>
+                        <Link
+                          to={`${data?.id}/editPlace`}
+                          className={classes.editIcon}
+                        >
+                          <EditIcon />
+                        </Link>
+                        <div className={classes.deleteIcon}>
+                          <DeleteIcon
+                            onClick={() => onDeleteHandler(data?.id)}
+                          />
+                        </div>
+                        <div
+                          className={`${classes.bookmarkBtn} ${
+                            bookmarks.some(
+                              (bookmark) =>
+                                bookmark.post === data?.key &&
+                                bookmark.user === lastLogins.nickName
+                            )
+                              ? classes.bookmarked
+                              : undefined
+                          }`}
+                          onClick={() => bookmarksHandler(data?.key)}
+                        >
+                          <BookmarkIcon />
+                        </div>
+                      </div>
+                    </div>
+                    <div className={classes.explanation}>
+                      <p>
+                        <strong>
+                          {data?.firstName} {data?.lastName} says:{" "}
+                        </strong>
+                        {data?.description}
+                      </p>
+                    </div>
                   </div>
-                  <div className={classes.explanation}>
-                    <p>
-                      <strong>
-                        {data?.firstName} {data?.lastName} says:{" "}
-                      </strong>
-                      {data?.description}
-                    </p>
+                  <div>
+                    {comments?.filter((comment) => comment?.postID === data?.id)
+                      .length === 0 && (
+                      <div className={classes.commentInfo}>
+                        There is no comment!
+                      </div>
+                    )}
+                    {comments?.filter((comment) => comment?.postID === data?.id)
+                      .length > 0 && (
+                      <div>
+                        {showComments ? (
+                          <p
+                            className={classes.commentInfo}
+                            onClick={commentHandler}
+                          >
+                            Close comments...
+                          </p>
+                        ) : (
+                          <div
+                            className={classes.commentInfo}
+                            onClick={commentHandler}
+                          >
+                            See other (
+                            {
+                              comments?.filter(
+                                (comment) => comment?.postID === data?.id
+                              ).length
+                            }
+                            ){" "}
+                            {comments?.filter(
+                              (comment) => comment?.postID === data?.id
+                            ).length === 1 && "comment"}
+                            {comments?.filter(
+                              (comment) => comment?.postID === data?.id
+                            ).length > 1 && " comments"}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {showComments && (
+                      <ul className={classes.comments}>
+                        {comments?.map(
+                          (comment) =>
+                            comment?.postID === data?.id && (
+                              <li className={classes.eachComment}>
+                                <div className={classes.imgSide}>
+                                  <img
+                                    src={comment?.commenterPP || avatar}
+                                    className={classes.commentPP}
+                                    alt="pp"
+                                  />
+                                  @{comment.commenter}
+                                </div>
+                                {comment.comment}
+                              </li>
+                            )
+                        )}
+                      </ul>
+                    )}
                   </div>
                 </div>
-                <p className={classes.noPostText}>Comments are gonna add...</p>
-                {/* <div>
-                  {comments.length === 0 && (
-                    <p className={classes.commentInfo}>
-                      There is no comment...
-                    </p>
-                  )}
-                  {comments.length > 0 && showComments ? (
-                    <div>
-                      <p
-                        className={classes.commentInfo}
-                        onClick={commentHandler}
-                      >
-                        Close comments...
-                      </p>
-                      <ul className={classes.comments}>
-                        {comments?.map((comment) => (
-                          <li className={classes.eachComment} key={comment?.id}>
-                            <div className={classes.commentSelf}>
-                              <img
-                                className={classes.commentPP}
-                                src={comment?.commenterPP}
-                                alt="pp"
-                              />
-                              <strong>@{comment?.commenter}:</strong>
-                            </div>
-                            <p>{comment?.comment}</p>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    comments?.length > 0 && (
-                      <p
-                        onClick={commentHandler}
-                        className={classes.commentInfo}
-                      >
-                        {`See other (${comments?.length}) ${
-                          comments?.length === 1 ? "comment..." : "comments..."
-                        }`}
-                      </p>
-                    )
-                  )}
-                </div> */}
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {likeModal &&
+        ReactDOM.createPortal(
+          <div
+            onClick={cancelLikeModalHandler}
+            className={classes.background}
+          ></div>,
+          document.getElementById("background")
         )}
-      </div>
+      {likeModal &&
+        ReactDOM.createPortal(
+          <LikeModalContent />,
+          document.getElementById("likemodal")
+        )}
       {removing &&
         ReactDOM.createPortal(
           <div onClick={onCancelHandler} className={classes.background}></div>,

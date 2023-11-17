@@ -20,6 +20,7 @@ function EditPlace() {
   const [secondPhotoValid, setSecondPhotoValid] = useState(null);
   const [thirdPhoto, setThirdPhoto] = useState("");
   const [thirdPhotoValid, setThirdPhotoValid] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
@@ -53,7 +54,7 @@ function EditPlace() {
     const gettingData = async () => {
       try {
         const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postID}.json`
+          `https://retoolapi.dev/d2cIkX/posts/${postID}`
         );
         const responseData = await response.json();
 
@@ -83,8 +84,9 @@ function EditPlace() {
 
     if (formValid) {
       try {
+        setSubmitting(true);
         const response = await fetch(
-          `https://explorehub-6824c-default-rtdb.europe-west1.firebasedatabase.app/app/posts/${postID}.json`,
+          `https://retoolapi.dev/d2cIkX/posts/${postID}`,
           {
             method: "PATCH",
             headers: {
@@ -103,6 +105,7 @@ function EditPlace() {
         console.log(error);
       }
     } else {
+      return;
     }
   };
 
@@ -151,6 +154,7 @@ function EditPlace() {
     if (resInfo) {
       setTimeout(() => {
         setResInfo(null);
+        setSubmitting(false);
         navigate("..");
       }, 1000);
     }
@@ -295,8 +299,20 @@ function EditPlace() {
                   />
                 </div>
                 <div className={classes.submitButtons}>
-                  <button type="submit">Save</button>
-                  <button onClick={goHomeHandler}>Cancel</button>
+                  <button
+                    className={submitting && classes.submitting}
+                    disabled={submitting}
+                    type="submit"
+                  >
+                    {submitting ? "Done!" : "Save"}
+                  </button>
+                  <button
+                    disabled={submitting}
+                    onClick={goHomeHandler}
+                    className={submitting && classes.submitting}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </form>
             </div>

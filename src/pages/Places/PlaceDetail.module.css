@@ -402,10 +402,14 @@
   border: 5px dashed #015792;
   margin: 0 auto;
   border-radius: 50%;
-  animation-name: bigLoading;
-  animation-duration: 2s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  -webkit-animation-name: bigLoading;
+          animation-name: bigLoading;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
 }
 
 .deleteIcon {
@@ -553,6 +557,14 @@
 }
 
 @keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes bigLoading {
   from {
     transform: rotate(0deg);
   }

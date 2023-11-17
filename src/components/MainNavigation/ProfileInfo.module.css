@@ -53,9 +53,13 @@
   height: 30%;
   margin: 0 auto 1.2rem auto;
   border-radius: 50%;
+  -webkit-animation-name: spinner;
   animation-name: spinner;
+  -webkit-animation-duration: 2s;
   animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
 }
 
@@ -80,6 +84,15 @@
 .profilePhoto {
   border: 3px solid #015792;
   border-radius: 50%;
+}
+
+@-webkit-keyframes spinner {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spinner {
