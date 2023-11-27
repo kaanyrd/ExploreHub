@@ -399,7 +399,7 @@ function MyProfile() {
                               ? classes.bookmarked
                               : undefined
                           }`}
-                          onClick={() => bookmarksHandler(data?.key)}
+                          onClick={() => bookmarksHandler(data?.id)}
                         >
                           <BookmarkIcon />
                         </div>

@@ -29,32 +29,6 @@ function Home() {
     auth && asyncFunc();
   }, [userId, auth]);
 
-  // useEffect(() => {
-  //   const gettingData = async () => {
-  //     const response = await fetch(`https://retoolapi.dev/d2cIkX/posts`);
-  //     const resData = await response.json();
-  //     console.log(resData);
-  //   };
-  //   gettingData();
-  // });
-  // useEffect(() => {
-  //   const gettingData = async () => {
-  //     const response = await fetch(
-  //       `https://retoolapi.dev/d2cIkX/posts/0.9192942467883338`,
-  //       {
-  //         method: "DELETE",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: null,
-  //       }
-  //     );
-  //     const resData = await response.json();
-  //     console.log(resData);
-  //   };
-  //   gettingData();
-  // });
-
   return (
     <div className={classes.main}>
       <div className={classes.mainContent}>
