@@ -393,7 +393,7 @@ function MyProfile() {
                           className={`${classes.bookmarkBtn} ${
                             bookmarks.some(
                               (bookmark) =>
-                                bookmark.post === data?.key &&
+                                bookmark.post === data?.id &&
                                 bookmark.user === lastLogins.nickName
                             )
                               ? classes.bookmarked
