@@ -42,9 +42,7 @@ function Login() {
     } else {
       try {
         setSubmitting(true);
-        const response = await fetch(
-          `https://retoolapi.dev/Brjzmm/users`
-        );
+        const response = await fetch(`https://retoolapi.dev/Brjzmm/users`);
         const data = await response.json();
         const emailMatched = data.find((user) => user.email === email);
         setSubmitting(false);
@@ -75,6 +73,17 @@ function Login() {
       }
     }
   };
+
+  // useEffect(() => {
+  //   const gettingData = async () => {
+  //     const response = await fetch(`https://retoolapi.dev/Brjzmm/users`);
+  //     const resData = await response.json();
+
+  //     console.log(resData);
+  //   };
+
+  //   gettingData();
+  // });
 
   useEffect(() => {
     if (email.length > 3 && email.includes("@") && password.length > 0) {

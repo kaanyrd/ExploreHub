@@ -9,6 +9,7 @@
   min-height: calc(100vh - 4rem);
   padding: 0.5rem 0;
   display: grid;
+  align-content: center;
   align-items: center;
 }
 
@@ -403,13 +404,13 @@
   margin: 0 auto;
   border-radius: 50%;
   -webkit-animation-name: bigLoading;
-          animation-name: bigLoading;
+  animation-name: bigLoading;
   -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  animation-duration: 2s;
   -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+  animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 }
 
 .deleteIcon {
