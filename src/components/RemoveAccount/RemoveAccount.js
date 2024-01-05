@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 function RemoveAccount(props) {
   const { setAuth, setLastLogins } = useContext(AuthContext);
-  const userID = props.removeAccount;
+  const userID = props.removeAccount.toString();
 
   const navigate = useNavigate();
 
   const onRemoveHandler = async () => {
     try {
       const response = await fetch(
-        `https://api-generator.retool.com/gzCqMn/data/${userID}`,
+        `https://retoolapi.dev/Brjzmm/users/${userID}`,
         {
           method: "DELETE",
           headers: {
