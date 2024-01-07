@@ -29,15 +29,15 @@ function Home() {
     auth && asyncFunc();
   }, [userId, auth]);
 
-  useEffect(() => {
-    const asyncFunc = async () => {
-      const response = await fetch("https://retoolapi.dev/Brjzmm/users");
-      const data = await response.json();
-      console.log(data);
-    };
+  // useEffect(() => {
+  //   const asyncFunc = async () => {
+  //     const response = await fetch("https://retoolapi.dev/Brjzmm/users");
+  //     const data = await response.json();
+  //     console.log(data);
+  //   };
 
-    asyncFunc();
-  }, []);
+  //   asyncFunc();
+  // }, []);
 
   return (
     <div className={classes.main}>
